@@ -1,0 +1,12 @@
+header="Content-type: application/json"
+header="Accept: application/json"
+header="ws_key: cd8680b9-43c8-4faf-a6a8-d9574e2470e3"
+url=https://pivotweb.tourismewallonie.be/PivotWeb-3.1/query/OTH-A0-009F-5MSN;content=2
+/data=@.\\Query_Parametre.xml
+data='{"urn:fld:adrcp": "6747"}'
+output=".\\All_Offers_Content_2.json"
+request=GET
+insecure
+verbose
+
+

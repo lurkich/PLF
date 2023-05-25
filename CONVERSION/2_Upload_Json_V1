@@ -1,0 +1,280 @@
+<?php
+
+require __DIR__ . "/Parameters.php";
+require __DIR__ . "/functions.php";
+
+$table_name = $GLOBALS['Tbl_Json'];
+
+
+
+
+
+/**
+ * 
+ *  Gather list of headers and create table definition file
+ * 
+ */
+
+$tbl_Definition = [];
+
+$headers = get_Json_Headers();
+
+
+// list fields do will not be loaded to the database.
+
+
+$headers["geometry"] = true;
+
+
+
+foreach ($headers as $key => $value) {
+
+
+    /**
+     * 
+     * Skip unnecessary fields
+     */
+
+
+    if ($headers[$key] == false) {
+        continue;
+    }
+
+
+
+    /**
+     * 
+     *  Append "_1" at the end of the duplicate fields for Database.
+     * 
+     */
+
+
+    if ($key == "Ter_Area" or $key == "Ter_Long" or $key == "Type") {
+        $key = "$key" . "_1";
+    }
+
+
+
+
+    /**
+     * 
+     *  change some field titles and set field type (integer ....) Default is TEXT 255
+     * 
+     */
+
+
+    $tbl_Definition[$key] = "TEXT (255)";
+
+
+    if (substr($key, 0, 20) == "geometry") {
+
+        $tbl_Definition[$key] = "LONGTEXT";
+    }
+
+
+    if ($key == "DATE_MAJ") {
+        $tbl_Definition[$key] = "DATETIME";
+    }
+
+
+    // if ($key == "Nomenclature") {
+    //     $tbl_Definition[$key] = "INTEGER";
+    // }
+
+
+
+    if (
+        $key == "OBJECTID" or
+        $key == "SAISON"
+    ) {
+        $tbl_Definition[$key] = "INTEGER";
+    }
+
+
+    if (
+        $key == "Ter_Long_1" or
+        $key == "Ter_Area_1" or
+        $key == "Ter_long" or
+        $key == "Ter_area"
+    ) {
+        $tbl_Definition[$key] = "DOUBLE";
+    }
+}
+
+Create_Table($table_name, $tbl_Definition);
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * 
+ *  Connect to the database
+ *  
+ */
+
+$db_conn = new PDO("odbc:Driver={Microsoft Access Driver (*.mdb, *.accdb)};Dbq=" . $GLOBALS['db_file_name'] . ";Client_CSet=UTF-8;Uid=; Pwd=;");
+$db_conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+/**
+ * 
+ *  Upload the table
+ * 
+ */
+
+$csv_file = fopen($GLOBALS['csv_file_name'], 'r');
+
+
+
+
+
+while (!feof($csv_file)) {
+
+    $sql_field_list = "";
+    $sql_value_list = "";
+
+
+    // read records including title. and remove all double quote and EOL  
+
+    $rec = fgets($csv_file);
+
+    if (substr($rec, 0, 9) == "geometry$") continue;  // skip header record
+
+    $rec = preg_replace('/\r*\n*/', "", $rec);      // remove all new lines
+
+    if ($rec == "") continue;                       // skip blank lines
+
+    $fields = explode("$", $rec);
+
+
+
+
+
+
+    /**
+     * 
+     * Process record.
+     */
+
+    $i = -1;
+
+    foreach ($headers as $key => $value) {
+
+        $i++;
+
+        // if($headers[$key] == "OBJECTID" and
+        //   $fields[19] == 278 ) {
+        //     $x = 1;
+        //   }
+
+
+        if ($headers[$key] == false) {
+            continue;
+        }  // skip fields that we don't want to see in the database
+
+
+
+
+
+        /**
+         * 
+         *  Append "_1" at the end of the duplicate fields for Database.
+         * 
+         */
+
+
+        if ($key == "Ter_Area" or $key == "Ter_Long" or $key == "Type") {
+            $key = "$key" . "_1";
+        }
+
+        $sql_field_list .= "[$key], ";
+
+
+
+        // convert Date_Maj to valid date or set date to 01-01-1970 for empty dates
+
+        if ($tbl_Definition[$key] == "DATETIME") {
+            if (empty($fields[$i])) {
+                $fields[$i] = "1970-01-01";
+            } else {
+                $dateInfo = date_parse_from_format('Y-n-j', $fields[$i]);
+                $fields[$i] = $dateInfo['year'] . '-' . $dateInfo['month'] . '-' . $dateInfo['day'];
+            }
+        }
+
+
+
+        // if numeric fields are empty, replace the value with 0
+
+        if (empty($fields[$i])) {
+
+            if ($tbl_Definition[$key] == "INTEGER" or $tbl_Definition[$key] == "DOUBLE") {
+                $fields[$i] = 0;
+            }
+        }
+
+        /**
+         * 
+         * Replace some invalid database interpretation characters in fields with valid ones
+         */
+
+        $fields[$i] = preg_replace('/""/', '"', $fields[$i]);
+        $fields[$i] = preg_replace("/'/", "''", $fields[$i]);
+        $fields[$i] = preg_replace("/;/", ";;", $fields[$i]);
+        $fields[$i] = preg_replace("/^\"(.*)\"$/", "$1", $fields[$i]);
+
+
+
+
+        // correct a invalid value in record
+
+        if ($key == "Ter_long" and $fields[$i] == "o") {
+            $fields[$i] = 0;
+        }
+
+        // Encode string with a valid character set for db insert.
+
+        $fvalue = $fields[$i];
+        if (!empty($fields[$i])) {
+            $fvalue = mb_convert_encoding($fvalue, 'Windows-1252', 'UTF-8');
+        }
+
+
+
+        // enclose the value with correct enclosion character
+
+        if ($tbl_Definition[$key] == "DATETIME") {
+            $sql_value_list .= "#" . $fvalue . "#, ";
+        } else {
+            $sql_value_list .= "'" . $fvalue . "', ";
+        }
+    }
+
+
+    $sql_field_list = substr($sql_field_list, 0, strlen($sql_field_list) - 2);
+    $sql_value_list = substr($sql_value_list, 0, strlen($sql_value_list) - 2);
+
+
+    $sql_insert = "INSERT INTO $table_name ($sql_field_list) VALUES ($sql_value_list)";
+
+
+
+    try {
+        $sql_result = $db_conn->query($sql_insert);
+    } catch (PDOException $e) {
+        echo ("Error : " . $e->getMessage() . "SQL Command : ");
+        echo "$sql_insert\n\n";
+    }
+}
+
+unset($db_conn);
+fclose($csv_file);
+
+
+echo ("End of process.");
