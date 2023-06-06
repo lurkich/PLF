@@ -15,23 +15,27 @@ class PLF
      * 
      *  List de tous les codes erreurs possibles dans l'ensemble des fonctions.
      *
-     *       -1 : Aucun record trouvé
-     *       -2 : Le territoire n'existe pas
-     *       -3 : Plusieurs enregistrements trouvés pour le territoire
-     *       -4 : La date est invalide. Doit être au format JJ-MM-AAAA
-     *       -5 : Erreur MySql
-     *       -6 : Commande SQL invalide
-     * 	     -7 : l'insert à produit une erreur
-     *       -8 : pas de correspondance entre territoire et nomnclature et vice versa
-     *       -9 : La combinaison date chasse / territoire n'existe pas
-     *      -10 : La combinaison date chasse / territoire existe déjà
-     *      -11 : Le canton n'existe pas
-     *      -12 : Le conseil cynégétique n'existe pas
-     *     -999 : Autres erreurs
      *       xx : entier >= 0 reprenant le nombre d'enregistrements retournés ou supprimés
      * 
      *################################################################################*/
 
+     private static $Return_Codes = Array(
+
+        -1 => "Aucun record trouvé",
+        -2 => "Le territoire n'existe pas",
+        -3 => "Plusieurs enregistrements trouvés pour le territoire",
+        -4 => "La date est invalide. Doit être au format JJ-MM-AAAA",
+        -5 => "Erreur MySql",
+        -6 => "Commande SQL invalide",
+        -7 => "l'insert à produit une erreur",
+        -8 => "pas de correspondance entre territoire et nomnclature et vice versa",
+        -9 => "La combinaison date chasse / territoire n'existe pas",
+        -10 => "La combinaison date chasse / territoire existe déjà",
+        -11 => "Le canton n'existe pas",
+        -12 => "Le conseil cynégétique n'existe pas",
+        -999 => "Autres erreurs"
+
+     );
 
 
 
@@ -473,7 +477,7 @@ class PLF
         if ($Check_Territoire[2] == false) {
 
             self::$RC = -2;
-            self::$RC_Msg = "Le territoire n'existe pas.";
+            self::$RC_Msg = self::$Return_Codes[self::$RC];
 
             return array(self::$RC, self::$RC_Msg, self::$List_Array);
         }
@@ -606,7 +610,7 @@ class PLF
         if ($Check_Canton[2] == false) {
 
             self::$RC = -11;
-            self::$RC_Msg = "Le canton n'existe pas.";
+            self::$RC_Msg = self::$Return_Codes[self::$RC];
 
             return array(self::$RC, self::$RC_Msg, self::$List_Array);
         }
@@ -725,7 +729,7 @@ class PLF
         if ($Check_CC[2] == false) {
 
             self::$RC = -11;
-            self::$RC_Msg = "Le conseil cynégétique n'existe pas.";
+            self::$RC_Msg = self::$Return_Codes[self::$RC];
 
             return array(self::$RC, self::$RC_Msg, self::$List_Array);
         }
@@ -862,7 +866,7 @@ class PLF
         if ($Check_Territoire[2] == false) {
 
             self::$RC = -2;
-            self::$RC_Msg = "Le territoire n'existe pas.";
+            self::$RC_Msg = self::$Return_Codes[self::$RC];
 
             return array(self::$RC, self::$RC_Msg, self::$List_Array);
         }
@@ -876,7 +880,7 @@ class PLF
         if ($Check_Duplicate[2] == true) {
 
             self::$RC = -10;
-            self::$RC_Msg = "La combinaison date chasse / territoire existe déjà.";
+            self::$RC_Msg = self::$Return_Codes[self::$RC];
 
             return array(self::$RC, self::$RC_Msg, self::$List_Array);
         }
@@ -1013,7 +1017,7 @@ class PLF
         if ($Check_Territoire[2] == false) {
 
             self::$RC = -2;
-            self::$RC_Msg = "Le territoire n'existe pas.";
+            self::$RC_Msg = self::$Return_Codes[self::$RC];
 
             return array(self::$RC, self::$RC_Msg, self::$List_Array);
         }
@@ -1090,7 +1094,8 @@ class PLF
         if ($sql_result_delete == false) {
 
             self::$RC = -999;
-            self::$RC_Msg = 'Erreur DELETE non répertoriée ' . " - ";
+
+            self::$RC_Msg = self::$Return_Codes[self::$RC] . " - ";
             self::$RC_Msg .= $sql_Delete;
 
             return array(self::$RC, self::$RC_Msg, self::$List_Array);
@@ -1153,7 +1158,7 @@ class PLF
         if ($Check_Territoire[2] == false) {
 
             self::$RC = -2;
-            self::$RC_Msg = "Le territoire n'existe pas.";
+            self::$RC_Msg = self::$Return_Codes[self::$RC];
 
             return array(self::$RC, self::$RC_Msg, self::$List_Array);
         }

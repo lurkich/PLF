@@ -11,10 +11,10 @@ require __DIR__ . "/functions.php";
 //goto Test1;
 //goto Test2;
 //goto Test3;
-//goto Test4;
+goto Test4;
 //goto Test5;
 //goto Test6;
-goto Test7;
+//goto Test7;
 //goto Test8;
 //goto Test8;
 
@@ -191,7 +191,7 @@ if ($List_Chasse_Dates_By_Territories[0] == 0) {
 
 
 
-$List_Chasse_Dates_By_Territories = PLF::Get_Chasse_By_Territoire(Territoire_Name: "9110501001");
+$List_Chasse_Dates_By_Territories = PLF::Get_Chasse_By_Territoire(Territoire_Name: "911050100199");
 
 if ($List_Chasse_Dates_By_Territories[0] < 0) {
 
@@ -363,11 +363,14 @@ if ($Territoire_Geometry[0] < 0) {
    //
    // .... traitement de l'erreur
    //
+} else {
+
+   $fp = fopen("C:\Users\chris\OneDrive\Documents\\Result_Territories_id.json", 'w');
+   fwrite($fp, $Territoire_Geometry[2]);
+   
 }
 
 
-$fp = fopen("C:\Users\chris\OneDrive\Documents\\Result_Territories_id.json", 'w');
-fwrite($fp, $Territoire_Geometry[2]);
 
 
 
@@ -382,11 +385,14 @@ if ($Territoire_Geometry[0] < 0) {
    // .... traitement de l'erreur
    //
 
+} else {
+
+   $fp = fopen("C:\Users\chris\OneDrive\Documents\\Result_DA_Numero.json", 'w');
+   fwrite($fp, $Territoire_Geometry[2]);
+   
 }
 
 
-$fp = fopen("C:\Users\chris\OneDrive\Documents\\Result_DA_Numero.json", 'w');
-fwrite($fp, $Territoire_Geometry[2]);
 
 
 
