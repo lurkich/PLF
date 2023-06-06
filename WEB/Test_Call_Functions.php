@@ -14,7 +14,9 @@ require __DIR__ . "/functions.php";
 //goto Test4;
 //goto Test5;
 //goto Test6;
-//goto Test7;
+goto Test7;
+//goto Test8;
+//goto Test8;
 
 
 
@@ -27,30 +29,30 @@ require __DIR__ . "/functions.php";
 Test1:
 
 
-
-
-
 $List_Territoires = PLF::Get_Territoire_List(TypeTerritoire: "T");
 
-if (empty($List_Territoires)) {
 
-    $error = plf::Get_Error();
-    echo $error;
-    exit;
+if ($List_Territoires[0] < 0) {
+
+   echo $List_Territoires[1];
+
+   //
+   // .... traitement de l'erreur
+   //
 }
-
-
 
 
 
 
 $List_Territoires = PLF::Get_Territoire_List();
 
-if (empty($List_Territoires)) {
+if ($List_Territoires[0] < 0) {
 
-    $error = plf::Get_Error();
-    echo $error;
-    exit;
+   echo $List_Territoires[1];
+
+   //
+   // .... traitement de l'erreur
+   //
 }
 
 
@@ -62,32 +64,37 @@ if (empty($List_Territoires)) {
  */
 
 
- Test2:
+Test2:
 
 
- $Territories_Info = PLF::Get_Territoire_Info(Territoire_Name: "AR210", TypeTerritoire: "T");
- 
- if (empty($Territories_Info)) {
- 
-     $error = plf::Get_Error();
-     echo $error;
-     exit;
- }
- 
- 
+$Territories_Info = PLF::Get_Territoire_Info(Territoire_Name: "AR210", TypeTerritoire: "T");
+
+if ($Territories_Info[0] < 0) {
+
+   echo $List_Territoires[1];
+
+   //
+   // .... traitement de l'erreur
+   //
+}
 
 
 
 
 
- $Territories_Info = PLF::Get_Territoire_Info(Territoire_Name: "9133383017");
- 
- if (empty($Territories_Info)) {
- 
-     $error = plf::Get_Error();
-     echo $error;
-     exit;
- }
+
+
+
+$Territories_Info = PLF::Get_Territoire_Info(Territoire_Name: "9133383017");
+
+if ($Territories_Info[0] < 0) {
+
+   echo $List_Territoires[1];
+
+   //
+   // .... traitement de l'erreur
+   //
+}
 
 
 
@@ -106,35 +113,45 @@ if (empty($List_Territoires)) {
  */
 
 
- Test3:
+Test3:
 
- $List_Chasse_Territories_By_Date = PLF::Get_Chasse_By_Date(Chasse_Date: "3-10-2021" ,TypeTerritoire: "T");
+$List_Chasse_Territories_By_Date = PLF::Get_Chasse_By_Date(Chasse_Date: "3-10-2021", TypeTerritoire: "T");
 
- if (empty($List_Chasse_Territories_By_Date)) {
- 
-     $error = plf::Get_Error();
-     echo $error;
-     exit;
- } 
+if ($List_Chasse_Territories_By_Date[0] < 0) {
 
- if ($List_Chasse_Territories_By_Date[0] == 999) {
+   echo $List_Chasse_Territories_By_Date[1];
 
-    echo "Pas de chasse pour cette date.";
- }
+   //
+   // .... traitement de l'erreur
+   //
+}
 
+if ($List_Chasse_Territories_By_Date[0] == 0) {
 
-
-
+   echo "Pas de chasse pour cette date.";
+}
 
 
- $List_Chasse_Territories_By_Date = PLF::Get_Chasse_By_Date(Chasse_Date: "3-10-2021" );
 
- if (empty($List_Chasse_Territories_By_Date)) {
- 
-     $error = plf::Get_Error();
-     echo $error;
-     exit;
- } 
+
+
+
+$List_Chasse_Territories_By_Date = PLF::Get_Chasse_By_Date(Chasse_Date: "3-10-2021");
+
+
+if ($List_Chasse_Territories_By_Date[0] < 0) {
+
+   echo $List_Chasse_Territories_By_Date[1];
+
+   //
+   // .... traitement de l'erreur
+   //
+}
+
+if ($List_Chasse_Territories_By_Date[0] == 0) {
+
+   echo "Pas de chasse pour cette date.";
+}
 
 
 
@@ -148,20 +165,25 @@ if (empty($List_Territoires)) {
  */
 
 
- Test4:
+Test4:
 
- $List_Chasse_Dates_By_Territories = PLF::Get_Chasse_By_Territoire(Territoire_Name: "VI08-03" ,TypeTerritoire: "T");
+$List_Chasse_Dates_By_Territories = PLF::Get_Chasse_By_Territoire(Territoire_Name: "VI08-03", TypeTerritoire: "T");
 
- if (empty($List_Chasse_Dates_By_Territories)) {
- 
-    $error = plf::Get_Error();
-    echo $error;
-    exit;
-} 
+if ($List_Chasse_Dates_By_Territories[0] < 0) {
 
-if ($List_Chasse_Dates_By_Territories[0] == 999) {
+   echo $List_Chasse_Dates_By_Territories[1];
 
-    echo "Pas de date de chasse pour ce territoire.";
+   //
+   // .... traitement de l'erreur
+   //
+}
+
+
+
+if ($List_Chasse_Dates_By_Territories[0] == 0) {
+
+
+   echo "Pas de date de chasse pour ce territoire.";
 }
 
 
@@ -169,21 +191,89 @@ if ($List_Chasse_Dates_By_Territories[0] == 999) {
 
 
 
- $List_Chasse_Dates_By_Territories = PLF::Get_Chasse_By_Territoire(Territoire_Name: "9120000034" );
+$List_Chasse_Dates_By_Territories = PLF::Get_Chasse_By_Territoire(Territoire_Name: "9110501001");
 
- if (empty($List_Chasse_Dates_By_Territories)) {
+if ($List_Chasse_Dates_By_Territories[0] < 0) {
+
+   echo $List_Chasse_Dates_By_Territories[1];
+
+   //
+   // .... traitement de l'erreur
+   //
+}
+
+
+
+if ($List_Chasse_Dates_By_Territories[0] == 0) {
+
+
+   echo "Pas de date de chasse pour ce territoire.";
+}
+
+
+
+
+
+
+
+/**********************************************************************************************
+ * 
+ *  Call to retrieve list of territories by Canton 
+ */
+
+
+Test5:
+
+$List_Territoire_By_Canton = PLF::Get_Territoire_By_Canton(Num_Canton: "999");
+
+if ($List_Territoire_By_Canton[0] < 0) {
+
+   echo $List_Territoire_By_Canton[1];
+
+   //
+   // .... traitement de l'erreur
+   //
+}
+
+
+
+if ($List_Territoire_By_Canton[0] == 0) {
+
+
+   echo "Pas de Territoire pour ce canton.";
+}
+
+
+
+
+
+
+/**********************************************************************************************
+ * 
+ *  Call to retrieve list of territories by Conseil cynégétique 
+ */
+
+
+ Test6:
+
+ $List_Territoire_By_CC = PLF::Get_Territoire_By_CC(Code_CC: "CCFARM");
  
-     $error = plf::Get_Error();
-     echo $error;
-     exit;
- } 
-
-
- if ($List_Chasse_Dates_By_Territories[0] == 999) {
-
-    echo "Pas de date de chasse pour ce territoire.";
+ if ($List_Territoire_By_CC[0] < 0) {
+ 
+    echo $List_Territoire_By_CC[1];
+ 
+    //
+    // .... traitement de l'erreur
+    //
  }
-
+ 
+ 
+ 
+ if ($List_Territoire_By_CC[0] == 0) {
+ 
+ 
+    echo "Pas de Territoire pour ce conseil cynégétique.";
+ }
 
 
 
@@ -196,27 +286,32 @@ if ($List_Chasse_Dates_By_Territories[0] == 999) {
  */
 
 
-Test5:
+Test7:
 
-$RC_Insert = PLF::Chasse_Date_New(Territoire_Name: "HA22" ,Chasse_Date: "31-07-23" ,TypeTerritoire: "T");
+$RC_Insert = PLF::Chasse_Date_New(Territoire_Name: "HA22", Chasse_Date: "31-07-23", TypeTerritoire: "T");
 
- if ($RC_Insert == false) {
- 
-    $error = plf::Get_Error();
-    echo $error;
-    exit;
-} 
+if ($RC_Insert[0] < 0) {
+
+   echo $RC_Insert[1];
+
+   //
+   // .... traitement de l'erreur
+   //
+}
 
 
 
- $RC_Insert = PLF::Chasse_Date_New(Territoire_Name: "9420000058" ,Chasse_Date: "27-07-24");
+$RC_Insert = PLF::Chasse_Date_New(Territoire_Name: "9110501001", Chasse_Date: "27-07-24");
 
- if ($RC_Insert == false) {
- 
-     $error = plf::Get_Error();
-     echo $error;
-     exit;
- } 
+if ($RC_Insert[0] < 0) {
+
+   echo $RC_Insert[1];
+
+   //
+   // .... traitement de l'erreur
+   //
+}
+
 
 
 /**********************************************************************************************
@@ -225,26 +320,29 @@ $RC_Insert = PLF::Chasse_Date_New(Territoire_Name: "HA22" ,Chasse_Date: "31-07-2
  */
 
 
- Test6:
+Test8:
 
-$RC_Delete = PLF::Chasse_Date_Delete(Territoire_Name: "HA22" ,Chasse_Date: "31-07-23" ,TypeTerritoire: "T");
+$RC_Delete = PLF::Chasse_Date_Delete(Territoire_Name: "HA22", Chasse_Date: "31-07-23", TypeTerritoire: "T");
 
- if ($RC_Delete == false) {
- 
-    $error = plf::Get_Error();
-    echo $error;
-    exit;
-} 
+if ($RC_Delete == false) {
+
+   $error = plf::Get_Error();
+   echo $error;
+   exit;
+}
 
 
- $RC_Delete = PLF::Chasse_Date_Delete(Territoire_Name: "9420000058" ,Chasse_Date: "27-07-24");
+$RC_Delete = PLF::Chasse_Date_Delete(Territoire_Name: "9110501001", Chasse_Date: "27-07-24");
 
- if ($RC_Delete == false) {
- 
-     $error = plf::Get_Error();
-     echo $error;
-     exit;
- } 
+if ($RC_Delete == false) {
+
+   $error = plf::Get_Error();
+   echo $error;
+   exit;
+}
+
+
+
 
 
 
@@ -254,40 +352,44 @@ $RC_Delete = PLF::Chasse_Date_Delete(Territoire_Name: "HA22" ,Chasse_Date: "31-0
  */
 
 
- Test7:
+Test9:
 
- $Territoire_Geometry = PLF::Territoire_JSON(Territoire_Name: "HA22",TypeTerritoire: "T");
+$Territoire_Geometry = PLF::Territoire_JSON(Territoire_Name: "HA222", TypeTerritoire: "T");
 
- if ($Territoire_Geometry == "") {
- 
-    $error = plf::Get_Error();
-    echo $error;
-    exit;
-} 
+if ($Territoire_Geometry[0] < 0) {
+
+   echo $Territoire_Geometry[1];
+
+   //
+   // .... traitement de l'erreur
+   //
+}
 
 
 $fp = fopen("C:\Users\chris\OneDrive\Documents\\Result_Territories_id.json", 'w');
-fwrite($fp, $Territoire_Geometry);
+fwrite($fp, $Territoire_Geometry[2]);
 
 
 
 
- $Territoire_Geometry = PLF::Territoire_JSON(Territoire_Name: "9420000058");
+$Territoire_Geometry = PLF::Territoire_JSON(Territoire_Name: "9420000058");
 
- if ($Territoire_Geometry == "") {
- 
-     $error = plf::Get_Error();
-     echo $error;
-     exit;
- } 
+if ($Territoire_Geometry[0] < 0) {
 
- $fp = fopen("C:\Users\chris\OneDrive\Documents\\Result_DA_Numero.json", 'w');
- fwrite($fp, $Territoire_Geometry);
+   echo $Territoire_Geometry[1];
+
+   //
+   // .... traitement de l'erreur
+   //
+
+}
+
+
+$fp = fopen("C:\Users\chris\OneDrive\Documents\\Result_DA_Numero.json", 'w');
+fwrite($fp, $Territoire_Geometry[2]);
 
 
 
 End:
 
 echo PHP_EOL . "Enf of process.";
-
-

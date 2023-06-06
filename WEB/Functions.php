@@ -6,58 +6,88 @@ require_once __DIR__ . "/Parameters.php";
 class PLF
 {
 
-    private static $error;
+    // private static $error;
+    private static $RC = 0;
+    private static $RC_Msg = "";
+    private static $List_Array = [];
 
-    /**
+    /**################################################################################
      * 
-     *  List of return codes
-     *      -1 : no records found
-     *      -2 : territoire does not exist
-     *      -3 : mutltiple records found for territoire
-     *      -4 : Invalid date
-     *      -5 : MySql error
-     *      -99 : other errors 
-     *       xx : positive integer -> number of records deleted
-     */
+     *  List de tous les codes erreurs possibles dans l'ensemble des fonctions.
+     *
+     *       -1 : Aucun record trouvé
+     *       -2 : Le territoire n'existe pas
+     *       -3 : Plusieurs enregistrements trouvés pour le territoire
+     *       -4 : La date est invalide. Doit être au format JJ-MM-AAAA
+     *       -5 : Erreur MySql
+     *       -6 : Commande SQL invalide
+     * 	     -7 : l'insert à produit une erreur
+     *       -8 : pas de correspondance entre territoire et nomnclature et vice versa
+     *       -9 : La combinaison date chasse / territoire n'existe pas
+     *      -10 : La combinaison date chasse / territoire existe déjà
+     *      -11 : Le canton n'existe pas
+     *      -12 : Le conseil cynégétique n'existe pas
+     *     -999 : Autres erreurs
+     *       xx : entier >= 0 reprenant le nombre d'enregistrements retournés ou supprimés
+     * 
+     *################################################################################*/
 
-    /**
+
+
+
+
+
+
+    /**-------------------------------------------------------------------------------------------------------------------------------------------
      * 
-     *    Make a list of territories by "Territories_id" OR "Nomenclature" (DA_Numero)
+     *    Retourne la liste des territoires basés sur "Territories_id" OU "Nomenclature" (DA_Numero)
      * 
      *      Input     : Database "PLF_Territoires"
-     *
-     *      Calling   : Get_Territoire_List(TypeTerritoire: "T")
+     *     
+     *      Appel     : Get_Territoire_List(TypeTerritoire: "T")
      *                  Get_Territoire_List()
      * 
-     *      Arguments : TypeTerritoire --> "T"       Select on "Territories_di"
-     *                                     Nothing   Select on "Nomenclature"  (DA_Numero)
+     *      Arguments : TypeTerritoire = "T"            Selection basée sur "Territories_id"
+     *                                 = non spécifié   Selection basée sur "Nomenclature"
      * 
-     *      Return    : Array containing all "Territories_Id" OR "Nomenclature" (DA_Numero)
-     *                  Order by "Territories_Id" OR "Nomenclature"
-     *                  DISTINCT
-     *                      Structure : Array[] = values "Territories_id" OR values "Nomenclature"
-     *                  Array[0] = -1
-     *
-     *                  Possible return codes :
-     *                      -5 : MySql error
+     *      Output    : Array contenant 3 éléments
+     *                      Array[0] : Code retour.
+     *                                  xx : entier >= 0 contenant le nombre de territoires 
+     *                                  -5 : Erreur MySql
+     *                                  -6 : Commande SQL invalide
+     *                      Array[1] : Message d'erreur éventuel
+     *                      Array[2] : Array indexé qui contient les territoires ("Territories_Id" OU "Nomenclature")
+     *                                      TRI SUR "Territories_Id" OU "Nomenclature"
+     *                                      DISTINCT (s'il y a plusieurs territoire avec le même id, seul le premier est sélectionné.)
+     *                                 Structure - Array[index] = "Territories_id" OU "Nomenclature"
      * 
-     */
+     *-------------------------------------------------------------------------------------------------------------------------------------------*/
 
 
     public static function Get_Territoire_List($TypeTerritoire = NULL)
     {
 
+        self::$RC = 0;
+        self::$RC_Msg = "";
+        self::$List_Array = [];
+
+
+        // Connect to database
+
         $db_connection = PLF::__Open_DB();
 
         if ($db_connection == NULL) {
 
-            $error_msg = PLF::Get_Error();
-            return NULL;
+            self::$RC = -5;
+            self::$RC_Msg = PLF::Get_Error();
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);;
         }
+
 
         // Build SQL statement
 
-        $sql_cmd = "SELECT DISTINCT DA_Numero, Territories_id FROM $GLOBALS[tbl_Territoires] ORDER BY ";
+        $sql_cmd = "SELECT DISTINCT DA_Numer, Territories_id FROM $GLOBALS[tbl_Territoires] ORDER BY ";
 
 
         if (strtolower($TypeTerritoire ?? '') == "t") {
@@ -67,31 +97,27 @@ class PLF
         }
 
 
-        $List_Array = [];
-
-        // Process SQL records
-
+        // Process SQL command
 
         try {
 
             foreach ($db_connection->query($sql_cmd) as $record) {
 
                 if (strtolower($TypeTerritoire ?? '') == "t") {
-                    array_push($List_Array, $record["Territories_id"]);
+                    array_push(self::$List_Array, $record["Territories_id"]);
                 } else {
-                    array_push($List_Array, $record["DA_Numero"]);
+                    array_push(self::$List_Array, $record["DA_Numero"]);
                 }
             }
         } catch (Exception $e) {
 
+            self::$RC = -6;
+            self::$RC_Msg = 'Error SELECT ' . " - ";
+            self::$RC_Msg .= $e->getMessage() . " - ";
+            self::$RC_Msg .= $sql_cmd;
 
-            self::$error =  'Error SELECT ' . PHP_EOL;
-            self::$error .= $e->getMessage() . PHP_EOL;
-            self::$error .= $sql_cmd;
-            return NULL;
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
         }
-
-
 
 
         // Close Database
@@ -99,42 +125,58 @@ class PLF
         PLF::__Close_DB($db_connection);
 
 
-
         // return values
 
-        return $List_Array;
+        self::$RC = count(self::$List_Array);
+        return array(self::$RC, self::$RC_Msg, self::$List_Array);
     }
 
 
 
 
 
-    /**
+
+
+
+
+
+
+    /**-------------------------------------------------------------------------------------------------------------------------------------------
      * 
-     *    Return all the information regarding a territoire based on the "Territories_id" OR "Nomenclature" (DA_Numero)
-     *
+     *    Retourne toutes les informations concernant un territoire "Territories_id" OU "Nomenclature" (DA_Numero)
+     * 
      *      Input     : Database "VTerritoires"
+     *     
+     *      Appel     : Get_Territoire_Info($Territoire_Name, $TypeTerritoire = NULL)
+     *                  Get_Territoire_Info($Territoire_Name)
      * 
-     *      Calling   : Get_Territoire_List(TypeTerritoire: "T")
-     *                  Get_Territoire_List()
-     *
-     *      Arguments : TypeTerritoire    --> "T"       Select on "Territories_id"
-     *                                        Nothing   Select on "Nomenclature" (DA_Numero)
-     *                  Territoire_Name   --> Territories_id OR Nomenclature (DA_Numero)
+     *      Arguments : Territoire_Name = Territories_id OU Nomenclature (DA_Numero)
+     *                  TypeTerritoire  = "T"            Selection basée sur "Territories_id"
+     *                                  = Non spécifié   Selection basée sur "Nomenclature"
      * 
-     *      Return    : Associative Array containing key/value pair
-     *                      Structure Array[<key>] = <value>
+     *      Output    : Array contenant 3 éléments
+     *                      Array[0] : Code retour.
+     *                                  xx : entier >= 0 contenant le nombre d'information pour le territoire sélectionné 
+     *                                  -2 : Le nom du territoire n'existe pas
+     *                                  -3 : Il existe plusieurs enregistrements pour le territoire sélectionné
+     *                                  -5 : Erreur MySql
+     *                                  -6 : Commande SQL invalide
+     *                      Array[1] : Message d'erreur éventuel
+     *                      Array[2] : Associative array qui contient toutes les informations du territoire ("Territories_Id" OU "Nomenclature")
+     *                                      TRI SUR "Territories_Id" OU "Nomenclature"
+     *                                      DISTINCT (s'il y a plusieurs territoire avec le même id, seul le premier est sélectionné.)
+     *                                 Structure - Array[clé] = valeur
      * 
-     *                  Possible return codes :
-     *                      -2 territoire_name is not found
-     *                      -3 multiple territoire records exist.
-     *                      -5 : MySql error
-     */
+     *-------------------------------------------------------------------------------------------------------------------------------------------*/
+
 
 
     public static function Get_Territoire_Info($Territoire_Name, $TypeTerritoire = NULL)
     {
 
+        self::$RC = 0;
+        self::$RC_Msg = "";
+        self::$List_Array = [];
 
         $List_Columns = [
 
@@ -166,30 +208,30 @@ class PLF
 
         ];
 
+        // Connect to database
 
         $db_connection = PLF::__Open_DB();
 
         if ($db_connection == NULL) {
 
-            $error_msg = PLF::Get_Error();
-            return NULL;
+            self::$RC = -5;
+            self::$RC_Msg = PLF::Get_Error();
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
         }
 
 
-        /**
-         * 
-         *  Build the SQL statement based on the $list_Columns array
-         */
 
+        //  Build the SQL statement based on the $list_Columns array
 
         $sql_cmd = "SELECT ";
+
         foreach (array_values($List_Columns) as $array_value) {
 
             $sql_cmd .= "$array_value, ";
         }
 
         $sql_cmd = preg_replace("/,\s*$/", "", $sql_cmd);
-        $List_Array = [];
 
 
         $sql_cmd .= " FROM $GLOBALS[View_Territoires] WHERE ";
@@ -204,13 +246,7 @@ class PLF
 
 
 
-
-
-
-
-        // Process SQL records
-
-        $List_Array = [];
+        // Process SQL command
 
         try {
 
@@ -218,16 +254,18 @@ class PLF
 
                 foreach ($List_Columns as $Column) {
 
-                    $List_Array[$Column] = $record[$Column];
+                    self::$List_Array[$Column] = $record[$Column];
                 }
             }
         } catch (Exception $e) {
 
 
-            self::$error =  'Error SELECT ' . PHP_EOL;
-            self::$error .= $e->getMessage() . PHP_EOL;
-            self::$error .= $sql_cmd;
-            return NULL;
+            self::$RC = -6;
+            self::$RC_Msg =  'Error SELECT ' . " - ";
+            self::$RC_Msg .= $e->getMessage() . " - ";
+            self::$RC_Msg .= $sql_cmd;
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
         }
 
 
@@ -241,7 +279,8 @@ class PLF
 
         // return values
 
-        return $List_Array;
+        self::$RC = count(self::$List_Array);
+        return array(self::$RC, self::$RC_Msg, self::$List_Array);
     }
 
 
@@ -249,36 +288,68 @@ class PLF
 
 
 
-    /**
+
+
+    /**-------------------------------------------------------------------------------------------------------------------------------------------
      * 
-     *    Make a list of territories by "Date de chasse"
+     *    Retourne la liste des territoires par date de chasse
      * 
      *      Input     : Database "PLF_Chasses"
-     *
-     *      Calling   : Get_Chasse_By_Date(Date_Chasse: <Date Chasse>) 
-     *    
-     *      Arguments : TypeTerritoire    --> "T"       Select on "Territories_id" 
-     *                  Date_Chasse       --> "Date" format DD-MM-YYYY
+     *     
+     *      Appel     : Get_Chasse_By_Date(Chasse_Date: <Date Chasse>, TypeTerritoire: "T")
+     *                  Get_Chasse_By_Date(Chasse_Date: <Date Chasse>)
      * 
-     *      Return    : Array of Array containing all "Territories_Id" AND "Nomenclature" (DA_Numero)
-     *                      Structure : Array[] = [<value of Territories_id>], [<value of Nomenclature>]
+     *      Arguments : Date_Chasse    = date de la chasse (format JJ-MM-AAAA et doit être valide)
+     *                  TypeTerritoire = "T"            Selection basée sur "Territories_id"
+     *                                 = non spécifié   Selection basée sur "Nomenclature" (DA_Numero)
      * 
-     *                  Possible return codes :
-     *                      -1 no records found
-     *                      -4 Invalid date
-     *                      -5 : MySql error
-     *
-     */
+     * 
+     *      Output    : Array contenant 3 éléments
+     *                      Array[0] : Code retour.
+     *                                  xx : entier >= 0 contenant le nombre de territoires
+     *                                  -4 : La date est erronée. Doit être au format JJ-MM-AAAA et valide
+     *                                  -5 : Erreur MySql
+     *                                  -6 : Commande SQL invalide
+     *                      Array[1] : Message d'erreur éventuel
+     *                      Array[2] : Array indexé qui contient un array avec le nom du "Territories_Id" ET sa "nomenclature" correspondante
+     *                                      TRI sur "Territories_Id" OU "Nomenclature" en fonction de l'appel
+     *                                 Structure - Array[index] = Array[<Territories_id>, <Nomenclature>]
+     * 
+     *-------------------------------------------------------------------------------------------------------------------------------------------*/
+
 
     public static function Get_Chasse_By_Date($Chasse_Date, $TypeTerritoire = NULL)
     {
+
+        self::$RC = 0;
+        self::$RC_Msg = "";
+        self::$List_Array = [];
+
+
+        // check date validity. Format DD-MM-YYYY et date is valid
+
+        $Errors_Values = self::__Check_If_Date_Is_Valid($Chasse_Date);
+
+        if (!empty($Errors_Values)) {
+
+            self::$RC = -4;
+            self::$RC_Msg = $Errors_Values;
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
+        }
+
+
+
+        // Connect to database
 
         $db_connection = PLF::__Open_DB();
 
         if ($db_connection == NULL) {
 
-            $error_msg = PLF::Get_Error();
-            return NULL;
+            self::$RC = -5;
+            self::$RC_Msg = PLF::Get_Error();
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
         }
 
         // Build SQL statement
@@ -286,7 +357,7 @@ class PLF
         $sql_cmd = "SELECT DA_Numero, Territories_id FROM $GLOBALS[tbl_Chasses] ";
         $sql_cmd .= "WHERE Date_Chasse = ";
 
-        $date_delimiter = "'";       // for MySql
+        $date_delimiter = "'";           // for MySql
 
         if (strtolower($GLOBALS['DB_MSAccess_or_MySql'] ?? '') == "msaccess") {
             $date_delimiter = "#";       // for MsAccess
@@ -306,13 +377,7 @@ class PLF
 
 
 
-
-        // Execute SQL statement
-
-
-        $List_Array = [];
-
-        // Process SQL records
+        // Process SQL command
 
         try {
 
@@ -320,17 +385,19 @@ class PLF
             foreach ($db_connection->query($sql_cmd) as $record) {
 
                 if (strtolower($TypeTerritoire ?? '') == "t") {
-                    array_push($List_Array, $record["Territories_id"]);
+                    array_push(self::$List_Array, $record["Territories_id"]);
                 } else {
-                    array_push($List_Array, $record["DA_Numero"]);
+                    array_push(self::$List_Array, $record["DA_Numero"]);
                 }
             }
         } catch (Exception $e) {
 
-            self::$error =  'Error SELECT ' . PHP_EOL;
-            self::$error .= $e->getMessage() . PHP_EOL;
-            self::$error .= $sql_cmd;
-            return NULL;
+            self::$RC = -6;
+            self::$RC_Msg = 'Error SELECT ' . " - ";
+            self::$RC_Msg .= $e->getMessage() . " - ";
+            self::$RC_Msg .= $sql_cmd;
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
         }
 
 
@@ -343,45 +410,90 @@ class PLF
 
         // return values
 
-        if (count($List_Array) == 0) {
-            $List_Array[0] = 999;
-        }
-        return $List_Array;
+        self::$RC = count(self::$List_Array);
+        return array(self::$RC, self::$RC_Msg, self::$List_Array);
     }
 
-    /**
+
+
+
+
+
+
+
+
+
+    /**-------------------------------------------------------------------------------------------------------------------------------------------
      * 
-     *    Make a list of "Date de chasse" by Territories_id OR Nomenclature (DA_Numero)
+     *    Retourne la liste des dates de chasse basés sur un "Territories_id" OU "Nomenclature" (DA_Numero)
      * 
      *      Input     : Database "PLF_Chasses"
-     *
-     *      Calling   : Get_Territoire_List(TypeTerritoire: "T", <territories_id> or <Nomenclature>)
-     *                  Get_Territoire_List()     
-     *  
-     *      Arguments : TypeTerritoire : --> "T"        select on "territories_id"
-     *                                   --> Nothing    select on "Nomenclature"
-     *                  Territoire     : --> <territories_id> or <Nomenclature>
+     *     
+     *      Appel     : Get_Chasse_By_Territoire(<Territoire>, TypeTerritoire: "T")
+     *                  Get_Chasse_By_Territoire(<Territoire>)
      * 
-     *      Return    : Array containing all date de chasse for the "Territories_Id" OR the "Nomenclature" (DA_Numero)
-     *                      Structure Array[] = "date" 
+     *      Arguments : Territoire     = <territories_id> or <Nomenclature>
+     *                  TypeTerritoire = "T"            Selection basée sur "Territories_id"
+     *                                 = non spécifié   Selection basée sur "Nomenclature"
+     *                  
+     *      Output    : Array contenant 3 éléments
+     *                      Array[0] : Code retour.
+     *                                  xx : entier >= 0 contenant le nombre de Dates de chasses
+     *                                  -2 : Le territoire n'existe pas
+     *                                  -5 : Erreur MySql
+     *                                  -6 : Commande SQL invalide
+     *                      Array[1] : Message d'erreur éventuel
+     *                      Array[2] : Array indexé qui contient les dates de chasses
+     *                                      TRI SUR "Date de chasse"
+     *                                 Structure - Array[index] = <date>
      * 
-     *                  Possible return codes :
-     *                      -1 no records found
-     *                      -2 Territoire does not exist
-     *                      -5 : MySql error
-     */
+     *-------------------------------------------------------------------------------------------------------------------------------------------*/
+
 
     public static function Get_Chasse_By_Territoire($Territoire_Name, $TypeTerritoire = NULL)
     {
 
+        self::$RC = 0;
+        self::$RC_Msg = "";
+        self::$List_Array = [];
+
+
+        // check if territoire exist
+
+        $Check_Territoire = self::__Check_If_Territoire_Exists($Territoire_Name, $TypeTerritoire);
+
+        if ($Check_Territoire[0] < 0) {       // MySql error
+
+            self::$RC = $Check_Territoire[0];
+            self::$RC_Msg = $Check_Territoire[1];
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
+        }
+
+        if ($Check_Territoire[2] == false) {
+
+            self::$RC = -2;
+            self::$RC_Msg = "Le territoire n'existe pas.";
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
+        }
+
+
+
+
+        // Connect to database
 
         $db_connection = PLF::__Open_DB();
 
         if ($db_connection == NULL) {
 
-            $error_msg = PLF::Get_Error();
-            return NULL;
+            self::$RC = -5;
+            self::$RC_Msg = PLF::Get_Error();
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
         }
+
+
 
         // Build SQL statement
 
@@ -400,25 +512,24 @@ class PLF
         $sql_cmd .= "' ORDER BY Date_Chasse ";
 
 
-        // Execute SQL statement
 
-        $List_Array = [];
-
-        // Process SQL records
+        // Process SQL command
 
         try {
 
             foreach ($db_connection->query($sql_cmd) as $record) {
 
                 $sqlDate = new DateTime($record["Date_Chasse"]);
-                array_push($List_Array, $sqlDate->format('d-m-Y'));
+                array_push(self::$List_Array, $sqlDate->format('d-m-Y'));
             }
         } catch (Exception $e) {
 
-            self::$error =  'Error SELECT ' . PHP_EOL;
-            self::$error .= $e->getMessage() . PHP_EOL;
-            self::$error .= $sql_cmd;
-            return NULL;
+            self::$RC = -6;
+            self::$RC_Msg = 'Error SELECT ' . " - ";
+            self::$RC_Msg .= $e->getMessage() . " - ";
+            self::$RC_Msg .= $sql_cmd;
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
         }
 
 
@@ -434,64 +545,375 @@ class PLF
 
 
         // return values
-        
-        if (count($List_Array) == 0) {
-            $List_Array[0] = 999;
-        }
-        return $List_Array;
+
+        self::$RC = count(self::$List_Array);
+        return array(self::$RC, self::$RC_Msg, self::$List_Array);
     }
 
 
-    /**
-     * 
-     *    Create a new "Date de chasse"
-     * 
-     *      Output    : Database "PLF_Chasses"
-     *      
-     *      Calling   : Chasse_Date_New(TypeTerritoire: "T", Territoire_Name: <Name of territoire), Date_Chasse: <DD-MM-YYY>)
-     *                  Chasse_Date_New(Territoire_Name: <Name of territoire), Date_Chasse: <DD-MM-YYY>)
-     * 
-     *      Arguments : TypeTerritoire   --> "T"          select on "territories_id"
-     *                                   --> Nothing      select on "Nomenclature"
-     *                  Territoire_Name  --> Territories_id OR Nomenclature (DA_Numero)
-     *                  Date_Chasse      --> "Date"       format DD-MM-YYYY
-     * 
-     *      Return    : True             --> successful insert
-     *                  False            --> unsuccessful insert
-     * 
-     *                  Possible return codes :
-     *                      -2 Territoire does not exist
-     *                      -4 invalid date   
-     *                      -5 MySql error
-     */
 
-    public static function Chasse_Date_New($Territoire_Name, $Chasse_Date, $TypeTerritoire = NULL)
+
+
+
+
+
+
+    /**-------------------------------------------------------------------------------------------------------------------------------------------
+     * 
+     *    Retourne la liste des territoires par numéro de canton
+     * 
+     *      Input     : Database "view_territoires"
+     *     
+     *      Appel     : Get_Territoire_By_Canton(Num_Canton: <numéro de canton>)
+     * 
+     *      Arguments : Num_Canton     = <Numéro du canton>
+     *                  
+     *      Output    : Array contenant 3 éléments
+     *                      Array[0] : Code retour.
+     *                                  xx : entier >= 0 contenant le nombre de territoires
+     *                                  -5 : Erreur MySql
+     *                                  -6 : Commande SQL invalide
+     *                                 -11 : Le canton n'existe pas
+     *                      Array[1] : Message d'erreur éventuel
+     *                      Array[2] : Array indexé qui contient un array avec le nom du "Territories_Id" ET sa "DA_Numero" correspondante
+     *                                      TRI sur "Nomenclature"
+     *                                      DISTINCT : n'affiche qu'une seule occurence territories_id <-> DA_Numero
+     *                                 Structure - Array[index] = Array[<Territories_id>, <Nomenclature>]
+     * 
+     *-------------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+    public static function Get_Territoire_By_Canton($Num_Canton)
     {
 
+        self::$RC = 0;
+        self::$RC_Msg = "";
+        self::$List_Array = [];
+
+
+        // check if canton exist
+
+        $Check_Canton = self::__Check_If_Canton_Exists($Num_Canton);
+
+        if ($Check_Canton[0] < 0) {       // MySql error
+
+            self::$RC = $Check_Canton[0];
+            self::$RC_Msg = $Check_Canton[1];
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
+        }
+
+        if ($Check_Canton[2] == false) {
+
+            self::$RC = -11;
+            self::$RC_Msg = "Le canton n'existe pas.";
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
+        }
+
+
+
+
+        // Connect to database
 
         $db_connection = PLF::__Open_DB();
 
         if ($db_connection == NULL) {
 
-            $error_msg = PLF::Get_Error();
-            return false;
+            self::$RC = -5;
+            self::$RC_Msg = PLF::Get_Error();
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
         }
+
+
+
+        // Build SQL statement
+
+        $sql_cmd = "SELECT DISTINCT Territories_id, DA_Numero FROM $GLOBALS[View_Territoires] ";
+        $sql_cmd .= " WHERE ";
+        $sql_cmd .= " num_canton = '" . $Num_Canton . "' ";
+        $sql_cmd .= " ORDER BY DA_Numero ";
+
+
+
+        // Process SQL command
+
+        try {
+
+            foreach ($db_connection->query($sql_cmd) as $record) {
+
+                array_push(self::$List_Array, [$record["DA_Numero"], $record["Territories_id"]]);
+            }
+        } catch (Exception $e) {
+
+            self::$RC = -6;
+            self::$RC_Msg = 'Error SELECT ' . " - ";
+            self::$RC_Msg .= $e->getMessage() . " - ";
+            self::$RC_Msg .= $sql_cmd;
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
+        }
+
+
+
+
+
+
+
+        // Close Database
+
+        PLF::__Close_DB($db_connection);
+
+
+
+        // return values
+
+        self::$RC = count(self::$List_Array);
+        return array(self::$RC, self::$RC_Msg, self::$List_Array);
+    }
+
+
+
+
+
+    /**-------------------------------------------------------------------------------------------------------------------------------------------
+     * 
+     *    Retourne la liste des territoires par Code Conseil Cynégétique
+     * 
+     *      Input     : Database "view_territoires"
+     *     
+     *      Appel     : Get_Territoire_By_CC(Code_CC: <Code conseil cynégétique>)
+     * 
+     *      Arguments : Code_CC       = <Code conseil cynégétique>
+     *                  
+     *      Output    : Array contenant 3 éléments
+     *                      Array[0] : Code retour.
+     *                                  xx : entier >= 0 contenant le nombre de territoires
+     *                                  -5 : Erreur MySql
+     *                                  -6 : Commande SQL invalide
+     *                                 -12 : Le conseil cynégéttique n'existe pas
+     *                      Array[1] : Message d'erreur éventuel
+     *                      Array[2] : Array indexé qui contient un array avec le nom du "Territories_Id" ET sa "DA_Numero" correspondante
+     *                                      TRI sur "Nomenclature"
+     *                                      DISTINCT : n'affiche qu'une seule occurence territories_id <-> DA_Numero
+     *                                 Structure - Array[index] = Array[<Territories_id>, <Nomenclature>]
+     * 
+     *-------------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+    public static function Get_Territoire_By_CC($Code_CC)
+    {
+
+        self::$RC = 0;
+        self::$RC_Msg = "";
+        self::$List_Array = [];
+
+
+        // check if canton exist
+
+        $Check_CC = self::__Check_If_CC_Exists($Code_CC);
+
+        if ($Check_CC[0] < 0) {       // MySql error
+
+            self::$RC = $Check_CC[0];
+            self::$RC_Msg = $Check_CC[1];
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
+        }
+
+        if ($Check_CC[2] == false) {
+
+            self::$RC = -11;
+            self::$RC_Msg = "Le conseil cynégétique n'existe pas.";
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
+        }
+
+
+
+
+        // Connect to database
+
+        $db_connection = PLF::__Open_DB();
+
+        if ($db_connection == NULL) {
+
+            self::$RC = -5;
+            self::$RC_Msg = PLF::Get_Error();
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
+        }
+
+
+
+        // Build SQL statement
+
+        $sql_cmd = "SELECT DISTINCT Territories_id, DA_Numero FROM $GLOBALS[View_Territoires] ";
+        $sql_cmd .= " WHERE ";
+        $sql_cmd .= " Code_CC = '" . $Code_CC . "' ";
+        $sql_cmd .= " ORDER BY DA_Numero ";
+
+
+
+        // Process SQL command
+
+        try {
+
+            foreach ($db_connection->query($sql_cmd) as $record) {
+
+                array_push(self::$List_Array, [$record["DA_Numero"], $record["Territories_id"]]);
+            }
+        } catch (Exception $e) {
+
+            self::$RC = -6;
+            self::$RC_Msg = 'Error SELECT ' . " - ";
+            self::$RC_Msg .= $e->getMessage() . " - ";
+            self::$RC_Msg .= $sql_cmd;
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
+        }
+
+
+
+
+
+
+
+        // Close Database
+
+        PLF::__Close_DB($db_connection);
+
+
+
+        // return values
+
+        self::$RC = count(self::$List_Array);
+        return array(self::$RC, self::$RC_Msg, self::$List_Array);
+    }
+
+
+
+
+
+
+
+    /**-------------------------------------------------------------------------------------------------------------------------------------------
+     * 
+     *    Crée une nouvelle date de chasse.
+     * 
+     *      Input     : N/A
+     *     
+     *      Appel     : Chasse_Date_New(Territoire_Name: <nom du territoire>, Date_Chasse: <JJ-MM-AAAA>, TypeTerritoire: "T" )
+     *                  Chasse_Date_New(Territoire_Name: <nom du territoire>, Date_Chasse: <JJ-MM-AAAA>)
+     * 
+     *      Arguments : Territoire     = <territories_id> or <Nomenclature> en 
+     *                  Date_Chasse    = Date de la chasse a créé (format JJ-MM-AAAA)
+     *                  TypeTerritoire = "T"            Selection basée sur "Territories_id"
+     *                                 = non spécifié   Selection basée sur "Nomenclature"
+     *                  
+     *      Output    : Array contenant 3 éléments
+     *                      Array[0] : Code retour.
+     *                                   0 : Insert OK
+     *                                  -2 : Le territoire n'existe pas
+     *                                  -4 : La date est invalide. Doit être au format JJ-MM-AAAA
+     *                                  -5 : Erreur MySql
+     *                                  -6 : Commande SQL invalide
+     * 	                                -7 : l'insert à produit une erreur
+     *                      Array[1] : Message d'erreur éventuel
+     *                      Array[2] : Non utilisé
+     * 
+     *-------------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+    public static function Chasse_Date_New($Territoire_Name, $Chasse_Date, $TypeTerritoire = NULL)
+    {
+
+        self::$RC = 0;
+        self::$RC_Msg = "";
+        self::$List_Array = [];
+
+
+        // check date validity. Format DD-MM-YYYY et date is valid
+
+        $Errors_Values = self::__Check_If_Date_Is_Valid($Chasse_Date);
+
+        if (!empty($Errors_Values)) {
+
+            self::$RC = -4;
+            self::$RC_Msg = $Errors_Values;
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
+        }
+
+
+        // check if territoire exist
+
+        $Check_Territoire = self::__Check_If_Territoire_Exists($Territoire_Name, $TypeTerritoire);
+
+        if ($Check_Territoire[0] < 0) {       // MySql error
+
+            self::$RC = $Check_Territoire[0];
+            self::$RC_Msg = $Check_Territoire[1];
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
+        }
+
+        if ($Check_Territoire[2] == false) {
+
+            self::$RC = -2;
+            self::$RC_Msg = "Le territoire n'existe pas.";
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
+        }
+
+
+
+        // check if record already exists.
+
+        $Check_Duplicate = plf::__Check_If_Date_Chasse_Already_Exists($Territoire_Name, $Chasse_Date, $TypeTerritoire);
+
+        if ($Check_Duplicate[2] == true) {
+
+            self::$RC = -10;
+            self::$RC_Msg = "La combinaison date chasse / territoire existe déjà.";
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
+        }
+
+
+        // Connect to database
+
+        $db_connection = PLF::__Open_DB();
+
+        if ($db_connection == NULL) {
+
+            self::$RC = -5;
+            self::$RC_Msg = PLF::Get_Error();
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
+        }
+
 
 
         // Get the territories_id corresponding to DA_Numero and vice versa
 
 
-        $territoire = PLF::__Get_Corresponding_Territoire(db_connection: $db_connection, Territoire_Name: $Territoire_Name, TypeTerritoire: $TypeTerritoire);
+        $territoire = PLF::__Get_Corresponding_Territoire(Territoire_Name: $Territoire_Name, TypeTerritoire: $TypeTerritoire);
 
-        if ($territoire == NULL) {
-            return false;
+        if ($territoire[0] == -8) {
+            self::$RC = $territoire[0];
+            self::$RC_Msg = $territoire[1];
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
         }
+
+
 
 
         // Build SQL statement
 
-        $Territoire_id = $territoire[0];
-        $DA_Numero = $territoire[1];
+        $Territoire_id = $territoire[2][0];
+        $DA_Numero = $territoire[2][1];
 
 
         $sql_insert = "INSERT INTO $GLOBALS[tbl_Chasses] ( Date_Chasse, Territories_id, DA_Numero " .
@@ -506,58 +928,124 @@ class PLF
         // Execute SQL statement
 
         try {
+
             $sql_result = $db_connection->query($sql_insert);
         } catch (Exception $e) {
-            echo ("Error : " . $e->getMessage() . "SQL Command : ");
-            echo "$sql_insert\n\n";
-            return false;
+
+            self::$RC = -7;
+            self::$RC_Msg = 'Error INSERT ' . " - ";
+            self::$RC_Msg .= $e->getMessage() . " - ";
+            self::$RC_Msg .= $sql_insert;
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
         }
 
-        return true;
+
+
+        // Close Database
 
         plf::__Close_DB($db_connection);
+
+
+
+
+        // return values
+
+        return array(self::$RC, self::$RC_Msg, self::$List_Array);
     }
 
 
 
 
+    /**-------------------------------------------------------------------------------------------------------------------------------------------
+     * 
+     *    Supprimer une date de chasse.
+     * 
+     *      Input     : N/A
+     *     
+     *      Appel     : Chasse_Date_Delete(Territoire_Name: <nom du territoire>, Date_Chasse: <JJ-MM-AAAA>, TypeTerritoire: "T" )
+     *                  Chasse_Date_Delete(Territoire_Name: <nom du territoire>, Date_Chasse: <JJ-MM-AAAA>)
+     * 
+     *      Arguments : Territoire     = <territories_id> or <Nomenclature> en 
+     *                  Date_Chasse    = Date de la chasse a supprimer (format JJ-MM-AAAA)
+     *                  TypeTerritoire = "T"            Selection basée sur "Territories_id"
+     *                                 = non spécifié   Selection basée sur "Nomenclature"
+     *                  
+     *      Output    : Array contenant 3 éléments
+     *                      Array[0] : Code retour.
+     *                                  xx : entier >= 0 contenant le nombre de records supprimés
+     *                                  -2 : Le territoire n'existe pas
+     *                                  -4 : La date est invalide. Doit être au format JJ-MM-AAAA
+     *                                  -5 : Erreur MySql
+     *                                  -6 : Commande SQL invalide
+     * 	                                -7 : le delete à produit une erreur
+     *                                  -9 : combinaison date chasse / territoire n'esiste pas
+     *                      Array[1] : Message d'erreur éventuel
+     *                      Array[2] : Non utilisé
+     * 
+     *-------------------------------------------------------------------------------------------------------------------------------------------*/
 
-
-    /**
-     * 
-     *    Deleta a "Date de chasse"
-     * 
-     *      Output    :  Database "PLF_Chasses"
-     *
-     *      Calling   : Chasse_Date_Delete(TypeTerritoire: "T", Territoire_Name: <Name of territoire), Date_Chasse: <DD-MM-YYY>)
-     *                  Chasse_Date_Delete(Territoire_Name: <Name of territoire), Date_Chasse: <DD-MM-YYY>)
-     *       
-     *      Arguments : TypeTerritoire   --> "T"          Delete on "territories_id"
-     *                                   --> Nothing      Delete on "Nomenclature"
-     *                  Territoire       --> <territories_id> OR <Nomenclature>
-     *                  Date_Chasse      --> (format DD-MM-AAAA)
-     *
-     *      Return    : True             --> successful delete
-     *                  False            --> unsuccessful delete
-     * 
-     *                  Possible return codes :
-     *                      -2 Territoire does not exist
-     *                      -4 invalid date   
-     *                      -5 MySql error
-     *                      xx : integer -> number of records deleted
-     */
 
 
     public static function Chasse_Date_Delete($Territoire_Name, $Chasse_Date, $TypeTerritoire = NULL)
     {
 
+        self::$RC = 0;
+        self::$RC_Msg = "";
+        self::$List_Array = [];
+
+
+
+
+
+        // check if territoire exist
+
+        $Check_Territoire = self::__Check_If_Territoire_Exists($Territoire_Name, $TypeTerritoire);
+
+        if ($Check_Territoire[0] < 0) {       // MySql error
+
+            self::$RC = $Check_Territoire[0];
+            self::$RC_Msg = $Check_Territoire[1];
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
+        }
+
+        if ($Check_Territoire[2] == false) {
+
+            self::$RC = -2;
+            self::$RC_Msg = "Le territoire n'existe pas.";
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
+        }
+
+
+
+        // check date validity. Format DD-MM-YYYY and date is valid
+
+        $Errors_Values = self::__Check_If_Date_Is_Valid($Chasse_Date);
+
+        if (!empty($Errors_Values)) {
+
+            self::$RC = -4;
+            self::$RC_Msg = $Errors_Values;
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
+        }
+
+
+
+        // Connect to database      
+
         $db_connection = PLF::__Open_DB();
 
         if ($db_connection == NULL) {
 
-            $error_msg = PLF::Get_Error();
-            return false;
+            self::$RC = -5;
+            self::$RC_Msg = PLF::Get_Error();
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
         }
+
 
 
         // Build SQL statement
@@ -582,19 +1070,41 @@ class PLF
         $sql_Delete .= $Territoire_Name . "'";
 
 
+        $sql_Row_Count = "SELECT ROW_COUNT()";
 
-
-        // Execute SQL statement
+        // Process SQL command
 
         try {
-            $sql_result = $db_connection->query($sql_Delete);
+            $sql_result_delete = $db_connection->query($sql_Delete);
+            $sql_result_Row_Count = $db_connection->affected_rows;
         } catch (Exception $e) {
-            echo ("Error : " . $e->getMessage() . "SQL Command : ");
-            echo "$sql_Delete\n\n";
-            return false;
+
+            self::$RC = -6;
+            self::$RC_Msg = 'Error DELETE ' . " - ";
+            self::$RC_Msg .= $e->getMessage() . " - ";
+            self::$RC_Msg .= $sql_Delete;
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
         }
 
-        return true;
+        if ($sql_result_delete == false) {
+
+            self::$RC = -999;
+            self::$RC_Msg = 'Erreur DELETE non répertoriée ' . " - ";
+            self::$RC_Msg .= $sql_Delete;
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
+        }
+
+
+
+        self::$RC = $sql_result_Row_Count;
+        self::$RC_Msg = 'Enregistrement(s) supprimé(s)';
+
+        return array(self::$RC, self::$RC_Msg, self::$List_Array);
+
+
+        // Close Database
 
         plf::__Close_DB($db_connection);
     }
@@ -623,7 +1133,31 @@ class PLF
     public static function Territoire_JSON($Territoire_Name, $TypeTerritoire = NULL)
     {
 
-        $Territory_Data = [];
+        self::$RC = 0;
+        self::$RC_Msg = "";
+        self::$List_Array = [];
+
+
+        // check if territoire exist
+
+        $Check_Territoire = self::__Check_If_Territoire_Exists($Territoire_Name, $TypeTerritoire);
+
+        if ($Check_Territoire[0] < 0) {       // MySql error
+
+            self::$RC = $Check_Territoire[0];
+            self::$RC_Msg = $Check_Territoire[1];
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
+        }
+
+        if ($Check_Territoire[2] == false) {
+
+            self::$RC = -2;
+            self::$RC_Msg = "Le territoire n'existe pas.";
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
+        }
+
 
         // Build SQL statement
 
@@ -649,6 +1183,13 @@ class PLF
             $Territory_Data = PLF::__Read_Geometry_MySql(sql_cmd: $sql_cmd);
         }
 
+        if ($Territory_Data[0] < 0) {
+
+            self::$RC = $Territory_Data[0];
+            self::$RC_Msg = $Territory_Data[1];
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
+        }
 
 
         $headers = "[\r\n\t{\r\n\t\t\"type\" : \"FeatureCollection\"," .
@@ -657,10 +1198,10 @@ class PLF
 
         $footer = "\r\n\t\t\t\t}\r\n\t\t\t}\r\n\t\r\n\t\t]\r\n\t}\r\n]";
 
-        $Geometry = $Territory_Data['geometry'];
-        $Territories_id = $Territory_Data['Territories_id'];
-        $Territories_name = $Territory_Data['Territories_name'];
-        $DA_Numero = $Territory_Data['DA_Numero'];
+        $Geometry = $Territory_Data[2]['geometry'];
+        $Territories_id = $Territory_Data[2]['Territories_id'];
+        $Territories_name = $Territory_Data[2]['Territories_name'];
+        $DA_Numero = $Territory_Data[2]['DA_Numero'];
 
         // convert some string characters to valid ones 
 
@@ -690,7 +1231,7 @@ class PLF
 
 
 
-        return $Geometry;
+        return array(self::$RC, self::$RC_Msg, $Geometry);
     }
 
 
@@ -714,8 +1255,8 @@ class PLF
                     $db_conn = new PDO("odbc:Driver={Microsoft Access Driver (*.mdb, *.accdb)};Dbq=" . $GLOBALS['db_file_name'] . ";Uid=; Pwd=;array(PDO::MYSQL_ATTR_MAX_BUFFER_SIZE=>1024*1024*50)");
                     $db_conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 } catch (PDOException $e) {
-                    self::$error =  'Error opening MsAccess database' . PHP_EOL;
-                    self::$error .= $e->getMessage() . PHP_EOL;
+                    self::$RC_Msg =  'Error opening MsAccess database' . " - ";
+                    self::$RC_Msg .= $e->getMessage() . " - ";
                     return NULL;
                 }
 
@@ -731,8 +1272,8 @@ class PLF
 
                     $db_conn = new mysqli($GLOBALS['MySql_Server'], $GLOBALS['MySql_Login'], $GLOBALS['MySql_Password'], $GLOBALS['MySql_DB']);
                 } catch (Exception $e) {
-                    self::$error =  'Error opening MySql database' . PHP_EOL;
-                    self::$error .= $e->getMessage() . PHP_EOL;
+                    self::$RC_Msg =  'Error opening MySql database' . " - ";
+                    self::$RC_Msg .= $e->getMessage() . " - ";
                     return NULL;
                 }
 
@@ -757,7 +1298,7 @@ class PLF
     public static function Get_Error()
     {
 
-        return self::$error;
+        return self::$RC_Msg;
     }
 
 
@@ -778,36 +1319,45 @@ class PLF
          */
 
 
-        $Territory_Data = [];
+
+        $RC = 0;
+        $RC_Msg = "";
+        $List_Array = [];
+
+
+        // Connect to database
 
         $db_connection = PLF::__Open_DB();
 
         if ($db_connection == NULL) {
 
-            $error_msg = PLF::Get_Error();
-            return NULL;
+            $RC = -5;
+            $RC_Msg = PLF::Get_Error();
+
+            return array($RC, $RC_Msg, $List_Array);
         }
 
 
 
-        // Process SQL records
+        // Process SQL command
 
         try {
 
             foreach ($db_connection->query($sql_cmd) as $record) {
 
-                $Territory_Data['geometry'] = $record['geometry'];
-                $Territory_Data['DA_Numero'] = $record['DA_Numero'];
-                $Territory_Data['Territories_id'] = $record['Territories_id'];
-                $Territory_Data['Territories_name'] = $record['Territories_name'];
-
+                $List_Array['geometry'] = $record['geometry'];
+                $List_Array['DA_Numero'] = $record['DA_Numero'];
+                $List_Array['Territories_id'] = $record['Territories_id'];
+                $List_Array['Territories_name'] = $record['Territories_name'];
             }
         } catch (Exception $e) {
 
-            self::$error =  'Error SELECT ' . PHP_EOL;
-            self::$error .= $e->getMessage() . PHP_EOL;
-            self::$error .= $sql_cmd;
-            return NULL;
+            $RC = -6;
+            $RC_Msg = 'Error SELECT ' . " - ";
+            $RC_Msg .= $e->getMessage() . " - ";
+            $RC_Msg .= $sql_cmd;
+
+            return array($RC, $RC_Msg, $List_Array);
         }
 
 
@@ -815,8 +1365,13 @@ class PLF
 
         PLF::__Close_DB($db_connection);
 
-        return $Territory_Data;
+        return array($RC, $RC_Msg, $List_Array);
     }
+
+
+
+
+
 
 
 
@@ -845,7 +1400,7 @@ class PLF
 
 
 
-        // Process SQL records
+        // Process SQL command
 
         $result = odbc_exec($db, $sql_cmd);
         odbc_longreadlen($result, 300000);      // !!!!!!!! this is the maximum record length. 
@@ -858,8 +1413,6 @@ class PLF
             $Territory_Data['DA_Numero'] = odbc_result($result, 2);
             $Territory_Data['Territories_id'] = odbc_result($result, 3);
             $Territory_Data['Territories_name'] = odbc_result($result, 4);
-            
-
         }
 
 
@@ -873,6 +1426,11 @@ class PLF
 
         return $Territory_Data;
     }
+
+
+
+
+
 
 
     /**
@@ -902,8 +1460,388 @@ class PLF
 
 
 
-    private static function __Get_Corresponding_Territoire($db_connection, $Territoire_Name, $TypeTerritoire)
+
+
+
+
+
+
+    // Check if the date has a valid format and is valid
+
+    private static function __Check_If_Date_Is_Valid($Date)
     {
+
+        $Date_Format = 'd-m-Y';
+
+        $Error_Message = "";
+
+        $date_from_format = DateTimeImmutable::createFromFormat($Date_Format, $Date);
+
+        if ($date_from_format == false) {
+
+            $Error_Message .= "Le format de la date n'est pas correct.";
+            return $Error_Message;
+        } else {
+            $Last_Errors = DateTimeImmutable::getLastErrors();
+
+            if (($Last_Errors["warning_count"] == 0) and
+                ($Last_Errors["error_count"] == 0)
+            ) {
+
+                $Error_Message = "";
+                return $Error_Message;
+            } else {
+
+                $Error_Message .= 'La date est invalide. - ';
+
+                foreach ($Last_Errors["warnings"] as $key => $msg) {
+
+                    $Error_Message .= "$msg - ";
+                }
+
+                foreach ($Last_Errors["errors"] as $key => $msg) {
+
+                    $Error_Message .= "$msg - ";
+                }
+
+                return $Error_Message;
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+    // check if record date chasse already exists. 
+
+    private static function __Check_If_Date_Chasse_Already_Exists($Territoire_Name, $Chasse_Date, $TypeTerritoire)
+    {
+
+        $RC = 0;
+        $RC_Msg = "";
+        $List_Array = [];
+
+
+        // Connect to database
+
+        $db_connection = PLF::__Open_DB();
+
+        if ($db_connection == NULL) {
+
+            $RC = -5;
+            $RC_Msg = PLF::Get_Error();
+
+            return array($RC, $RC_Msg, $List_Array);
+        }
+
+
+        // build SQL statement
+
+        $date_delimiter = "'";           // for MySql
+
+        if (strtolower($GLOBALS['DB_MSAccess_or_MySql'] ?? '') == "msaccess") {
+            $date_delimiter = "#";       // for MsAccess
+
+        }
+
+
+        if (strtolower($TypeTerritoire ?? '') == "t") {
+            $sql_cmd = "SELECT Territories_id ";
+        } else {
+            $sql_cmd = "SELECT DA_Numero ";
+        }
+
+        $sql_cmd .= " FROM $GLOBALS[tbl_Chasses] ";
+        $sql_cmd .= " WHERE Date_Chasse = ";
+        $sql_cmd .= $date_delimiter . PLF::__Convert_2_Sql_Date(Date_DD_MM_YYYY: $Chasse_Date);
+        $sql_cmd .= $date_delimiter;
+        $sql_cmd .= " AND ";
+
+        if (strtolower($TypeTerritoire ?? '') == "t") {
+            $sql_cmd .= " Territories_id = '";
+        } else {
+            $sql_cmd .= " DA_Numero = '";
+        }
+
+        $sql_cmd .= "$Territoire_Name' ";
+        $sql_cmd .= " LIMIT 1";
+
+
+        // Process SQL command
+
+        try {
+
+            $records_found = false;
+
+            foreach ($db_connection->query($sql_cmd) as $record) {
+
+                $records_found = true;
+
+            }
+        } catch (Exception $e) {
+
+            $RC = -6;
+            $RC_Msg = 'Error SELECT ' . " - ";
+            $RC_Msg .= $e->getMessage() . " - ";
+            $RC_Msg .= $sql_cmd;
+
+            return array($RC, $RC_Msg, false);
+        }
+
+
+        return array($RC, $RC_Msg, $records_found);
+
+
+
+
+        // Close Database
+
+        PLF::__Close_DB($db_connection);
+    }
+
+
+
+    // Check the existence of a territoire
+
+    private static function __Check_If_Territoire_Exists($Territoire_Name, $TypeTerritoire)
+    {
+
+        $RC = 0;
+        $RC_Msg = "";
+        $List_Array = [];
+
+
+        // Connect to database
+
+        $db_connection = PLF::__Open_DB();
+
+        if ($db_connection == NULL) {
+
+            $RC = -5;
+            $RC_Msg = PLF::Get_Error();
+
+            return array($RC, $RC_Msg, $List_Array);
+        }
+
+
+
+        // Build SQL statement
+
+        if (strtolower($TypeTerritoire ?? '') == "t") {
+            $sql_cmd = "SELECT Territories_id ";
+        } else {
+            $sql_cmd = "SELECT DA_Numero ";
+        }
+
+        $sql_cmd .= "FROM $GLOBALS[tbl_Territoires] ";
+        $sql_cmd .= " WHERE ";
+
+        if (strtolower($TypeTerritoire ?? '') == "t") {
+            $sql_cmd .= " Territories_id = '";
+        } else {
+            $sql_cmd .= " DA_Numero = '";
+        }
+
+        $sql_cmd .= "$Territoire_Name' ";
+        $sql_cmd .= " LIMIT 1";
+
+
+        // Process SQL command
+
+        try {
+
+            $records_found = false;
+
+            foreach ($db_connection->query($sql_cmd) as $record) {
+
+                $records_found = true;
+
+            }
+        } catch (Exception $e) {
+
+            $RC = -6;
+            $RC_Msg = 'Error SELECT ' . " - ";
+            $RC_Msg .= $e->getMessage() . " - ";
+            $RC_Msg .= $sql_cmd;
+
+            return array($RC, $RC_Msg, false);
+        }
+
+
+        return array($RC, $RC_Msg, $records_found);
+
+
+
+
+        // Close Database
+
+        PLF::__Close_DB($db_connection);
+    }
+
+
+
+
+    // Check the existence of a Canton
+
+    private static function __Check_If_Canton_Exists($Num_Canton)
+    {
+
+        $RC = 0;
+        $RC_Msg = "";
+        $List_Array = [];
+
+
+        // Connect to database
+
+        $db_connection = PLF::__Open_DB();
+
+        if ($db_connection == NULL) {
+
+            $RC = -5;
+            $RC_Msg = PLF::Get_Error();
+
+            return array($RC, $RC_Msg, $List_Array);
+        }
+
+
+
+        // Build SQL statement
+
+        $sql_cmd = "SELECT Num_Canton ";
+        $sql_cmd .= "FROM $GLOBALS[View_Territoires] ";
+        $sql_cmd .= " WHERE ";
+        $sql_cmd .= " Num_Canton = '" . "$Num_Canton' ";
+        $sql_cmd .= " LIMIT 1";
+
+
+        // Process SQL command
+
+        try {
+
+            $records_found = false;
+
+            foreach ($db_connection->query($sql_cmd) as $record) {
+
+                $records_found = true;
+            }
+        } catch (Exception $e) {
+
+            $RC = -6;
+            $RC_Msg = 'Error SELECT ' . " - ";
+            $RC_Msg .= $e->getMessage() . " - ";
+            $RC_Msg .= $sql_cmd;
+
+            return array($RC, $RC_Msg, false);
+        }
+
+
+        return array($RC, $RC_Msg, $records_found);
+
+
+
+
+        // Close Database
+
+        PLF::__Close_DB($db_connection);
+    }
+
+
+
+    // Check the existence of a Conseil Cynégétique
+
+    private static function __Check_If_CC_Exists($Code_CC)
+    {
+
+        $RC = 0;
+        $RC_Msg = "";
+        $List_Array = [];
+
+
+        // Connect to database
+
+        $db_connection = PLF::__Open_DB();
+
+        if ($db_connection == NULL) {
+
+            $RC = -5;
+            $RC_Msg = PLF::Get_Error();
+
+            return array($RC, $RC_Msg, $List_Array);
+        }
+
+
+
+        // Build SQL statement
+
+        $sql_cmd = "SELECT Code_CC ";
+        $sql_cmd .= "FROM $GLOBALS[View_Territoires] ";
+        $sql_cmd .= " WHERE ";
+        $sql_cmd .= " Code_CC = '" . "$Code_CC' ";
+        $sql_cmd .= " LIMIT 1";
+
+
+        // Process SQL command
+
+        try {
+
+            $records_found = false;
+
+            foreach ($db_connection->query($sql_cmd) as $record) {
+
+                $records_found = true;
+            }
+        } catch (Exception $e) {
+
+            $RC = -6;
+            $RC_Msg = 'Error SELECT ' . " - ";
+            $RC_Msg .= $e->getMessage() . " - ";
+            $RC_Msg .= $sql_cmd;
+
+            return array($RC, $RC_Msg, false);
+        }
+
+
+        return array($RC, $RC_Msg, $records_found);
+
+
+
+
+        // Close Database
+
+        PLF::__Close_DB($db_connection);
+    }
+
+
+
+
+
+    private static function __Get_Corresponding_Territoire($Territoire_Name, $TypeTerritoire)
+    {
+
+        $RC = 0;
+        $RC_Msg = "";
+        $List_Array = [];
+
+
+        // Connect to database
+
+        $db_connection = PLF::__Open_DB();
+
+        if ($db_connection == NULL) {
+
+            $RC = -5;
+            $RC_Msg = PLF::Get_Error();
+
+            return array($RC, $RC_Msg, $List_Array);
+        }
+
+
+
+        // Build SQL statement
 
         $sql_cmd = "SELECT Territories_id, DA_Numero from $GLOBALS[tbl_Territoires] WHERE ";
         if (strtolower($TypeTerritoire ?? '') ==  "t") {
@@ -915,6 +1853,10 @@ class PLF
         $Territories_id = "";
         $DA_Numero = "";
 
+
+
+        // Process SQL command
+
         try {
 
             foreach ($db_connection->query($sql_cmd) as $record) {
@@ -924,17 +1866,26 @@ class PLF
             }
         } catch (Exception $e) {
 
-            self::$error =  'Error SELECT ' . PHP_EOL;
-            self::$error .= $e->getMessage() . PHP_EOL;
-            self::$error .= $sql_cmd;
-            return NULL;
+            $RC = -6;
+            $RC_Msg =  'Error SELECT ' . PHP_EOL;
+            $RC_Msg .= $e->getMessage() . PHP_EOL;
+            $RC_Msg .= $sql_cmd;
+
+            return array($RC, $RC_Msg, $List_Array);
         }
 
         if ($Territories_id == "") {
-            self::$error =  'No corresponding territories_id/DA_Numero found for territoire = $Territoire_Name ' . PHP_EOL;
-            return NULL;
+            $RC = -8;
+            $RC_Msg =  "Aucune territoire trouvé pour la nomenclature $DA_Numero.";
+            return array($RC, $RC_Msg, $List_Array);
         }
 
-        return [$Territories_id, $DA_Numero];
+        if ($DA_Numero == "") {
+            $RC = -8;
+            $RC_Msg =  "Aucune nomenclature trouvée pour le territoire $Territories_id.";
+            return array($RC, $RC_Msg, $List_Array);
+        }
+
+        return array($RC, $RC_Msg, [$Territories_id, $DA_Numero]);
     }
 }
