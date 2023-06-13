@@ -69,44 +69,16 @@ $db_conn_Arlon->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $fp_Chasses = fopen($GLOBALS['Fichier_Chasses'], 'r');
 
 
-$first_Data_Record = false;
-
 
 while (!feof($fp_Chasses)) {
 
     $rec = fgets($fp_Chasses);
 
+    $num_match = preg_match("/,\s'/", $rec, $rec_id);
 
-
-
-    /**
-     *  remove unecessary characters : ( ) '
-     */
-
-    if ($first_Data_Record == false) {
-
-        if (substr_compare($rec, "(1,", 0, 3) == 0) {
-
-            $first_Data_Record = true;
-        }
+    if ($num_match == 0 ) {
         continue 1;
     }
-
-
-
-    /**
-     * 
-     *  Stop processing at end of records
-     */
-
-    $num_match = preg_match("/^\(\d+/", $rec, $rec_id);
-
-    if ($num_match == 0) {
-        break;
-    }
-
-
-
 
 
 

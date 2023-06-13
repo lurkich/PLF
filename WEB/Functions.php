@@ -60,10 +60,13 @@ class PLF
      *                                  -5 : Erreur MySql
      *                                  -6 : Commande SQL invalide
      *                      Array[1] : Message d'erreur éventuel
-     *                      Array[2] : Array indexé qui contient les territoires ("Territories_Id" OU "Nomenclature")
+     *                      Array[2] : Array indexé qui contient chacun une associate array
      *                                      TRI SUR "Territories_Id" OU "Nomenclature"
      *                                      DISTINCT (s'il y a plusieurs territoire avec le même id, seul le premier est sélectionné.)
-     *                                 Structure - Array[index] = "Territories_id" OU "Nomenclature"
+     *                                 Structure - Array[<index>] = ["DA_Numero"]      = <DA_Numero>, 
+     *                                                               "DA_Nom"]         = <DA_Nom>, 
+     *                                                               "Territories_id   = <Territories_id>, 
+     *                                                               "Territories_name = <Territories_Name>]
      * 
      *-------------------------------------------------------------------------------------------------------------------------------------------*/
 
@@ -91,7 +94,7 @@ class PLF
 
         // Build SQL statement
 
-        $sql_cmd = "SELECT DISTINCT DA_Numer, Territories_id FROM $GLOBALS[tbl_Territoires] ORDER BY ";
+        $sql_cmd = "SELECT DISTINCT DA_Numero, Territories_id, Territories_Name, DA_Nom FROM $GLOBALS[tbl_Territoires] ORDER BY ";
 
 
         if (strtolower($TypeTerritoire ?? '') == "t") {
@@ -107,11 +110,10 @@ class PLF
 
             foreach ($db_connection->query($sql_cmd) as $record) {
 
-                if (strtolower($TypeTerritoire ?? '') == "t") {
-                    array_push(self::$List_Array, $record["Territories_id"]);
-                } else {
-                    array_push(self::$List_Array, $record["DA_Numero"]);
-                }
+                array_push(self::$List_Array, ["DA_Numero" => $record["DA_Numero"] , 
+                                               "DA_Nom" => $record["DA_Nom"], 
+                                               "Territories_id" => $record["Territories_id"], 
+                                               "Territories_Name" => $record["Territories_Name"]]  );
             }
         } catch (Exception $e) {
 
@@ -1129,7 +1131,7 @@ class PLF
      *                                   --> Nothing      Select on "Nomenclature"
      *                  Territoire       --> <territories_id> OR <Nomenclature>
      *
-     *      Return    : String
+     *      Return    : JSON String
      *                  Possible return codes :
      *                      -2 Territoire does not exist
      *                      -5 MySql error

@@ -8,10 +8,10 @@ require __DIR__ . "/functions.php";
 
 
 
-//goto Test1;
+goto Test1;
 //goto Test2;
 //goto Test3;
-goto Test4;
+//goto Test4;
 //goto Test5;
 //goto Test6;
 //goto Test7;

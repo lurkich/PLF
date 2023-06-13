@@ -1,0 +1,675 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<offres
+	xmlns="http://pivot.tourismewallonie.be/files/xsd/pivot/3.1" count="386">
+	<offre codeCgt="LOD-A0-003H-1X5G" dateCreation="2020-08-17T12:58:25+02:00" dateModification="2022-04-21T17:33:08+02:00">
+		<userCreation codeCgt="TUSR-01-00000O">
+			<login>aurélie</login>
+			<nom>Billon</nom>
+			<prenom>Aurélie</prenom>
+		</userCreation>
+		<userGlobalCreation idUserglobal="1">
+			<nom>CGT</nom>
+		</userGlobalCreation>
+		<userModification codeCgt="USR-A0-004L-0RXP">
+			<login>charmalmc</login>
+			<nom>Marchal</nom>
+			<prenom>Marie-Claude</prenom>
+		</userModification>
+		<userGlobalModification idUserglobal="37">
+			<nom>MFA</nom>
+		</userGlobalModification>
+		<nom>
+			<![CDATA[Promenade de l'allée Miest]]>
+		</nom>
+		<estActive>30</estActive>
+		<estActiveUrn urn="urn:val:etatedit:30">
+			<label lang="fr">
+				<value>
+					<![CDATA[Publiable]]>
+				</value>
+			</label>
+			<label lang="nl">
+				<value>
+					<![CDATA[Publicabel]]>
+				</value>
+			</label>
+			<label lang="en">
+				<value>
+					<![CDATA[Publishable]]>
+				</value>
+			</label>
+			<label lang="de">
+				<value>
+					<![CDATA[Publizierbar]]>
+				</value>
+			</label>
+		</estActiveUrn>
+		<visibilite>30</visibilite>
+		<visibiliteUrn urn="urn:val:visibilite:reg">
+			<label lang="fr">
+				<value>
+					<![CDATA[Régional]]>
+				</value>
+			</label>
+			<label lang="nl">
+				<value>
+					<![CDATA[Regionaal]]>
+				</value>
+			</label>
+			<label lang="en">
+				<value>
+					<![CDATA[Regional]]>
+				</value>
+			</label>
+			<label lang="de">
+				<value>
+					<![CDATA[Regional]]>
+				</value>
+			</label>
+		</visibiliteUrn>
+		<typeOffre idTypeOffre="8">
+			<label lang="fr">
+				<value>
+					<![CDATA[Itinéraire]]>
+				</value>
+			</label>
+			<label lang="nl">
+				<value>
+					<![CDATA[Route]]>
+				</value>
+			</label>
+			<label lang="en">
+				<value>
+					<![CDATA[Route]]>
+				</value>
+			</label>
+			<label lang="de">
+				<value>
+					<![CDATA[Route]]>
+				</value>
+			</label>
+		</typeOffre>
+		<adresse1>
+			<rue>
+				<![CDATA[Rue de Luxembourg]]>
+			</rue>
+			<numero>
+				<![CDATA[3]]>
+			</numero>
+			<idIns>1167</idIns>
+			<ins>
+				<![CDATA[85046]]>
+			</ins>
+			<cp>6720</cp>
+			<localite lang="fr">
+				<value>
+					<![CDATA[Habay-la-Neuve]]>
+				</value>
+			</localite>
+			<localite lang="nl">
+				<value>
+					<![CDATA[Habay-la-Neuve]]>
+				</value>
+			</localite>
+			<localite lang="en">
+				<value>
+					<![CDATA[Habay-la-Neuve]]>
+				</value>
+			</localite>
+			<localite lang="de">
+				<value>
+					<![CDATA[Habay-la-Neuve]]>
+				</value>
+			</localite>
+			<commune lang="fr">
+				<value>
+					<![CDATA[Habay]]>
+				</value>
+			</commune>
+			<commune lang="nl">
+				<value>
+					<![CDATA[Habay]]>
+				</value>
+			</commune>
+			<commune lang="en">
+				<value>
+					<![CDATA[Habay]]>
+				</value>
+			</commune>
+			<commune lang="de">
+				<value>
+					<![CDATA[Habay]]>
+				</value>
+			</commune>
+			<lieuPrecis>
+				<![CDATA[Syndicat d'Initiative]]>
+			</lieuPrecis>
+			<province>
+				<![CDATA[Luxembourg]]>
+			</province>
+			<provinceUrn urn="urn:val:adrprov:bewlx">
+				<label lang="fr">
+					<value>
+						<![CDATA[Luxembourg]]>
+					</value>
+				</label>
+				<label lang="nl">
+					<value>
+						<![CDATA[Luxemburg]]>
+					</value>
+				</label>
+				<label lang="en">
+					<value>
+						<![CDATA[Luxembourg]]>
+					</value>
+				</label>
+				<label lang="de">
+					<value>
+						<![CDATA[Luxemburg]]>
+					</value>
+				</label>
+			</provinceUrn>
+			<pays>
+				<![CDATA[Belgique]]>
+			</pays>
+			<paysUrn urn="urn:val:adrpays:be">
+				<label lang="fr">
+					<value>
+						<![CDATA[Belgique]]>
+					</value>
+				</label>
+				<label lang="nl">
+					<value>
+						<![CDATA[België]]>
+					</value>
+				</label>
+				<label lang="en">
+					<value>
+						<![CDATA[Belgium]]>
+					</value>
+				</label>
+				<label lang="de">
+					<value>
+						<![CDATA[Belgien]]>
+					</value>
+				</label>
+			</paysUrn>
+			<lambertX>
+				<![CDATA[242122.78125]]>
+			</lambertX>
+			<lambertY>
+				<![CDATA[46962.3515625]]>
+			</lambertY>
+			<latitude>49.72771</latitude>
+			<longitude>5.64517</longitude>
+			<altitude>404.87457</altitude>
+			<noaddress>false</noaddress>
+			<parcNaturel idPn="10">
+				<label>Parc naturel de la Haute-Sûre et de la forêt d'Anlier</label>
+			</parcNaturel>
+			<organisme idMdt="30">
+				<label>Haute-Süre Forêt d'Anlier en Ardenne</label>
+			</organisme>
+		</adresse1>
+		<adresse2>
+			<rue>
+				<![CDATA[Rue de Luxembourg]]>
+			</rue>
+			<numero>
+				<![CDATA[3]]>
+			</numero>
+			<idIns>1167</idIns>
+			<ins>
+				<![CDATA[85046]]>
+			</ins>
+			<cp>6720</cp>
+			<localite lang="fr">
+				<value>
+					<![CDATA[Habay-la-Neuve]]>
+				</value>
+			</localite>
+			<localite lang="nl">
+				<value>
+					<![CDATA[Habay-la-Neuve]]>
+				</value>
+			</localite>
+			<localite lang="en">
+				<value>
+					<![CDATA[Habay-la-Neuve]]>
+				</value>
+			</localite>
+			<localite lang="de">
+				<value>
+					<![CDATA[Habay-la-Neuve]]>
+				</value>
+			</localite>
+			<commune lang="fr">
+				<value>
+					<![CDATA[Habay]]>
+				</value>
+			</commune>
+			<commune lang="nl">
+				<value>
+					<![CDATA[Habay]]>
+				</value>
+			</commune>
+			<commune lang="en">
+				<value>
+					<![CDATA[Habay]]>
+				</value>
+			</commune>
+			<commune lang="de">
+				<value>
+					<![CDATA[Habay]]>
+				</value>
+			</commune>
+			<lieuPrecis>
+				<![CDATA[Syndicat d'Initiative]]>
+			</lieuPrecis>
+			<province>
+				<![CDATA[Luxembourg]]>
+			</province>
+			<provinceUrn urn="urn:val:adrprov:bewlx">
+				<label lang="fr">
+					<value>
+						<![CDATA[Luxembourg]]>
+					</value>
+				</label>
+				<label lang="nl">
+					<value>
+						<![CDATA[Luxemburg]]>
+					</value>
+				</label>
+				<label lang="en">
+					<value>
+						<![CDATA[Luxembourg]]>
+					</value>
+				</label>
+				<label lang="de">
+					<value>
+						<![CDATA[Luxemburg]]>
+					</value>
+				</label>
+			</provinceUrn>
+			<pays>
+				<![CDATA[Belgique]]>
+			</pays>
+			<paysUrn urn="urn:val:adrpays:be">
+				<label lang="fr">
+					<value>
+						<![CDATA[Belgique]]>
+					</value>
+				</label>
+				<label lang="nl">
+					<value>
+						<![CDATA[België]]>
+					</value>
+				</label>
+				<label lang="en">
+					<value>
+						<![CDATA[Belgium]]>
+					</value>
+				</label>
+				<label lang="de">
+					<value>
+						<![CDATA[Belgien]]>
+					</value>
+				</label>
+			</paysUrn>
+			<lambertX>
+				<![CDATA[242122.78125]]>
+			</lambertX>
+			<lambertY>
+				<![CDATA[46962.3515625]]>
+			</lambertY>
+			<latitude>49.72771</latitude>
+			<longitude>5.64517</longitude>
+			<altitude>404.87457</altitude>
+			<noaddress>false</noaddress>
+			<parcNaturel idPn="10">
+				<label>Parc naturel de la Haute-Sûre et de la forêt d'Anlier</label>
+			</parcNaturel>
+			<organisme idMdt="30">
+				<label>Haute-Süre Forêt d'Anlier en Ardenne</label>
+			</organisme>
+		</adresse2>
+		<spec urn="urn:fld:adr">
+			<urnCat>urn:cat:resume</urnCat>
+			<urnSubCat>urn:cat:resume:resume</urnSubCat>
+			<order>60</order>
+			<type>String</type>
+			<value>
+				<![CDATA[Rue de Luxembourg, 3]]>
+			</value>
+		</spec>
+		<spec urn="urn:fld:etatedit">
+			<urnCat>urn:cat:ident</urnCat>
+			<urnSubCat>urn:cat:ident:pub</urnSubCat>
+			<order>310</order>
+			<type>Choice</type>
+			<value>
+				<![CDATA[urn:val:etatedit:30]]>
+			</value>
+		</spec>
+		<spec urn="urn:fld:homepage">
+			<urnCat>urn:cat:ident</urnCat>
+			<urnSubCat>urn:cat:ident:pub</urnSubCat>
+			<order>360</order>
+			<type>String</type>
+			<value>
+				<![CDATA[https://organismes.tourismewallonie.be/details/LOD-A0-003H-1X5G&type=8/​]]>
+			</value>
+		</spec>
+		<spec urn="nl:urn:fld:nomofr">
+			<urnCat>urn:cat:ident</urnCat>
+			<urnSubCat>urn:cat:ident:denom</urnSubCat>
+			<order>460</order>
+			<type>FirstUpperStringML</type>
+			<value>
+				<![CDATA[Promenade de l'allée Miest (De wandeling van de "Allée Miest")]]>
+			</value>
+		</spec>
+		<spec urn="en:urn:fld:nomofr">
+			<urnCat>urn:cat:ident</urnCat>
+			<urnSubCat>urn:cat:ident:denom</urnSubCat>
+			<order>470</order>
+			<type>FirstUpperStringML</type>
+			<value>
+				<![CDATA[Promenade de l'allée Miest (The walk of "L'Allée Miest")]]>
+			</value>
+		</spec>
+		<spec urn="de:urn:fld:nomofr">
+			<urnCat>urn:cat:ident</urnCat>
+			<urnSubCat>urn:cat:ident:denom</urnSubCat>
+			<order>480</order>
+			<type>FirstUpperStringML</type>
+			<value>
+				<![CDATA[Promenade de l'allée Miest (Der Spaziergang von de l’allée Miest)]]>
+			</value>
+		</spec>
+		<spec urn="urn:fld:idreco">
+			<urnCat>urn:cat:ident</urnCat>
+			<urnSubCat>urn:cat:ident:idalt</urnSubCat>
+			<order>500</order>
+			<type>String</type>
+			<value>
+				<![CDATA[HB 07]]>
+			</value>
+		</spec>
+		<spec urn="urn:fld:typecirc">
+			<urnCat>urn:cat:classlab</urnCat>
+			<urnSubCat>urn:cat:classlab:classif</urnSubCat>
+			<order>1440</order>
+			<type>Choice</type>
+			<value>
+				<![CDATA[urn:val:typecirc:boucle]]>
+			</value>
+		</spec>
+		<spec urn="urn:fld:catcirc">
+			<urnCat>urn:cat:classlab</urnCat>
+			<urnSubCat>urn:cat:classlab:classif</urnSubCat>
+			<order>1480</order>
+			<type>Choice</type>
+			<value>
+				<![CDATA[urn:val:catcirc:loc]]>
+			</value>
+		</spec>
+		<spec urn="urn:fld:reco">
+			<urnCat>urn:cat:classlab</urnCat>
+			<urnSubCat>urn:cat:classlab:classif</urnSubCat>
+			<order>1520</order>
+			<type>Choice</type>
+			<value>
+				<![CDATA[urn:val:reco:reco]]>
+			</value>
+		</spec>
+		<spec urn="urn:fld:signal">
+			<urnCat>urn:cat:classlab</urnCat>
+			<urnSubCat>urn:cat:classlab:labellisation</urnSubCat>
+			<order>1620</order>
+			<type>HChoice</type>
+			<value>
+				<![CDATA[urn:val:signal:autre:nrec]]>
+			</value>
+		</spec>
+		<spec urn="urn:fld:signalnrec">
+			<urnCat>urn:cat:classlab</urnCat>
+			<urnSubCat>urn:cat:classlab:labellisation</urnSubCat>
+			<order>2950</order>
+			<type>StringML</type>
+			<value>
+				<![CDATA[Chiffre 2 noir dans un rectangle vert]]>
+			</value>
+		</spec>
+		<spec urn="nl:urn:fld:signalnrec">
+			<urnCat>urn:cat:classlab</urnCat>
+			<urnSubCat>urn:cat:classlab:labellisation</urnSubCat>
+			<order>2960</order>
+			<type>StringML</type>
+			<value>
+				<![CDATA[Zwart cijfer 2 in een groene rechthoek]]>
+			</value>
+		</spec>
+		<spec urn="en:urn:fld:signalnrec">
+			<urnCat>urn:cat:classlab</urnCat>
+			<urnSubCat>urn:cat:classlab:labellisation</urnSubCat>
+			<order>2970</order>
+			<type>StringML</type>
+			<value>
+				<![CDATA[Black 2 in a green rectangle]]>
+			</value>
+		</spec>
+		<spec urn="de:urn:fld:signalnrec">
+			<urnCat>urn:cat:classlab</urnCat>
+			<urnSubCat>urn:cat:classlab:labellisation</urnSubCat>
+			<order>2980</order>
+			<type>StringML</type>
+			<value>
+				<![CDATA[Schwarze Ziffer 2 in einem grünen Rechteck]]>
+			</value>
+		</spec>
+		<spec urn="urn:fld:urlweb">
+			<urnCat>urn:cat:moycom</urnCat>
+			<urnSubCat>urn:cat:moycom:moycom</urnSubCat>
+			<order>3020</order>
+			<type>URL</type>
+			<value>
+				<![CDATA[https://61453aac-6ed1-4e33-a6f6-37c5b3ea227c.filesusr.com/ugd/a35561_bb188ada34fa4a6c8fd66a7725199616.pdf]]>
+			</value>
+		</spec>
+		<spec urn="urn:fld:dist">
+			<urnCat>urn:cat:desc</urnCat>
+			<urnSubCat>urn:cat:desc:dist</urnSubCat>
+			<order>3100</order>
+			<type>UFloat</type>
+			<value>
+				<![CDATA[13]]>
+			</value>
+		</spec>
+		<spec urn="urn:fld:hdifmin">
+			<urnCat>urn:cat:desc</urnCat>
+			<urnSubCat>urn:cat:desc:dist</urnSubCat>
+			<order>3140</order>
+			<type>SFloat</type>
+			<value>
+				<![CDATA[100]]>
+			</value>
+		</spec>
+		<spec urn="urn:fld:hdifmax">
+			<urnCat>urn:cat:desc</urnCat>
+			<urnSubCat>urn:cat:desc:dist</urnSubCat>
+			<order>3150</order>
+			<type>SFloat</type>
+			<value>
+				<![CDATA[100]]>
+			</value>
+		</spec>
+		<spec urn="urn:fld:revet:callebotis">
+			<urnCat>urn:cat:desc</urnCat>
+			<urnSubCat>urn:cat:desc:revet</urnSubCat>
+			<order>3320</order>
+			<type>Choice</type>
+			<value>
+				<![CDATA[urn:val:revet:0]]>
+			</value>
+		</spec>
+		<spec urn="urn:fld:revet:empierre">
+			<urnCat>urn:cat:desc</urnCat>
+			<urnSubCat>urn:cat:desc:revet</urnSubCat>
+			<order>3380</order>
+			<type>Choice</type>
+			<value>
+				<![CDATA[urn:val:revet:0]]>
+			</value>
+		</spec>
+		<spec urn="urn:fld:revet:goudasphpave">
+			<urnCat>urn:cat:desc</urnCat>
+			<urnSubCat>urn:cat:desc:revet</urnSubCat>
+			<order>3440</order>
+			<type>Choice</type>
+			<value>
+				<![CDATA[urn:val:revet:0]]>
+			</value>
+		</spec>
+		<spec urn="urn:fld:revet:gue">
+			<urnCat>urn:cat:desc</urnCat>
+			<urnSubCat>urn:cat:desc:revet</urnSubCat>
+			<order>3500</order>
+			<type>Choice</type>
+			<value>
+				<![CDATA[urn:val:revet:0]]>
+			</value>
+		</spec>
+		<spec urn="urn:fld:revet:pature">
+			<urnCat>urn:cat:desc</urnCat>
+			<urnSubCat>urn:cat:desc:revet</urnSubCat>
+			<order>3560</order>
+			<type>Choice</type>
+			<value>
+				<![CDATA[urn:val:revet:0]]>
+			</value>
+		</spec>
+		<spec urn="urn:fld:revet:terre">
+			<urnCat>urn:cat:desc</urnCat>
+			<urnSubCat>urn:cat:desc:revet</urnSubCat>
+			<order>3680</order>
+			<type>Choice</type>
+			<value>
+				<![CDATA[urn:val:revet:0]]>
+			</value>
+		</spec>
+		<spec urn="urn:fld:revet:autre">
+			<urnCat>urn:cat:desc</urnCat>
+			<urnSubCat>urn:cat:desc:revet</urnSubCat>
+			<order>3740</order>
+			<type>Choice</type>
+			<value>
+				<![CDATA[urn:val:revet:0]]>
+			</value>
+		</spec>
+		<spec urn="urn:fld:descmarket10">
+			<urnCat>urn:cat:descmarket</urnCat>
+			<urnSubCat>urn:cat:descmarket:descmarket</urnSubCat>
+			<order>3980</order>
+			<type>TextML</type>
+			<value>
+				<![CDATA[<p>Adoptez la slow zénitude avec une immersion 100% forêt d’Anlier et de ses nombreux ruisseaux aux noms enchanteurs : l’Arlune, ruisseau du champ Gilot, ruisseau du bois le prêtre, ruisseau de la Fagne Jean Simon…</p>]]>
+			</value>
+		</spec>
+		<spec urn="nl:urn:fld:descmarket10">
+			<urnCat>urn:cat:descmarket</urnCat>
+			<urnSubCat>urn:cat:descmarket:descmarket</urnSubCat>
+			<order>3990</order>
+			<type>TextML</type>
+			<value>
+				<![CDATA[<p>Neem de slow-, zenhouding aan, voor een 100% immersie in het Woud van Anlier met de vele beken met betoverende namen : de Arlune, de beek van de “champ Gilot”, de beek van het bos “le prêtre”, de beek van het veen Jean-Simon…..</p>]]>
+			</value>
+		</spec>
+		<spec urn="en:urn:fld:descmarket10">
+			<urnCat>urn:cat:descmarket</urnCat>
+			<urnSubCat>urn:cat:descmarket:descmarket</urnSubCat>
+			<order>4000</order>
+			<type>TextML</type>
+			<value>
+				<![CDATA[<p>Adopt the slow zenitude with a 100% immersion in the Anlier forest and its many streams with enchanting names: the Arlune, stream of the Gilot field, stream of the Bois le Prêtre, stream of the Fagne Jean Simon...</p>]]>
+			</value>
+		</spec>
+		<spec urn="de:urn:fld:descmarket10">
+			<urnCat>urn:cat:descmarket</urnCat>
+			<urnSubCat>urn:cat:descmarket:descmarket</urnSubCat>
+			<order>4010</order>
+			<type>TextML</type>
+			<value>
+				<![CDATA[<p>Tauchen Sie ohne Hast 100% in den Wald von Anlier ein mit seinen vielnen Bächen mit zuberhaften Namen : l’Arlune,Bach des Feldes, Gilot, Bach Wald des Pristers, Bach von la Fagne Jean Simon,...</p>]]>
+			</value>
+		</spec>
+		<spec urn="urn:fld:descmarket">
+			<urnCat>urn:cat:descmarket</urnCat>
+			<urnSubCat>urn:cat:descmarket:descmarket</urnSubCat>
+			<order>4020</order>
+			<type>TextML</type>
+			<value>
+				<![CDATA[<p>Adoptez la slow zénitude avec une immersion 100% forêt d’Anlier et de ses nombreux ruisseaux aux noms enchanteurs : l’Arlune, ruisseau du champ Gilot, ruisseau du bois le prêtre, ruisseau de la Fagne Jean Simon…</p>]]>
+			</value>
+		</spec>
+		<spec urn="nl:urn:fld:descmarket">
+			<urnCat>urn:cat:descmarket</urnCat>
+			<urnSubCat>urn:cat:descmarket:descmarket</urnSubCat>
+			<order>4030</order>
+			<type>TextML</type>
+			<value>
+				<![CDATA[<p>Neem de slow-, zenhouding aan, voor een 100% immersie in het Woud van Anlier met de vele beken met betoverende namen : de Arlune, de beek van de “champ Gilot”, de beek van het bos “le prêtre”, de beek van het veen Jean-Simon…..</p>]]>
+			</value>
+		</spec>
+		<spec urn="en:urn:fld:descmarket">
+			<urnCat>urn:cat:descmarket</urnCat>
+			<urnSubCat>urn:cat:descmarket:descmarket</urnSubCat>
+			<order>4040</order>
+			<type>TextML</type>
+			<value>
+				<![CDATA[<p>Adopt the slow zenitude with a 100% immersion in the Anlier forest and its many streams with enchanting names: the Arlune, stream of the Gilot field, stream of the Bois le Prêtre, stream of the Fagne Jean Simon...</p>]]>
+			</value>
+		</spec>
+		<spec urn="de:urn:fld:descmarket">
+			<urnCat>urn:cat:descmarket</urnCat>
+			<urnSubCat>urn:cat:descmarket:descmarket</urnSubCat>
+			<order>4050</order>
+			<type>TextML</type>
+			<value>
+				<![CDATA[<p>Tauchen Sie ohne Hast 100% in den Wald von Anlier ein mit seinen vielnen Bächen mit zuberhaften Namen : l’Arlune,Bach des Feldes, Gilot, Bach Wald des Pristers, Bach von la Fagne Jean Simon,...</p>]]>
+			</value>
+		</spec>
+		<spec urn="urn:fld:infusgped">
+			<urnCat>urn:cat:accueil</urnCat>
+			<urnSubCat>urn:cat:accueil:infusgped</urnSubCat>
+			<order>4150</order>
+			<type>Boolean</type>
+			<value>
+				<![CDATA[true]]>
+			</value>
+		</spec>
+		<spec urn="urn:fld:filtweb:01:00000T">
+			<urnCat>urn:cat:ident</urnCat>
+			<urnSubCat>urn:cat:ident:pub</urnSubCat>
+			<type>Boolean</type>
+			<value>
+				<![CDATA[true]]>
+			</value>
+		</spec>
+		<spec urn="urn:fld:filtautre:11:006W:3ULN">
+			<urnCat>urn:cat:filtre</urnCat>
+			<urnSubCat>urn:cat:filtre:filtautre</urnSubCat>
+			<type>Boolean</type>
+			<value>
+				<![CDATA[true]]>
+			</value>
+		</spec>
+		<relOffre urn="urn:lnk:media:autre">
+			<offre codeCgt="OTH-A0-0067-0MYC" dateCreation="2021-12-28T13:16:33+01:00" dateModification="2021-12-28T13:16:33+01:00">
+				<typeOffre idTypeOffre="268"/>
+			</offre>
+		</relOffre>
+	</offre>
+</offres>
+	
+	

@@ -1,0 +1,1 @@
+curl -K Get_All_Offers.txt -d Query_Parametre.xml
