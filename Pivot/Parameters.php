@@ -5,8 +5,11 @@
 
 $db_file_name = "C:\Users\chris\OneDrive\IT\PartageonsLaForet\Data\PLF.accdb";
 
+// Step 01 - Load Thesaurus Values
+$xml_file_name_thesaurus = "C:\Users\chris\OneDrive\IT\PartageonsLaForet\PLF\Pivot\Thesaurus_Offre_8.xml";
+$csv_file_name_thesaurus = "C:\Users\chris\OneDrive\IT\PartageonsLaForet\PLF\Pivot\Thesaurus_Offre_8.csv";
 
-// Step 1 - convert Json to CSV   - Step 2
+// Step 05 - convert Json to CSV   - Step 2
 $xml_file_name = "C:\Users\chris\OneDrive\IT\PartageonsLaForet\PLF\Pivot\All_Offers_Content_2.xml";
 $csv_file_name = "C:\Users\chris\OneDrive\IT\PartageonsLaForet\PLF\Pivot\All_Offers_Content_2.csv";
 

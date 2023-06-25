@@ -8,15 +8,17 @@ require __DIR__ . "/functions.php";
 
 
 
-goto Test1;
+//goto Test1;
 //goto Test2;
 //goto Test3;
 //goto Test4;
-//goto Test5;
+goto Test5;
 //goto Test6;
-//goto Test7;
+goto Test7;
 //goto Test8;
-//goto Test8;
+//goto Test9;
+//goto Test10;
+//goto Test11;
 
 
 
@@ -218,13 +220,35 @@ if ($List_Chasse_Dates_By_Territories[0] == 0) {
 
 /**********************************************************************************************
  * 
+ *  Call to retrieve list of Cantons 
+ */
+
+
+ Test5:
+
+$List_Cantons = PLF::Get_Canton_List();
+
+if ($List_Cantons[0] < 0) {
+
+   echo $List_Cantons[1];
+
+   //
+   // .... traitement de l'erreur
+   //
+}
+
+
+
+
+/**********************************************************************************************
+ * 
  *  Call to retrieve list of territories by Canton 
  */
 
 
-Test5:
+Test6:
 
-$List_Territoire_By_Canton = PLF::Get_Territoire_By_Canton(Num_Canton: "999");
+$List_Territoire_By_Canton = PLF::Get_Territoire_By_Canton(Num_Canton: "913");
 
 if ($List_Territoire_By_Canton[0] < 0) {
 
@@ -248,15 +272,44 @@ if ($List_Territoire_By_Canton[0] == 0) {
 
 
 
+
+
+
+
+
+/**********************************************************************************************
+ * 
+ *  Call to retrieve list of Conseil Cynégétique 
+ */
+
+
+ Test7:
+
+$List_CC = PLF::Get_CC_List();
+
+if ($List_CC[0] < 0) {
+
+   echo $List_CC[1];
+
+   //
+   // .... traitement de l'erreur
+   //
+}
+
+
+
+
+
+
 /**********************************************************************************************
  * 
  *  Call to retrieve list of territories by Conseil cynégétique 
  */
 
 
- Test6:
+ Test8:
 
- $List_Territoire_By_CC = PLF::Get_Territoire_By_CC(Code_CC: "CCFARM");
+ $List_Territoire_By_CC = PLF::Get_Territoire_By_CC(Code_CC: "CCFARM1");
  
  if ($List_Territoire_By_CC[0] < 0) {
  
@@ -286,7 +339,7 @@ if ($List_Territoire_By_Canton[0] == 0) {
  */
 
 
-Test7:
+Test9:
 
 $RC_Insert = PLF::Chasse_Date_New(Territoire_Name: "HA22", Chasse_Date: "31-07-23", TypeTerritoire: "T");
 
@@ -320,7 +373,7 @@ if ($RC_Insert[0] < 0) {
  */
 
 
-Test8:
+Test10:
 
 $RC_Delete = PLF::Chasse_Date_Delete(Territoire_Name: "HA22", Chasse_Date: "31-07-23", TypeTerritoire: "T");
 
@@ -352,7 +405,7 @@ if ($RC_Delete == false) {
  */
 
 
-Test9:
+Test11:
 
 $Territoire_Geometry = PLF::Territoire_JSON(Territoire_Name: "HA222", TypeTerritoire: "T");
 

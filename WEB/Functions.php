@@ -562,6 +562,90 @@ class PLF
 
 
 
+    /**-------------------------------------------------------------------------------------------------------------------------------------------
+     * 
+     *    Retourne la liste des cantons
+     * 
+     *      Input     : Database "PLF_Cantonnements"
+     *     
+     *      Appel     : Get_Territoire_List()
+     * 
+     *      Arguments : Néant     * 
+     * 
+     *      Output    : Array contenant 3 éléments
+     *                      Array[0] : Code retour.
+     *                                  xx : entier >= 0 contenant le nombre de cantons
+     *                                  -5 : Erreur MySql
+     *                                  -6 : Commande SQL invalide
+     *                      Array[1] : Message d'erreur éventuel
+     *                      Array[2] : Associative array qui contient chacun une associate array
+     *                                      TRI SUR "Num_Canton"
+     *                                      DISTINCT (s'il y a plusieurs cantons avec le même numéro, seul le premier est sélectionné.)
+     *                                 Structure - Array[<num_canton>] = ["nom_canton"]   = <nom_canton>, 
+     *                                                                   ["tel_canton"]   = <tel_canton> 
+     * 
+     *-------------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+    public static function Get_Canton_List()
+    {
+
+        self::$RC = 0;
+        self::$RC_Msg = "";
+        self::$List_Array = [];
+
+
+        // Connect to database
+
+        $db_connection = PLF::__Open_DB();
+
+        if ($db_connection == NULL) {
+
+            self::$RC = -5;
+            self::$RC_Msg = PLF::Get_Error();
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);;
+        }
+
+
+        // Build SQL statement
+
+        $sql_cmd = "SELECT DISTINCT num_canton, nom_canton, tel_canton FROM $GLOBALS[tbl_cantonnements] ORDER BY ";
+        $sql_cmd .= "num_canton";
+
+
+        // Process SQL command
+
+        try {
+
+            foreach ($db_connection->query($sql_cmd) as $record) {
+
+                self::$List_Array[$record["num_canton"]] = ["nom_canton" => $record["nom_canton"], 
+                                                            "tel_canton" => $record["tel_canton"]];
+            }
+        } catch (Exception $e) {
+
+            self::$RC = -6;
+            self::$RC_Msg = 'Error SELECT ' . " - ";
+            self::$RC_Msg .= $e->getMessage() . " - ";
+            self::$RC_Msg .= $sql_cmd;
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
+        }
+
+
+        // Close Database
+
+        PLF::__Close_DB($db_connection);
+
+
+        // return values
+
+        self::$RC = count(self::$List_Array);
+        return array(self::$RC, self::$RC_Msg, self::$List_Array);
+    }
+
+
 
 
     /**-------------------------------------------------------------------------------------------------------------------------------------------
@@ -683,6 +767,117 @@ class PLF
 
 
 
+
+
+
+
+
+
+
+
+
+    /**-------------------------------------------------------------------------------------------------------------------------------------------
+     * 
+     *    Retourne la liste des conseils cynégétiques
+     * 
+     *      Input     : Database "PLF_CC"
+     *     
+     *      Appel     : Get_CC_List()
+     * 
+     *      Arguments : Néant     * 
+     * 
+     *      Output    : Array contenant 3 éléments
+     *                      Array[0] : Code retour.
+     *                                  xx : entier >= 0 contenant le nombre de cantons
+     *                                  -5 : Erreur MySql
+     *                                  -6 : Commande SQL invalide
+     *                      Array[1] : Message d'erreur éventuel
+     *                      Array[2] : Associative array qui contient chacun une associate array
+     *                                      TRI SUR "Code_CC"
+     *                                      DISTINCT (s'il y a plusieurs cantons avec le même code_cc, seul le premier est sélectionné.)
+     *                                 Structure - Array[<Code_CC>] = ["nom_CC"]      = <nom_CC>, 
+     *                                                                ["president"]   = <president>,
+     *                                                                ["secreataire"] = <secretaire> 
+     * 
+     *-------------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+     public static function Get_CC_List()
+     {
+ 
+         self::$RC = 0;
+         self::$RC_Msg = "";
+         self::$List_Array = [];
+ 
+ 
+         // Connect to database
+ 
+         $db_connection = PLF::__Open_DB();
+ 
+         if ($db_connection == NULL) {
+ 
+             self::$RC = -5;
+             self::$RC_Msg = PLF::Get_Error();
+ 
+             return array(self::$RC, self::$RC_Msg, self::$List_Array);;
+         }
+ 
+ 
+         // Build SQL statement
+ 
+         $sql_cmd = "SELECT DISTINCT Code, Nom, President, Secretaire FROM $GLOBALS[tbl_CC] ORDER BY ";
+         $sql_cmd .= "Code";
+ 
+ 
+         // Process SQL command
+ 
+         try {
+ 
+             foreach ($db_connection->query($sql_cmd) as $record) {
+ 
+
+                 self::$List_Array[$record["Code"]] = ["nom_CC" => $record["Code"], 
+                                                       "president" => $record["President"],
+                                                       "secretaire" => $record["Secretaire"]];
+             }
+         } catch (Exception $e) {
+ 
+             self::$RC = -6;
+             self::$RC_Msg = 'Error SELECT ' . " - ";
+             self::$RC_Msg .= $e->getMessage() . " - ";
+             self::$RC_Msg .= $sql_cmd;
+ 
+             return array(self::$RC, self::$RC_Msg, self::$List_Array);
+         }
+ 
+ 
+         // Close Database
+ 
+         PLF::__Close_DB($db_connection);
+ 
+ 
+         // return values
+ 
+         self::$RC = count(self::$List_Array);
+         return array(self::$RC, self::$RC_Msg, self::$List_Array);
+     }
+ 
+
+     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**-------------------------------------------------------------------------------------------------------------------------------------------
      * 
      *    Retourne la liste des territoires par Code Conseil Cynégétique
@@ -730,7 +925,7 @@ class PLF
 
         if ($Check_CC[2] == false) {
 
-            self::$RC = -11;
+            self::$RC = -12;
             self::$RC_Msg = self::$Return_Codes[self::$RC];
 
             return array(self::$RC, self::$RC_Msg, self::$List_Array);
@@ -1719,7 +1914,7 @@ class PLF
         // Build SQL statement
 
         $sql_cmd = "SELECT Num_Canton ";
-        $sql_cmd .= "FROM $GLOBALS[View_Territoires] ";
+        $sql_cmd .= "FROM $GLOBALS[tbl_cantonnements] ";
         $sql_cmd .= " WHERE ";
         $sql_cmd .= " Num_Canton = '" . "$Num_Canton' ";
         $sql_cmd .= " LIMIT 1";
@@ -1784,10 +1979,10 @@ class PLF
 
         // Build SQL statement
 
-        $sql_cmd = "SELECT Code_CC ";
-        $sql_cmd .= "FROM $GLOBALS[View_Territoires] ";
+        $sql_cmd = "SELECT Code ";
+        $sql_cmd .= "FROM $GLOBALS[tbl_CC] ";
         $sql_cmd .= " WHERE ";
-        $sql_cmd .= " Code_CC = '" . "$Code_CC' ";
+        $sql_cmd .= " Code = '" . "$Code_CC' ";
         $sql_cmd .= " LIMIT 1";
 
 
