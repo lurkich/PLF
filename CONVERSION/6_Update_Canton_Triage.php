@@ -9,8 +9,11 @@ require __DIR__ . "/functions.php";
 
 $sql_cmd = "";
 $row = "";
-$tbl_In = $GLOBALS["Tbl_Update_CC"];
-$tbl_Out = $GLOBALS["Tbl_Canton_Triages"];
+$tbl_In = $GLOBALS["tbl_Update_CC"];
+$tbl_Out = $GLOBALS["tbl_Canton_Triages"];
+$tbl_Cantonnements = $GLOBALS["tbl_Cantonnements"];
+$tbl_Triages = $GLOBALS["tbl_Triages"];
+$view_Arlon_Cantons_Triages = $GLOBALS["view_Cantons_Triages"];
 
 
 
@@ -50,6 +53,10 @@ tbl_Add_Column($tbl_Out, "temp3", "TEXT(255)");
 tbl_Add_Column($tbl_Out, "temp4", "TEXT(255)");
 tbl_Add_Column($tbl_Out, "temp5", "TEXT(255)");
 
+
+
+
+
 /**
  * 
  * read into memory table Canton into array $list_Canton
@@ -59,7 +66,7 @@ tbl_Add_Column($tbl_Out, "temp5", "TEXT(255)");
 $list_Canton = [];
 
 
-$sql_cmd = "SELECT tbl_id, num_canton FROM tbl_04_Cantonnements";
+$sql_cmd = "SELECT tbl_id, num_canton FROM $tbl_Cantonnements";
 
 
 
@@ -79,7 +86,7 @@ foreach ($db_conn->query($sql_cmd) as $record_Canton) {
 $list_Triage = [];
 
 
-$sql_cmd = "SELECT num_canton, num_triage, tbl_id FROM VCantons_Triages";
+$sql_cmd = "SELECT num_canton, num_triage, tbl_id FROM $view_Arlon_Cantons_Triages";
 
 
 

@@ -13,7 +13,7 @@ $csv_file_name = "C:\Users\chris\OneDrive\IT\PartageonsLaForet\Data\TerritoriesA
 
 // Step 2 - Upload Table Json
 
-$Tbl_Json = "tbl_02_Upload_json";
+$tbl_Json = "tbl_02_Upload_json";
 
 //step 3 - Create file cantonnement - Step 4
 
@@ -26,26 +26,30 @@ $file_name_out_triages = "C:\Users\chris\OneDrive\IT\PartageonsLaForet\Data\PHP_
 
 $tbl_Cantonnements = "tbl_04_Cantonnements";
 $tbl_Triages = "tbl_04_Triages";
+$view_Cantons_Triages = "view_cantons_triages";
 
 
 // Step 5 - Upload CC
 
-$Tbl_Update_CC = "tbl_05_Update_CC";
+$file_CC = "C:\Users\chris\OneDrive\IT\PartageonsLaForet\Conseils Cynegetiques\conseils cynégétiques.xlsx";
+$tbl_CC = "tbl_05_CC";
+$tbl_Update_CC = "tbl_05_Update_CC";
 
 
 // Step 6 - Update Canton / Triages
-$Tbl_Canton_Triages = "tbl_06_Update_Canton_Triage";
+$tbl_Canton_Triages = "tbl_06_Update_Canton_Triage";
+
 
 // Step 7 - Upload Territoire Arlon
 
 $DB_Territoires_chasse_Direction_Arlon_2023_MW = "C:\Users\chris\OneDrive\IT\PartageonsLaForet\Cartes\Territoires_chasse_Direction_Arlon_2023_MW.accdb";
-$Tbl_In_Territoires_chasse_Direction_Arlon_2023_MW = "Territoires_chasse_Direction_Arlon_2023_MW";
-$Tbl_Out_Territoires_chasse_Direction_Arlon_2023_MW = "tbl_07_Chasses_Direction_Arlon";
+$tbl_In_Territoires_chasse_Direction_Arlon_2023_MW = "Territoires_chasse_Direction_Arlon_2023_MW";
+$tbl_Out_Territoires_chasse_Direction_Arlon_2023_MW = "tbl_07_Chasses_Direction_Arlon";
 
 
 // Step 8 - Update Direction Arlon
 
-$Tbl_Direction_Arlon = "tbl_08_Update_Chasse_Direction_Arlon";
+$tbl_Direction_Arlon = "tbl_08_Update_Chasse_Direction_Arlon";
 
 // Step 10 - Remove unecessary Fields
 
@@ -64,13 +68,15 @@ $json_rebuild_without_tabs_file_name = "C:\Users\chris\OneDrive\IT\PartageonsLaF
 
 $Fichier_Chasses = "C:\Users\chris\OneDrive\IT\PartageonsLaForet\Fichier_Chasses\dates_chasses.sql";
 $tbl_Chasses = "tbl_110_Chasses";
-$tbl_Chasses_Arlon = "plf_Chasses";
-$tbl_Direction_Arlon = "Territoires_chasse_Direction_Arlon_2023_MW";
+$tbl_Direction_Arlon2 = "Territoires_chasse_Direction_Arlon_2023_MW";
 
 
 // Step 120 - Create DB Arlon
 
-$tbl_Arlon_territories = "plf_territoires";
-$tbl_Arlon_Cantonnement = "plf_cantonnements";
-$tbl_Arlon_Chasses = "plf_chasses";
-$tbl_Arlon_Triages = "plf_triages";
+$tbl_plf_territories = "plf_territoires";
+$tbl_plf_Cantonnement = "plf_cantonnements";
+$tbl_plf_Chasses = "plf_chasses";
+$tbl_plf_Triages = "plf_triages";
+$tbl_plf_CC = "plf_CC";
+$view_plf_Cantons_Triages = "view_cantons_triages";
+$view_plf_territoires = "view_territoires";

@@ -10,14 +10,7 @@ $sql_cmd = "";
 $row = "";
 
 
-$tbl_Cantonnements = $GLOBALS['tbl_Cantonnements'];
-$tbl_Triages = $GLOBALS['tbl_Triages'];
-
-$file_name_canton = $GLOBALS['file_name_out_cantonnements'];
-$file_name_triages = $GLOBALS['file_name_out_triages'];
-
-
-
+$tbl_CC = $GLOBALS['tbl_plf_CC'];
 
 
 
@@ -42,6 +35,8 @@ $tbl_Definition_canton = [];
 $tbl_Definition_canton["num_canton"] = "INTEGER";
 $tbl_Definition_canton["nom_canton"] = "TEXT (255)";
 $tbl_Definition_canton["tel_canton"] = "TEXT (255)";
+
+
 
 Create_Table($tbl_Cantonnements, $tbl_Definition_canton);
 
@@ -153,11 +148,11 @@ while (!feof($csv_file)) {
 
     $sql_insert = "INSERT INTO $tbl_Triages (" . (join(",", array_keys($tbl_Definition_triage))) .
         " ) VALUES (" .
-        " '" . mb_convert_encoding($fields[1], 'Windows-1252', 'UTF-8') . "', " .
-        " '" . mb_convert_encoding($fields[2], 'Windows-1252', 'UTF-8') . "', " .
-        " '" . mb_convert_encoding($fields[3], 'Windows-1252', 'UTF-8') . "', " .
-        " '" . mb_convert_encoding($fields[4], 'Windows-1252', 'UTF-8') . "', " .
-        " '" . mb_convert_encoding($fields[5], 'Windows-1252', 'UTF-8') . "' " .
+        " '" . $fields[1] . "', " .
+        " '" . $fields[2] . "', " .
+        " '" . $fields[3] . "', " .
+        " '" . $fields[4] . "', " .
+        " '" . $fields[5] . "' " .
         ")";
 
 
@@ -170,6 +165,58 @@ while (!feof($csv_file)) {
     }
 }
 
+
+
+
+
+
+
+/**
+ * 
+ *  Create view view_Arlon_Cantons_Triages
+ * 
+ */
+
+
+ $sql_cmd = "DROP TABLE $view_Cantons_Triages";
+
+ try {
+     $sql_result = $db_conn->query($sql_cmd);
+ } catch (Exception $e) {
+ }
+
+
+ $sql_cmd = "
+     CREATE VIEW $view_Cantons_Triages AS 
+     SELECT $tbl_Cantonnements.tbl_id AS Canton_tbl_id,
+     $tbl_Cantonnements.num_canton AS num_canton,
+     $tbl_Cantonnements.nom_canton AS nom_canton,
+     $tbl_Cantonnements.tel_canton AS tel_canton,
+
+     $tbl_Triages.tbl_id AS tbl_id,
+     $tbl_Triages.num_triage AS num_triage,
+     $tbl_Triages.nom_triage AS nom_triage,
+     $tbl_Triages.nom_Prepose AS nom_Prepose,
+     $tbl_Triages.gsm_Prepose AS gsm_Prepose 
+     FROM ($tbl_Triages INNER JOIN $tbl_Cantonnements ON(($tbl_Triages.Ptr_Canton = $tbl_Cantonnements.tbl_id)))
+     ";
+
+
+
+ try {
+     $sql_result = $db_conn->query($sql_cmd);
+ } catch (Exception $e) {
+     echo ("Error : " . $e->getMessage() . "SQL Command : ");
+     echo "sql_Create_View_Cantons_Triages\n\n";
+     return false;
+ }
+
+
+
+
+
+
+ 
 unset($db_conn);
 fclose($csv_file);    
     

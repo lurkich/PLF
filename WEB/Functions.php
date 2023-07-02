@@ -203,6 +203,12 @@ class PLF
             "Nom_CC",
             "President_CC",
             "Secretaire_CC",
+            "direction_CC",
+            "email_CC",
+            "attache_CC",
+            "tel_CC",
+            "adresse_CC",
+            "localisation_CC",
             "COMMENTAIR",
             "num_triage",
             "nom_triage",
@@ -318,8 +324,8 @@ class PLF
      *                                  -6 : Commande SQL invalide
      *                      Array[1] : Message d'erreur éventuel
      *                      Array[2] : Array indexé qui contient un array avec le nom du "Territories_Id" ET sa "nomenclature" correspondante
-     *                                      TRI sur "Territories_Id" OU "Nomenclature" en fonction de l'appel
-     *                                 Structure - Array[index] = Array[<Territories_id>, <Nomenclature>]
+     *                                      TRI sur "Territory_Id" OU "Nomenclature" en fonction de l'appel
+     *                                 Structure - Array[index] = Array[<Territory_id>, <Nomenclature>]
      * 
      *-------------------------------------------------------------------------------------------------------------------------------------------*/
 
@@ -360,7 +366,7 @@ class PLF
 
         // Build SQL statement
 
-        $sql_cmd = "SELECT DA_Numero, Territories_id FROM $GLOBALS[tbl_Chasses] ";
+        $sql_cmd = "SELECT DA_Numero, Territory_id FROM $GLOBALS[tbl_Chasses] ";
         $sql_cmd .= "WHERE Date_Chasse = ";
 
         $date_delimiter = "'";           // for MySql
@@ -376,7 +382,7 @@ class PLF
         $sql_cmd .= " ORDER BY ";
 
         if (strtolower($TypeTerritoire ?? '') == "t") {
-            $sql_cmd .= "Territories_id";
+            $sql_cmd .= "Territory_id";
         } else {
             $sql_cmd .= "DA_Numero";
         }
@@ -391,7 +397,7 @@ class PLF
             foreach ($db_connection->query($sql_cmd) as $record) {
 
                 if (strtolower($TypeTerritoire ?? '') == "t") {
-                    array_push(self::$List_Array, $record["Territories_id"]);
+                    array_push(self::$List_Array, $record["Territory_id"]);
                 } else {
                     array_push(self::$List_Array, $record["DA_Numero"]);
                 }
@@ -438,8 +444,8 @@ class PLF
      *      Appel     : Get_Chasse_By_Territoire(<Territoire>, TypeTerritoire: "T")
      *                  Get_Chasse_By_Territoire(<Territoire>)
      * 
-     *      Arguments : Territoire     = <territories_id> or <Nomenclature>
-     *                  TypeTerritoire = "T"            Selection basée sur "Territories_id"
+     *      Arguments : Territoire     = <territory_id> or <Nomenclature>
+     *                  TypeTerritoire = "T"            Selection basée sur "Territory_id"
      *                                 = non spécifié   Selection basée sur "Nomenclature"
      *                  
      *      Output    : Array contenant 3 éléments
@@ -507,7 +513,7 @@ class PLF
         $sql_cmd .= " WHERE ";
 
         if (strtolower($TypeTerritoire ?? '') == "t") {
-            $sql_cmd .= " Territories_id = '";
+            $sql_cmd .= " Territory_id = '";
         } else {
             $sql_cmd .= " DA_Numero = '";
         }
@@ -610,7 +616,10 @@ class PLF
 
         // Build SQL statement
 
-        $sql_cmd = "SELECT DISTINCT num_canton, nom_canton, tel_canton FROM $GLOBALS[tbl_cantonnements] ORDER BY ";
+        $sql_cmd = "SELECT DISTINCT num_canton, 
+                        nom_canton, 
+                        tel_canton
+                        FROM $GLOBALS[tbl_cantonnements] ORDER BY ";
         $sql_cmd .= "num_canton";
 
 
@@ -621,7 +630,8 @@ class PLF
             foreach ($db_connection->query($sql_cmd) as $record) {
 
                 self::$List_Array[$record["num_canton"]] = ["nom_canton" => $record["nom_canton"], 
-                                                            "tel_canton" => $record["tel_canton"]];
+                                                            "tel_canton" => $record["tel_canton"]
+                                                        ];
             }
         } catch (Exception $e) {
 
@@ -825,7 +835,7 @@ class PLF
  
          // Build SQL statement
  
-         $sql_cmd = "SELECT DISTINCT Code, Nom, President, Secretaire FROM $GLOBALS[tbl_CC] ORDER BY ";
+         $sql_cmd = "SELECT DISTINCT Code, Nom, President, Secretaire, direction, email, attache, tel, adresse, localisation FROM $GLOBALS[tbl_CC] ORDER BY ";
          $sql_cmd .= "Code";
  
  
@@ -838,7 +848,14 @@ class PLF
 
                  self::$List_Array[$record["Code"]] = ["nom_CC" => $record["Code"], 
                                                        "president" => $record["President"],
-                                                       "secretaire" => $record["Secretaire"]];
+                                                       "secretaire" => $record["Secretaire"],
+                                                       "direction" => $record["direction"],
+                                                       "email" => $record["email"],
+                                                       "attache" => $record["attache"],
+                                                       "tel" => $record["tel"],
+                                                       "adresse" => $record["adresse"],
+                                                       "localisation" => $record["localisation"],
+                                                    ];
              }
          } catch (Exception $e) {
  
@@ -1117,7 +1134,7 @@ class PLF
         $DA_Numero = $territoire[2][1];
 
 
-        $sql_insert = "INSERT INTO $GLOBALS[tbl_Chasses] ( Date_Chasse, Territories_id, DA_Numero " .
+        $sql_insert = "INSERT INTO $GLOBALS[tbl_Chasses] ( Date_Chasse, Territory_id, DA_Numero " .
             " ) VALUES (" .
             " '"   . PLF::__Convert_2_Sql_Date($Chasse_Date) . "', " .
             " '" . $Territoire_id . "', " .
@@ -1167,9 +1184,9 @@ class PLF
      *      Appel     : Chasse_Date_Delete(Territoire_Name: <nom du territoire>, Date_Chasse: <JJ-MM-AAAA>, TypeTerritoire: "T" )
      *                  Chasse_Date_Delete(Territoire_Name: <nom du territoire>, Date_Chasse: <JJ-MM-AAAA>)
      * 
-     *      Arguments : Territoire     = <territories_id> or <Nomenclature> en 
+     *      Arguments : Territoire     = <territoriy_id> or <Nomenclature> en 
      *                  Date_Chasse    = Date de la chasse a supprimer (format JJ-MM-AAAA)
-     *                  TypeTerritoire = "T"            Selection basée sur "Territories_id"
+     *                  TypeTerritoire = "T"            Selection basée sur "Territory_id"
      *                                 = non spécifié   Selection basée sur "Nomenclature"
      *                  
      *      Output    : Array contenant 3 éléments
@@ -1263,7 +1280,7 @@ class PLF
 
 
         if (strtolower($TypeTerritoire ?? '') == "t") {
-            $sql_Delete .= " Territories_id = '";
+            $sql_Delete .= " Territory_id = '";
         } else {
             $sql_Delete .= " DA_Numero = '";
         }
@@ -1394,11 +1411,11 @@ class PLF
         }
 
 
-        $headers = "[\r\n\t{\r\n\t\t\"type\" : \"FeatureCollection\"," .
+        $headers = "\r\n\t{\r\n\t\t\"type\" : \"FeatureCollection\"," .
             "\r\n\t\t\"name\" : \"NewFeatureType\"," .
             "\r\n\t\t\"features\" : [\r\n\t\t\t{\r\n\t\t\t\t\"type\" : \"Feature\",\r\n\t\t\t\t\"geometry\" : ";
 
-        $footer = "\r\n\t\t\t\t}\r\n\t\t\t}\r\n\t\r\n\t\t]\r\n\t}\r\n]";
+        $footer = "\r\n\t\t\t\t}\r\n\t\t\t}\r\n\t\r\n\t\t]\r\n\t}\r\n";
 
         $Geometry = $Territory_Data[2]['geometry'];
         $Territories_id = $Territory_Data[2]['Territories_id'];

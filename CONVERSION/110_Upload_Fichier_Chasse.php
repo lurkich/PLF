@@ -10,7 +10,6 @@ require __DIR__ . "/functions.php";
 $sql_cmd = "";
 $row = "";
 $tbl_Chasses = $GLOBALS['tbl_Chasses'];
-$tbl_Date_Chasses_Arlon = $GLOBALS['tbl_Chasses_Arlon'];
 
 
 drop_Table($tbl_Chasses);
@@ -31,21 +30,6 @@ $tbl_Definition_Chasses["DA_Numero"] = "TEXT (255)";
 Create_Table($tbl_Chasses, $tbl_Definition_Chasses);
 
 
-/**
- * 
- *  Create table_Chasses_Arlon
- */
-
-
- $tbl_Definition_Chasses_Arlon = [];
-
- $tbl_Definition_Chasses_Arlon["Date_Chasse"] = "DATETIME";
- $tbl_Definition_Chasses_Arlon["Territories_ID"] = "TEXT (255)";
- $tbl_Definition_Chasses_Arlon["DA_Numero"] = "TEXT (255)";
- 
- Create_Table($tbl_Chasses_Arlon, $tbl_Definition_Chasses_Arlon);
-
-
 
 /**
  * 
@@ -55,10 +39,6 @@ Create_Table($tbl_Chasses, $tbl_Definition_Chasses);
 
 $db_conn = new PDO("odbc:Driver={Microsoft Access Driver (*.mdb, *.accdb)};Dbq=" . $GLOBALS['db_file_name'] . ";Uid=; Pwd=;");
 $db_conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-
-$db_conn_Arlon = new PDO("odbc:Driver={Microsoft Access Driver (*.mdb, *.accdb)};Dbq=" . $GLOBALS['db_file_name'] . ";Uid=; Pwd=;");
-$db_conn_Arlon->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 /**
  * 
@@ -135,24 +115,6 @@ while (!feof($fp_Chasses)) {
         } catch (PDOException $e) {
             echo ("Error : " . $e->getMessage() . "SQL Command : ");
             echo "\n$sql_cmd\n\n";
-        }
-
-
-        if (substr($nomenclature,0,1) == "9") {
-            $sql_cmd_Arlon = "INSERT INTO  $tbl_Chasses_Arlon (Date_Chasse, Territories_ID, DA_Numero " .
-            ")  VALUES ( " .
-            " #$rec_fields[1]#, " .
-            " '$territory', " .
-            " '$nomenclature' " .
-            ")";
-        
-            try {
-                $sql_result = $db_conn_Arlon->query($sql_cmd_Arlon);
-            } catch (PDOException $e) {
-                echo ("Error : " . $e->getMessage() . "SQL Command : ");
-                echo "\n$sql_cmd_Arlon\n\n";
-            }
-    
         }
 
 

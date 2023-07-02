@@ -74,7 +74,7 @@ function drop_Table(string $table_Name)
     try {
         $sql_result = $db_conn->query($sql_delete);
     } catch (PDOException $e) {
-        echo ("Error : " . $e->getMessage());
+        echo ("Error : " . $e->getMessage() . "\n");
     }
 
 
@@ -109,8 +109,6 @@ function Create_Table(string $table_Name, array $tbl_definition)
     $db_conn = new PDO("odbc:Driver={Microsoft Access Driver (*.mdb, *.accdb)};Dbq=" . $GLOBALS['db_file_name'] . ";Uid=; Pwd=;");
     $db_conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-
-
     $sql_Create = "CREATE TABLE $table_Name ( ";
     $sql_Create .= " tbl_id AUTOINCREMENT PRIMARY KEY, ";
 
@@ -129,7 +127,7 @@ function Create_Table(string $table_Name, array $tbl_definition)
     try {
         $sql_result = $db_conn->query($sql_Create);
     } catch (PDOException $e) {
-        echo ("Error : " . $e->getMessage() . "\nSQL Command : " . $sql_Create);
+        echo ("Error : " . $e->getMessage() . "\nSQL Command : " . $sql_Create . "\n");
     }
 
 
@@ -165,7 +163,7 @@ function Duplicate_Table(string $tbl_In, string $tbl_Out)
     try {
         $sql_result = $db_conn->query($sql_cmd);
     } catch (PDOException $e) {
-        echo ("Error : " . $e->getMessage() . "\nSQL Command : " . $sql_cmd);
+        echo ("Error : " . $e->getMessage() . "\nSQL Command : " . $sql_cmd) . "\n";
     }
 
     unset($db_conn);

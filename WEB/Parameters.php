@@ -16,6 +16,7 @@ $tbl_Territoires = "plf_territoires";
 $tbl_Chasses = "plf_chasses";
 $View_Territoires = "view_territoires";
 $tbl_cantonnements = "plf_cantonnements";
+$tbl_triages = "plf_triages";
 $tbl_CC = "plf_cc";
 
 

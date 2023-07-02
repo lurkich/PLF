@@ -9,9 +9,9 @@ require __DIR__ . "/functions.php";
 
 $sql_cmd = "";
 $row = "";
-$tbl_Chasse_Arlon = $GLOBALS["Tbl_Out_Territoires_chasse_Direction_Arlon_2023_MW"];
-$tbl_In = $GLOBALS["Tbl_Canton_Triages"];
-$tbl_Out = $GLOBALS["Tbl_Direction_Arlon"];
+$tbl_Chasse_Arlon = $GLOBALS["tbl_Out_Territoires_chasse_Direction_Arlon_2023_MW"];
+$tbl_In = $GLOBALS["tbl_Canton_Triages"];
+$tbl_Out = $GLOBALS["tbl_Direction_Arlon"];
 
 
 
@@ -52,7 +52,7 @@ tbl_Add_Column($tbl_Out, "DA_Nom", "TEXT(255)");
 $list_DA_Arlon = [];
 
 
-$sql_cmd = "SELECT Canto, Numero, Nom FROM " . $GLOBALS['Tbl_Out_Territoires_chasse_Direction_Arlon_2023_MW'];
+$sql_cmd = "SELECT Canto, Numero, Nom FROM " . $GLOBALS['tbl_Out_Territoires_chasse_Direction_Arlon_2023_MW'];
 
 
 try {

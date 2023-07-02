@@ -12,12 +12,12 @@ require __DIR__ . "/functions.php";
 //goto Test2;
 //goto Test3;
 //goto Test4;
-goto Test5;
+//goto Test5;
 //goto Test6;
-goto Test7;
+//goto Test7;
 //goto Test8;
 //goto Test9;
-//goto Test10;
+goto Test10;
 //goto Test11;
 
 
@@ -407,7 +407,7 @@ if ($RC_Delete == false) {
 
 Test11:
 
-$Territoire_Geometry = PLF::Territoire_JSON(Territoire_Name: "HA222", TypeTerritoire: "T");
+$Territoire_Geometry = PLF::Territoire_JSON(Territoire_Name: "HA22", TypeTerritoire: "T");
 
 if ($Territoire_Geometry[0] < 0) {
 

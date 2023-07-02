@@ -11,8 +11,8 @@ $sql_cmd = "";
 $row = "";
 
 $db_Territoires_Arlon = $GLOBALS["DB_Territoires_chasse_Direction_Arlon_2023_MW"];
-$tbl_In = $GLOBALS["Tbl_In_Territoires_chasse_Direction_Arlon_2023_MW"];
-$tbl_Out = $GLOBALS["Tbl_Out_Territoires_chasse_Direction_Arlon_2023_MW"];
+$tbl_In = $GLOBALS["tbl_In_Territoires_chasse_Direction_Arlon_2023_MW"];
+$tbl_Out = $GLOBALS["tbl_Out_Territoires_chasse_Direction_Arlon_2023_MW"];
 
 
 // Create the table

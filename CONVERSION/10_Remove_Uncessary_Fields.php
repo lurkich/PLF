@@ -11,7 +11,7 @@ require __DIR__ . "/functions.php";
 
 $sql_cmd = "";
 $row = "";
-$tbl_In = $GLOBALS["Tbl_Direction_Arlon"];
+$tbl_In = $GLOBALS["tbl_Direction_Arlon"];
 $tbl_Out = $GLOBALS['tbl_json_final'];
 
 
