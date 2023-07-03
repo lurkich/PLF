@@ -15,9 +15,9 @@ require __DIR__ . "/functions.php";
 //goto Test5;
 //goto Test6;
 //goto Test7;
-//goto Test8;
+goto Test8;
 //goto Test9;
-goto Test10;
+//goto Test10;
 //goto Test11;
 
 
@@ -309,7 +309,7 @@ if ($List_CC[0] < 0) {
 
  Test8:
 
- $List_Territoire_By_CC = PLF::Get_Territoire_By_CC(Code_CC: "CCFARM1");
+ $List_Territoire_By_CC = PLF::Get_Territoire_By_CC(Code_CC: "CCFARM");
  
  if ($List_Territoire_By_CC[0] < 0) {
  

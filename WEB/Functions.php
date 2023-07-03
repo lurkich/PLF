@@ -185,7 +185,7 @@ class PLF
         self::$List_Array = [];
 
         $List_Columns = [
-
+            "tbl_id",
             "Territories_id",
             "Nomenclature",
             "DA_Numero",
@@ -196,27 +196,31 @@ class PLF
             "PRENOM_TIT",
             "TITULAIRE1",
             "SAISON",
+            "COMMENTAIR",
+            "DATE_MAJ",
+            "ESRI_OID",
             "num_canton",
             "nom_canton",
             "tel_canton",
+            "direction_canton",
+            "email_canton",
+            "attache_canton",
+            "adresse_canton",
+            "localisation_canton",
             "Code_CC",
             "Nom_CC",
             "President_CC",
             "Secretaire_CC",
-            "direction_CC",
             "email_CC",
-            "attache_CC",
-            "tel_CC",
             "adresse_CC",
             "localisation_CC",
-            "COMMENTAIR",
+            "site_internet_CC",
+            "logo_CC",
             "num_triage",
             "nom_triage",
             "nom_Prepose",
-            "gsm_Prepose",
-            "DATE_MAJ",
-            "ESRI_OID",
-            "tbl_id"
+            "gsm_Prepose"
+
 
         ];
 
@@ -616,11 +620,16 @@ class PLF
 
         // Build SQL statement
 
-        $sql_cmd = "SELECT DISTINCT num_canton, 
-                        nom_canton, 
-                        tel_canton
+        $sql_cmd = "SELECT DISTINCT numero, 
+                        nom, 
+                        tel,
+                        direction,
+                        email,
+                        attache,
+                        adresse,
+                        localisation
                         FROM $GLOBALS[tbl_cantonnements] ORDER BY ";
-        $sql_cmd .= "num_canton";
+        $sql_cmd .= "numero";
 
 
         // Process SQL command
@@ -629,8 +638,13 @@ class PLF
 
             foreach ($db_connection->query($sql_cmd) as $record) {
 
-                self::$List_Array[$record["num_canton"]] = ["nom_canton" => $record["nom_canton"], 
-                                                            "tel_canton" => $record["tel_canton"]
+                self::$List_Array[$record["numero"]] = ["nom" => $record["nom"], 
+                                                            "tel" => $record["tel"],
+                                                            "direction" => $record["direction"],
+                                                            "email" => $record["email"],
+                                                            "attache" => $record["attache"],
+                                                            "adresse" => $record["adresse"],
+                                                            "localisation" => $record["localisation"]
                                                         ];
             }
         } catch (Exception $e) {
@@ -835,7 +849,16 @@ class PLF
  
          // Build SQL statement
  
-         $sql_cmd = "SELECT DISTINCT Code, Nom, President, Secretaire, direction, email, attache, tel, adresse, localisation FROM $GLOBALS[tbl_CC] ORDER BY ";
+         $sql_cmd = "SELECT DISTINCT Code, 
+                        Nom, 
+                        President, 
+                        Secretaire, 
+                        email, 
+                        adresse, 
+                        localisation, 
+                        site_internet, 
+                        logo 
+                    FROM $GLOBALS[tbl_CC] ORDER BY ";
          $sql_cmd .= "Code";
  
  
@@ -846,15 +869,14 @@ class PLF
              foreach ($db_connection->query($sql_cmd) as $record) {
  
 
-                 self::$List_Array[$record["Code"]] = ["nom_CC" => $record["Code"], 
+                 self::$List_Array[$record["Code"]] = ["nom" => $record["Code"], 
                                                        "president" => $record["President"],
                                                        "secretaire" => $record["Secretaire"],
-                                                       "direction" => $record["direction"],
                                                        "email" => $record["email"],
-                                                       "attache" => $record["attache"],
-                                                       "tel" => $record["tel"],
                                                        "adresse" => $record["adresse"],
                                                        "localisation" => $record["localisation"],
+                                                       "site_internet" => $record["site_internet"],
+                                                       "logo" => $record["logo"],
                                                     ];
              }
          } catch (Exception $e) {
@@ -1930,10 +1952,10 @@ class PLF
 
         // Build SQL statement
 
-        $sql_cmd = "SELECT Num_Canton ";
+        $sql_cmd = "SELECT Numero ";
         $sql_cmd .= "FROM $GLOBALS[tbl_cantonnements] ";
         $sql_cmd .= " WHERE ";
-        $sql_cmd .= " Num_Canton = '" . "$Num_Canton' ";
+        $sql_cmd .= " Numero = '" . "$Num_Canton' ";
         $sql_cmd .= " LIMIT 1";
 
 

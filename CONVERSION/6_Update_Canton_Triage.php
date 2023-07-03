@@ -66,12 +66,12 @@ tbl_Add_Column($tbl_Out, "temp5", "TEXT(255)");
 $list_Canton = [];
 
 
-$sql_cmd = "SELECT tbl_id, num_canton FROM $tbl_Cantonnements";
+$sql_cmd = "SELECT tbl_id, numero FROM $tbl_Cantonnements";
 
 
 
 foreach ($db_conn->query($sql_cmd) as $record_Canton) {
-    $list_Canton[$record_Canton['num_canton']] = $record_Canton['tbl_id'];
+    $list_Canton[$record_Canton['numero']] = $record_Canton['tbl_id'];
 }
 
 

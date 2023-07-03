@@ -184,12 +184,11 @@ function Upload_plf_CC($tbl_CC, $File_CC)
     $tbl_Definition_CC["Nom"] = "TEXT (255)";
     $tbl_Definition_CC["President"] = "TEXT (255)";
     $tbl_Definition_CC["Secretaire"] = "TEXT (255)";
-    $tbl_Definition_CC["direction"] = "TEXT (255)";
     $tbl_Definition_CC["email"] = "TEXT (255)";
-    $tbl_Definition_CC["attache"] = "TEXT (255)";
-    $tbl_Definition_CC["tel"] = "TEXT (255)";
     $tbl_Definition_CC["adresse"] = "TEXT (255)";
     $tbl_Definition_CC["localisation"] = "TEXT (255)";
+    $tbl_Definition_CC["site_internet"] = "TEXT (255)";
+    $tbl_Definition_CC["logo"] = "TEXT (255)";
 
 
 
@@ -230,6 +229,7 @@ function Upload_plf_CC($tbl_CC, $File_CC)
     $data = $sheet->toArray();
 
 
+    $x = 0;
 
     foreach ($data as $rec) {
 
@@ -248,18 +248,19 @@ function Upload_plf_CC($tbl_CC, $File_CC)
             }
         }
 
-        $sql_cmd = "INSERT INTO  $tbl_CC (Code, Nom, President, Secretaire, direction, email, attache, tel, adresse, localisation  " .
+        $x++; 
+
+        $sql_cmd = "INSERT INTO  $tbl_CC (Code, Nom, President, Secretaire, email, adresse, localisation, site_internet, logo  " .
             ")  VALUES ( " .
             " '" . $rec[0] . "', " .
             " '" . $rec[1] . "', " .
             " '" . $rec[2] . "', " .
             " '" . $rec[3] . "', " .
-            " '" . $rec[4] . "', " .
-            " '" . $rec[5] . "', " .
-            " '" . $rec[6] . "', " .
-            " '" . $rec[7] . "', " .
-            " '" . $rec[8] . "', " .
-            " '" . $rec[9] . "' " .
+            " '" . "AA" . $x . "', " .
+            " '" . "BB" . $x . "', " .
+            " '" . "CC" . $x . "', " .
+            " '" . "DD" . $x . "', " .
+            " '" . "EE" . $x . "' " .
             ")";
 
         try {

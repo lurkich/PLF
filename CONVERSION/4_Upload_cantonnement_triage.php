@@ -32,9 +32,14 @@ drop_Table($tbl_Triages);
 
 $tbl_Definition_canton = [];
 
-$tbl_Definition_canton["num_canton"] = "INTEGER";
-$tbl_Definition_canton["nom_canton"] = "TEXT (255)";
-$tbl_Definition_canton["tel_canton"] = "TEXT (255)";
+$tbl_Definition_canton["numero"] = "INTEGER";
+$tbl_Definition_canton["nom"] = "TEXT (255)";
+$tbl_Definition_canton["tel"] = "TEXT (255)";
+$tbl_Definition_canton["direction"] = "TEXT (255)";
+$tbl_Definition_canton["email"] = "TEXT (255)";
+$tbl_Definition_canton["attache"] = "TEXT (255)";
+$tbl_Definition_canton["adresse"] = "TEXT (255)";
+$tbl_Definition_canton["localisation"] = "TEXT (255)";
 
 
 
@@ -43,8 +48,8 @@ Create_Table($tbl_Cantonnements, $tbl_Definition_canton);
 
 $tbl_Definition_triage = [];
 
-$tbl_Definition_triage["num_triage"] = "INTEGER";
-$tbl_Definition_triage["nom_triage"] = "TEXT (255)";
+$tbl_Definition_triage["numero"] = "INTEGER";
+$tbl_Definition_triage["nom"] = "TEXT (255)";
 $tbl_Definition_triage["nom_Prepose"] = "TEXT (255)";
 $tbl_Definition_triage["gsm_Prepose"] = "TEXT (255)";
 $tbl_Definition_triage["Ptr_Canton"] = "INTEGER";
@@ -96,7 +101,12 @@ while (!feof($csv_file)) {
                   " ) VALUES (" . 
                   " '$fields[1]', " .
                   " '$fields[2]', " .
-                  " '$fields[3]' " .
+                  " '$fields[3]', " .
+                  " '$fields[4]', " .
+                  " '$fields[5]', " .
+                  " '$fields[6]', " .
+                  " '$fields[7]', " .
+                  " '$fields[8]' " .
                   ")";
 
 
@@ -168,10 +178,7 @@ while (!feof($csv_file)) {
 
 
 
-
-
-
-/**
+ /**
  * 
  *  Create view view_Arlon_Cantons_Triages
  * 
@@ -189,19 +196,22 @@ while (!feof($csv_file)) {
  $sql_cmd = "
      CREATE VIEW $view_Cantons_Triages AS 
      SELECT $tbl_Cantonnements.tbl_id AS Canton_tbl_id,
-     $tbl_Cantonnements.num_canton AS num_canton,
-     $tbl_Cantonnements.nom_canton AS nom_canton,
-     $tbl_Cantonnements.tel_canton AS tel_canton,
+     $tbl_Cantonnements.numero AS num_canton,
+     $tbl_Cantonnements.nom AS nom_canton,
+     $tbl_Cantonnements.tel AS tel_canton,
+     $tbl_Cantonnements.direction AS direction_canton,
+     $tbl_Cantonnements.email AS email_canton,
+     $tbl_Cantonnements.attache AS attache_canton,
+     $tbl_Cantonnements.adresse AS adresse_canton,
+     $tbl_Cantonnements.localisation AS locatlisation_canton,
 
      $tbl_Triages.tbl_id AS tbl_id,
-     $tbl_Triages.num_triage AS num_triage,
-     $tbl_Triages.nom_triage AS nom_triage,
+     $tbl_Triages.numero AS num_triage,
+     $tbl_Triages.nom AS nom_triage,
      $tbl_Triages.nom_Prepose AS nom_Prepose,
      $tbl_Triages.gsm_Prepose AS gsm_Prepose 
      FROM ($tbl_Triages INNER JOIN $tbl_Cantonnements ON(($tbl_Triages.Ptr_Canton = $tbl_Cantonnements.tbl_id)))
      ";
-
-
 
  try {
      $sql_result = $db_conn->query($sql_cmd);
@@ -216,7 +226,8 @@ while (!feof($csv_file)) {
 
 
 
- 
+
+
 unset($db_conn);
 fclose($csv_file);    
     

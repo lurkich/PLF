@@ -46,7 +46,6 @@ while(! feof($file_in_cantonnements)) {
             "direction_Canton" => "Direction_Canton",
             "email_Canton" => "email_Canton",
             "attache_Canton" => "Attache_Canton",
-            "tel2_Canton" => "Tel2_Canton",
             "adresse_Canton" => "Adresse_Canton",
             "localisation_Canton" => "Localisation_Canton",
             "OBJECT_ID" => "OBJECT_ID",
@@ -110,6 +109,11 @@ while(! feof($file_in_cantonnements)) {
             "Num_Canton" => mb_convert_encoding($array_items[2], 'Windows-1252', 'UTF-8'),
             "Nom_Canton" =>  mb_convert_encoding($array_items[6], 'Windows-1252', 'UTF-8'),
             "TEL_Canton" =>  mb_convert_encoding($array_items[7], 'Windows-1252', 'UTF-8'),
+            "direction_Canton" =>  mb_convert_encoding("XXXX" . $Record_ID_Canton, 'Windows-1252', 'UTF-8'),
+            "email_Canton" =>  mb_convert_encoding("AAAA" . $Record_ID_Canton, 'Windows-1252', 'UTF-8'),
+            "attache_Canton" =>  mb_convert_encoding("BBBB" . $Record_ID_Canton, 'Windows-1252', 'UTF-8'),
+            "adresse_Canton" =>  mb_convert_encoding("CCCC" . $Record_ID_Canton, 'Windows-1252', 'UTF-8'),
+            "localisation_Canton" =>  mb_convert_encoding("DDDD" . $Record_ID_Canton, 'Windows-1252', 'UTF-8'),
         );
 
         
