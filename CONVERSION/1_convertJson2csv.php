@@ -70,8 +70,8 @@ foreach ($payload[0]['features'] as $x) {
         
             if ($level2 == "Ter_long" or 
                 $level2 == "Ter_area" or 
-                $level2 == "Ter_Area_1" or 
-                $level2 == "Ter_Long_1") {
+                $level2 == "Ter_Area" or 
+                $level2 == "Ter_Long") {
                 // $csv_items[$level2] = floatval($x[$level1][$level2]);
                 $csv_items[$level2] = preg_replace('/\./', ",", $x[$level1][$level2]);
               

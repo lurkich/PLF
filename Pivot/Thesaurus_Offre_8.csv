@@ -1,1 +1,628 @@
-urn$urn_Value
+urn:val:adrpays:de,fr,Pays,Allemagne
+urn:val:adrpays:de,nl,Pays,Duitsland
+urn:val:adrpays:de,en,Pays,Germany
+urn:val:adrpays:de,de,Pays,Deutschland
+urn:val:adrpays:be,fr,Pays,Belgique
+urn:val:adrpays:be,nl,Pays,België
+urn:val:adrpays:be,en,Pays,Belgium
+urn:val:adrpays:be,de,Pays,Belgien
+urn:val:adrpays:fr,fr,Pays,France
+urn:val:adrpays:fr,nl,Pays,Frankrijk
+urn:val:adrpays:fr,en,Pays,France
+urn:val:adrpays:fr,de,Pays,Frankreich
+urn:val:adrpays:lu,fr,Pays,Luxembourg
+urn:val:adrpays:lu,nl,Pays,Luxemburg
+urn:val:adrpays:lu,en,Pays,Luxembourg
+urn:val:adrpays:lu,de,Pays,Luxemburg
+urn:val:adrpays:nl,fr,Pays,Pays-Bas
+urn:val:adrpays:nl,nl,Pays,Nederland
+urn:val:adrpays:nl,en,Pays,Netherlands
+urn:val:adrpays:nl,de,Pays,Niederlande
+urn:val:valscore:0,fr,"inquiétante (0/10)","Inquiétante (0/10)"
+urn:val:valscore:10,fr,"très mauvaise (1/10)","Très mauvaise (1/10)"
+urn:val:valscore:20,fr,"mauvaise (2/10)","Mauvaise (2/10)"
+urn:val:valscore:30,fr,"mauvaise (3/10)","Mauvaise (3/10)"
+urn:val:valscore:40,fr,"mauvaise (4/10)","Mauvaise (4/10)"
+urn:val:valscore:50,fr,"faible (5/10)","Faible (5/10)"
+urn:val:valscore:60,fr,"moyenne (6/10)","Moyenne (6/10)"
+urn:val:valscore:70,fr,"bonne (7/10)","Bonne (7/10)"
+urn:val:valscore:80,fr,"très bonne (8/10)","Très bonne (8/10)"
+urn:val:valscore:90,fr,"excellente (9/10)","Excellente (9/10)"
+urn:val:valscore:100,fr,"parfaite (10/10)","Parfaite (10/10)"
+urn:val:etatedit:05,fr,,Archivée
+urn:val:etatedit:10,fr,,"Non publiable"
+urn:val:etatedit:10,nl,,"Niet publicabel"
+urn:val:etatedit:10,en,,Unpublishable
+urn:val:etatedit:10,de,,"Nicht publizierbar"
+urn:val:etatedit:20,fr,,"En édition"
+urn:val:etatedit:20,nl,,"Wordt gepubliceerd"
+urn:val:etatedit:20,en,,"In preparation"
+urn:val:etatedit:20,de,,"In der Veröffentlichung"
+urn:val:etatedit:30,fr,,Publiable
+urn:val:etatedit:30,nl,,Publicabel
+urn:val:etatedit:30,en,,Publishable
+urn:val:etatedit:30,de,,Publizierbar
+urn:val:adrprov:bevan,fr,,Anvers
+urn:val:adrprov:bevan,nl,,Antwerpen
+urn:val:adrprov:bevan,en,,Antwerpen
+urn:val:adrprov:bevan,de,,Antwerpen
+urn:val:adrprov:bevbr,fr,,"Brabant flamand"
+urn:val:adrprov:bevbr,nl,,Vlaams-Brabant
+urn:val:adrprov:bevbr,en,,Vlaams-Brabant
+urn:val:adrprov:bevbr,de,,Flämisch-Brabant
+urn:val:adrprov:bewbr,fr,,"Brabant wallon"
+urn:val:adrprov:bewbr,nl,,Waals-Brabant
+urn:val:adrprov:bewbr,en,,"Brabant wallon"
+urn:val:adrprov:bewbr,de,,"Brabant wallon"
+urn:val:adrprov:bevwv,fr,,"Flandre orientale"
+urn:val:adrprov:bevwv,nl,,Oost-Vlaanderen
+urn:val:adrprov:bevwv,en,,Oost-Vlaanderen
+urn:val:adrprov:bevwv,de,,Oost-Vlaanderen
+urn:val:adrprov:bevov,fr,,"Flandre occidentale"
+urn:val:adrprov:bevov,nl,,West-Vlaanderen
+urn:val:adrprov:bevov,en,,West-Vlaanderen
+urn:val:adrprov:bevov,de,,West-Vlaanderen
+urn:val:adrprov:bewht,fr,,Hainaut
+urn:val:adrprov:bewht,nl,,Henegouwen
+urn:val:adrprov:bewht,en,,Hainaut
+urn:val:adrprov:bewht,de,,Hennegau
+urn:val:adrprov:bewlg,fr,,Liège
+urn:val:adrprov:bewlg,nl,,Luik
+urn:val:adrprov:bewlg,en,,Liège
+urn:val:adrprov:bewlg,de,,Lüttich
+urn:val:adrprov:bevli,fr,,Limbourg
+urn:val:adrprov:bevli,nl,,Limburg
+urn:val:adrprov:bevli,en,,Limburg
+urn:val:adrprov:bevli,de,,Limburg
+urn:val:adrprov:bewlx,fr,,Luxembourg
+urn:val:adrprov:bewlx,nl,,Luxemburg
+urn:val:adrprov:bewlx,en,,Luxembourg
+urn:val:adrprov:bewlx,de,,Luxemburg
+urn:val:adrprov:bewna,fr,,Namur
+urn:val:adrprov:bewna,nl,,Namen
+urn:val:adrprov:bewna,en,,Namur
+urn:val:adrprov:bewna,de,,Namur
+urn:val:adrpn:hopa,fr,,"Hors Parcs"
+urn:val:adrpn:hopa,nl,,"Exclusief parken"
+urn:val:adrpn:hopa,en,,"Outside Parks"
+urn:val:adrpn:hopa,de,,"Außerhalb der Parks"
+urn:val:adrpn:pcol,fr,,"Parc Naturel du Pays des Collines"
+urn:val:adrpn:pcol,nl,,"Natuurpark Pays des Collines"
+urn:val:adrpn:pcol,en,,"Pays des Collines Natural Park"
+urn:val:adrpn:pcol,de,,"Pays des Collines Naturpark"
+urn:val:adrpn:hapa,fr,,"Parc Naturel des Hauts Pays"
+urn:val:adrpn:hapa,nl,,"Natuurpark Hauts Pays"
+urn:val:adrpn:hapa,en,,"Hauts Pays Natural Park"
+urn:val:adrpn:hapa,de,,"Hauts zahlt Naturpark"
+urn:val:adrpn:ples,fr,,"Parc Naturel des Plaines de l’Escaut"
+urn:val:adrpn:ples,nl,,"Natuurpark Scheldevlakten"
+urn:val:adrpn:ples,en,,"Scheldt Plains Natural Park"
+urn:val:adrpn:ples,de,,"Naturpark Scheldebene"
+urn:val:adrpn:vihe,fr,,"Parc Naturel Viroin-Hermeton"
+urn:val:adrpn:vihe,nl,,"Natuurpark Viroin-Hermeton"
+urn:val:adrpn:vihe,en,,"Viroin-Hermeton Natural Park"
+urn:val:adrpn:vihe,de,,"Viroin-Hermeton Naturpark"
+urn:val:adrpn:hfei,fr,,"Parc Naturel national Hautes Fagnes – Eifel"
+urn:val:adrpn:hfei,nl,,"Nationaal natuurpark Hoge Venen – Eifel"
+urn:val:adrpn:hfei,en,,"Hautes Fagnes National Nature Park – Eifel"
+urn:val:adrpn:hfei,de,,"Hautes Fagnes Nationaler Naturpark – Eifel"
+urn:val:adrpn:vaat,fr,,"Parc Naturel de la Vallée de l’Attert"
+urn:val:adrpn:vaat,nl,,"Natuurpark Attert Valley"
+urn:val:adrpn:vaat,en,,"Attert Valley Natural Park"
+urn:val:adrpn:vaat,de,,"Naturpark Attert Valley"
+urn:val:adrpn:vabm,fr,,"Parc Naturel des Vallées de la Burdinale et de la Méhaigne"
+urn:val:adrpn:vabm,nl,,"Burdinale en Méhaigne Valleys Natural Park"
+urn:val:adrpn:vabm,en,,"Burdinale and Méhaigne Valleys Natural Park"
+urn:val:adrpn:vabm,de,,"Naturpark Burdinale und Méhaigne Valleys"
+urn:val:adrpn:deou,fr,,"Parc Naturel des Deux-Ourthes"
+urn:val:adrpn:deou,nl,,"Natuurpark Deux-Ourthes"
+urn:val:adrpn:deou,en,,"Deux-Ourthes Natural Park"
+urn:val:adrpn:deou,de,,"Naturpark Deux-Ourthes"
+urn:val:adrpn:hsfa,fr,,"Parc Naturel de la Haute-Sûre et de la forêt d’Anlier"
+urn:val:adrpn:hsfa,nl,,"Natuurpark Haute-Sûre en Woud van Anlier"
+urn:val:adrpn:hsfa,en,,"Haute-Sûre and Anlier Forest Natural Park"
+urn:val:adrpn:hsfa,de,,"Naturpark Haute-Sûre und Anlier Forest"
+urn:val:adrpn:gaum,fr,,"Parc Naturel de Gaume"
+urn:val:adrpn:gaum,nl,,"Gaume natuurpark"
+urn:val:adrpn:gaum,en,,"Gaume Natural Park"
+urn:val:adrpn:gaum,de,,"Naturpark Gaume"
+urn:val:typecirc:boucle,fr,,"En boucle"
+urn:val:typecirc:boucle,nl,,Lus
+urn:val:typecirc:boucle,en,,Loop
+urn:val:typecirc:boucle,de,,Hügelig
+urn:val:typecirc:lineaire,fr,,Linéaire
+urn:val:typecirc:lineaire,nl,,Lineair
+urn:val:typecirc:lineaire,en,,Linear
+urn:val:typecirc:lineaire,de,,Linear
+urn:val:typecirc:ptnoeud,fr,,Points-noeuds
+urn:val:typecirc:ptnoeud,nl,,Knooppunten
+urn:val:typecirc:ptnoeud,en,,"Connection points"
+urn:val:typecirc:ptnoeud,de,,Knotenpunkte
+urn:val:catcirc:loc,fr,,"Circuit local"
+urn:val:catcirc:reg,fr,,"Circuit régional"
+urn:val:catcirc:int,fr,,"Circuit international"
+urn:val:reco:nreco,fr,,"Non reconnu"
+urn:val:reco:nreco,nl,,"Niet geclassificeerd"
+urn:val:reco:nreco,en,,Unclassified
+urn:val:reco:nreco,de,,"Nicht klassifiziert"
+urn:val:reco:ecreco,fr,,"En cours de reconnaissance"
+urn:val:reco:ecreco,nl,,"Erkenning aan de gang"
+urn:val:reco:ecreco,en,,"Awaiting recognition"
+urn:val:reco:ecreco,de,,"In der Klassifizierungsphase"
+urn:val:reco:reco,fr,,Reconnu
+urn:val:reco:reco,nl,,Erkend
+urn:val:reco:reco,en,,Recognised
+urn:val:reco:reco,de,,Anerkannt
+urn:val:signal:dec07:n1:bleu,fr,,"N1 (Piéton) - Bleu"
+urn:val:signal:dec07:n1:bleu,nl,,"N1 (Voetganger) - Blauw"
+urn:val:signal:dec07:n1:bleu,en,,"N1 (Pedestrian) - Blue"
+urn:val:signal:dec07:n1:bleu,de,,"N1 (Fußgänger)-blau"
+urn:val:signal:dec07:n1:jaune,fr,,"N1 (Piéton) - Jaune"
+urn:val:signal:dec07:n1:jaune,nl,,"N1 (Voetganger) - Geel"
+urn:val:signal:dec07:n1:jaune,en,,"N1 (Pedestrian) - Yellow"
+urn:val:signal:dec07:n1:jaune,de,,"N1 (Fußgänger)-gelb"
+urn:val:signal:dec07:n1:rouge,fr,,"N1 (Piéton) - Rouge"
+urn:val:signal:dec07:n1:rouge,nl,,"N1 (Voetganger) - Rood"
+urn:val:signal:dec07:n1:rouge,en,,"N1 (Pedestrian) - Red"
+urn:val:signal:dec07:n1:rouge,de,,"N1 (Fußgänger)-rot"
+urn:val:signal:dec07:n1:vert,fr,,"N1 (Piéton) - Vert"
+urn:val:signal:dec07:n1:vert,nl,,"N1 (Voetganger) - Groen"
+urn:val:signal:dec07:n1:vert,en,,"N1 (Pedestrian) - Green"
+urn:val:signal:dec07:n1:vert,de,,"N1 (Fußgänger)-grün"
+urn:val:signal:dec07:n2:bleu,fr,,"N2 (Vélotouriste) - Bleu"
+urn:val:signal:dec07:n2:bleu,nl,,"N2 (Fietser) - Blauw"
+urn:val:signal:dec07:n2:bleu,en,,"N2 (Cycle tourist) - Blue"
+urn:val:signal:dec07:n2:bleu,de,,"N2 (Fahrradtourist)-blau"
+urn:val:signal:dec07:n2:jaune,fr,,"N2 (Vélotouriste) - Jaune"
+urn:val:signal:dec07:n2:jaune,nl,,"N2 (Fietser) - Geel"
+urn:val:signal:dec07:n2:jaune,en,,"N2 (Cycle tourist) - Yellow"
+urn:val:signal:dec07:n2:jaune,de,,"N2 (Fahrradtourist)-gelb"
+urn:val:signal:dec07:n2:rouge,fr,,"N2 (Vélotouriste) - Rouge"
+urn:val:signal:dec07:n2:rouge,nl,,"N2 (Fietser) - Rood"
+urn:val:signal:dec07:n2:rouge,en,,"N2 (Cycle tourist) - Red"
+urn:val:signal:dec07:n2:rouge,de,,"N2 (Fahrradtourist)-rot"
+urn:val:signal:dec07:n2:vert,fr,,"N2 (Vélotouriste) - Vert"
+urn:val:signal:dec07:n2:vert,nl,,"N2 (Fietser) - Groen"
+urn:val:signal:dec07:n2:vert,en,,"N2 (Cycle tourist) - Green"
+urn:val:signal:dec07:n2:vert,de,,"N2 (Fahrradtourist)-grün"
+urn:val:signal:dec07:n2b:vert,fr,,"N2 bis (Points-Nœuds) – Vert"
+urn:val:signal:dec07:n2b:vert,nl,,"N2 bis (Knooppunten) - Groen"
+urn:val:signal:dec07:n2b:vert,en,,"N2 bis (Connection points) - Green"
+urn:val:signal:dec07:n2b:vert,de,,"N2 bis (Knotenpunkte)-grün"
+urn:val:signal:dec07:n3:bleu,fr,,"N3 (Vététiste) - Bleu"
+urn:val:signal:dec07:n3:bleu,nl,,"N3 (MTB) - Blauw"
+urn:val:signal:dec07:n3:bleu,en,,"N3 (Mountain biker) - Blue"
+urn:val:signal:dec07:n3:bleu,de,,"N3 (Mountainbiker)-blau"
+urn:val:signal:dec07:n3:jaune,fr,,"N3 (Vététiste) - Jaune"
+urn:val:signal:dec07:n3:jaune,nl,,"N3 (MTB) - Geel"
+urn:val:signal:dec07:n3:jaune,en,,"N3 (Mountain biker) - Yellow"
+urn:val:signal:dec07:n3:jaune,de,,"N3 (Mountainbiker)-gelb"
+urn:val:signal:dec07:n3:rouge,fr,,"N3 (Vététiste) - Rouge"
+urn:val:signal:dec07:n3:rouge,nl,,"N3 (MTB) - Rood"
+urn:val:signal:dec07:n3:rouge,en,,"N3 (Mountain biker) - Red"
+urn:val:signal:dec07:n3:rouge,de,,"N3 (Mountainbiker)-rot"
+urn:val:signal:dec07:n3:vert,fr,,"N3 (Vététiste) - Vert"
+urn:val:signal:dec07:n3:vert,nl,,"N3 (MTB) - Groen"
+urn:val:signal:dec07:n3:vert,en,,"N3 (Mountain biker) - Green"
+urn:val:signal:dec07:n3:vert,de,,"N3 (Mountainbiker)-grün"
+urn:val:signal:dec07:n4:orange,fr,,"N4 (Attelage)"
+urn:val:signal:dec07:n4:orange,nl,,"N4 (Span)"
+urn:val:signal:dec07:n4:orange,en,,"N4 (Horse-drawn carriage)"
+urn:val:signal:dec07:n4:orange,de,,"N4 (Gespann)"
+urn:val:signal:dec07:n4b:orange,fr,,"N4 (Cavalier)"
+urn:val:signal:dec07:n4b:orange,nl,,"N4 (Ruiter)"
+urn:val:signal:dec07:n4b:orange,en,,"N4 (Rider)"
+urn:val:signal:dec07:n4b:orange,de,,"N4 (Reiter)"
+urn:val:signal:dec07:n5:bleu,fr,,"N5 (Skieur de fond) - Bleu"
+urn:val:signal:dec07:n5:bleu,nl,,"N5 (Langlaufer) - Blauw"
+urn:val:signal:dec07:n5:bleu,en,,"N5 (Cross-country skier) - Blue"
+urn:val:signal:dec07:n5:bleu,de,,"N5 (Ski-Langläufer)-blau"
+urn:val:signal:dec07:n5:noir,fr,,"N5 (Skieur de fond) - Noir"
+urn:val:signal:dec07:n5:noir,nl,,"N5 (Langlaufer) - Geel"
+urn:val:signal:dec07:n5:noir,en,,"N5 (Cross-country skier) - Black"
+urn:val:signal:dec07:n5:noir,de,,"N5 (Ski-Langläufer)-schwarz"
+urn:val:signal:dec07:n5:rouge,fr,,"N5 (Skieur de fond) - Rouge"
+urn:val:signal:dec07:n5:rouge,nl,,"N5 (Langlaufer) - Rood"
+urn:val:signal:dec07:n5:rouge,en,,"N5 (Cross-country skier) - Red"
+urn:val:signal:dec07:n5:rouge,de,,"N5 (Ski-Langläufer)-rot"
+urn:val:signal:dec07:n5:vert,fr,,"N5 (Skieur de fond) - Vert"
+urn:val:signal:dec07:n5:vert,nl,,"N5 (Langlaufer) - Groen"
+urn:val:signal:dec07:n5:vert,en,,"N5 (Cross-country skier) - Green"
+urn:val:signal:dec07:n5:vert,de,,"N5 (Ski-Langläufer)-grün"
+urn:val:signal:dec07:n6:bleu,fr,,"N6 (Non motorisé multiple) - Bleu"
+urn:val:signal:dec07:n6:bleu,nl,,"N6 (Niet gemotoriseerd) - Blauw"
+urn:val:signal:dec07:n6:bleu,en,,"N6 (Non-motorised miscellaneous) - Blue"
+urn:val:signal:dec07:n6:bleu,de,,"N6 (nicht motorisiert mehrfach)-blau"
+urn:val:signal:dec07:n6:jaune,fr,,"N6 (Non motorisé multiple) - Jaune"
+urn:val:signal:dec07:n6:jaune,nl,,"N6 (Niet gemotoriseerd) - Geel"
+urn:val:signal:dec07:n6:jaune,en,,"N6 (Non-motorised miscellaneous) - Yellow"
+urn:val:signal:dec07:n6:jaune,de,,"N6 (nicht motorisiert mehrfach)-gelb"
+urn:val:signal:dec07:n6:rouge,fr,,"N6 (Non motorisé multiple) - Rouge"
+urn:val:signal:dec07:n6:rouge,nl,,"N6 (Niet gemotoriseerd) - Rood"
+urn:val:signal:dec07:n6:rouge,en,,"N6 (Non-motorised miscellaneous) - Red"
+urn:val:signal:dec07:n6:rouge,de,,"N6 (nicht motorisiert mehrfach)-rot"
+urn:val:signal:dec07:n6:vert,fr,,"N6 (Non motorisé multiple) - Vert"
+urn:val:signal:dec07:n6:vert,nl,,"N6 (Niet gemotoriseerd) - Groen"
+urn:val:signal:dec07:n6:vert,en,,"N6 (Non-motorised miscellaneous) - Green"
+urn:val:signal:dec07:n6:vert,de,,"N6 (nicht motorisiert mehrfach)-grün"
+urn:val:signal:dec07a29b:n1b:vert,fr,,"N1 bis (Point-noeud pédestre)"
+urn:val:signal:dec07a29b:n1b:vert,nl,,"N1 bis (Wandelaar Knooppunten)"
+urn:val:signal:dec07a29b:n1b:vert,en,,"N1 bis (On foot connection points)"
+urn:val:signal:dec07a29b:n1b:vert,de,,"N1 bis (Fußgänger Knotenpunkte)"
+urn:val:signal:dec07a29b:n3vtc:00,fr,,"N3-VTC (Vélo tout chemin) - Liaison"
+urn:val:signal:dec07a29b:n3vtc:00,nl,,"N3-VTC (MTB) - Verbinding"
+urn:val:signal:dec07a29b:n3vtc:00,en,,"N3-VTC (Mountain bike) - Linking"
+urn:val:signal:dec07a29b:n3vtc:00,de,,"N3-VTC (Mountainbike) - Verbindung"
+urn:val:signal:dec07a29b:n3vtc:01,fr,,"N3-VTC (Vélo tout chemin) - Facile"
+urn:val:signal:dec07a29b:n3vtc:01,nl,,"N3-VTC (MTB) - Gemakkelijk"
+urn:val:signal:dec07a29b:n3vtc:01,en,,"N3-VTC (Mountain bike) - Easy"
+urn:val:signal:dec07a29b:n3vtc:01,de,,"N3-VTC (Mountainbike) - Einfach"
+urn:val:signal:dec07a29b:n3vtc:02,fr,,"N3-VTC (Vélo tout chemin) - Intermédiaire"
+urn:val:signal:dec07a29b:n3vtc:02,nl,,"N3-VTC (MTB) - Gemiddeld"
+urn:val:signal:dec07a29b:n3vtc:02,en,,"N3-VTC (Mountain bike) - Intermediate"
+urn:val:signal:dec07a29b:n3vtc:02,de,,"N3-VTC (Mountainbike) - Mittlere"
+urn:val:signal:dec07a29b:n3grvl:00,fr,,"N3-GRVL (Gravel) - Liaison"
+urn:val:signal:dec07a29b:n3grvl:00,nl,,"N3-GRVL (Gravel) - Verbinding"
+urn:val:signal:dec07a29b:n3grvl:00,en,,"N3-GRVL (Gravel) - Linking"
+urn:val:signal:dec07a29b:n3grvl:00,de,,"N3-GRVL (Gravel) - Verbindung"
+urn:val:signal:dec07a29b:n3grvl:03,fr,,"N3-GRVL (Gravel) - Difficile"
+urn:val:signal:dec07a29b:n3grvl:03,nl,,"N3-GRVL (Gravel) - Moeilijk"
+urn:val:signal:dec07a29b:n3grvl:03,en,,"N3-GRVL (Gravel) - Difficult"
+urn:val:signal:dec07a29b:n3grvl:03,de,,"N3-GRVL (Gravel) - Schwierig"
+urn:val:signal:dec07a29b:n3grvl:04,fr,,"N3-GRVL (Gravel) - Expert"
+urn:val:signal:dec07a29b:n3grvl:04,nl,,"N3-GRVL (Gravel) - Expert"
+urn:val:signal:dec07a29b:n3grvl:04,en,,"N3-GRVL (Gravel) - Expert"
+urn:val:signal:dec07a29b:n3grvl:04,de,,"N3-GRVL (Gravel) - Experten"
+urn:val:signal:dec07a29b:n3xc:00,fr,,"N3-XC (Cross-Country) - Liaison"
+urn:val:signal:dec07a29b:n3xc:00,nl,,"N3-XC (Cross-Country) - Verbinding"
+urn:val:signal:dec07a29b:n3xc:00,en,,"N3-XC (Cross-Country) - Linking"
+urn:val:signal:dec07a29b:n3xc:00,de,,"N3-XC (Cross-Country) - Verbindung"
+urn:val:signal:dec07a29b:n3xc:01,fr,,"N3-XC (Cross-Country) - Facile"
+urn:val:signal:dec07a29b:n3xc:01,nl,,"N3-XC (Cross-Country) - Gemakkelijk"
+urn:val:signal:dec07a29b:n3xc:01,en,,"N3-XC (Cross-Country) - Easy"
+urn:val:signal:dec07a29b:n3xc:01,de,,"N3-XC (Cross-Country) - Einfach"
+urn:val:signal:dec07a29b:n3xc:02,fr,,"N3-XC (Cross-Country) - Intermédiaire"
+urn:val:signal:dec07a29b:n3xc:02,nl,,"N3-XC (Cross-Country) - Gemiddeld"
+urn:val:signal:dec07a29b:n3xc:02,en,,"N3-XC (Cross-Country) - Intermediate"
+urn:val:signal:dec07a29b:n3xc:02,de,,"N3-XC (Cross-Country) - Mittlere"
+urn:val:signal:dec07a29b:n3xc:03,fr,,"N3-XC (Cross-Country) - Difficile"
+urn:val:signal:dec07a29b:n3xc:03,nl,,"N3-XC (Cross-Country) - Moeilijk"
+urn:val:signal:dec07a29b:n3xc:03,en,,"N3-XC (Cross-Country) - Difficult"
+urn:val:signal:dec07a29b:n3xc:03,de,,"N3-XC (Cross-Country) - Schwierig"
+urn:val:signal:dec07a29b:n3xc:04,fr,,"N3-XC (Cross-Country) - Expert"
+urn:val:signal:dec07a29b:n3xc:04,nl,,"N3-XC (Cross-Country) - Expert"
+urn:val:signal:dec07a29b:n3xc:04,en,,"N3-XC (Cross-Country) - Expert"
+urn:val:signal:dec07a29b:n3xc:04,de,,"N3-XC (Cross-Country) - Experten"
+urn:val:signal:dec07a29b:n3en:00,fr,,"N3-EN (Enduro) - Liaison"
+urn:val:signal:dec07a29b:n3en:00,nl,,"N3-EN (Enduro) - Verbinding"
+urn:val:signal:dec07a29b:n3en:00,en,,"N3-EN (Enduro) - Linking"
+urn:val:signal:dec07a29b:n3en:00,de,,"N3-EN (Enduro) - Verbindung"
+urn:val:signal:dec07a29b:n3en:01,fr,,"N3-EN (Enduro) - Facile"
+urn:val:signal:dec07a29b:n3en:01,nl,,"N3-EN (Enduro) - Gemakkelijk"
+urn:val:signal:dec07a29b:n3en:01,en,,"N3-EN (Enduro) - Easy"
+urn:val:signal:dec07a29b:n3en:01,de,,"N3-EN (Enduro) - Einfach"
+urn:val:signal:dec07a29b:n3en:02,fr,,"N3-EN (Enduro) - Intermédiaire"
+urn:val:signal:dec07a29b:n3en:02,nl,,"N3-EN (Enduro) - Gemiddeld"
+urn:val:signal:dec07a29b:n3en:02,en,,"N3-EN (Enduro) - Intermediate"
+urn:val:signal:dec07a29b:n3en:02,de,,"N3-EN (Enduro) - Mittlere"
+urn:val:signal:dec07a29b:n3en:03,fr,,"N3-EN (Enduro) - Difficile"
+urn:val:signal:dec07a29b:n3en:03,nl,,"N3-EN (Enduro) - Moeilijk"
+urn:val:signal:dec07a29b:n3en:03,en,,"N3-EN (Enduro) - Difficult"
+urn:val:signal:dec07a29b:n3en:03,de,,"N3-EN (Enduro) - Schwierig"
+urn:val:signal:dec07a29b:n3en:04,fr,,"N3-EN (Enduro) - Expert"
+urn:val:signal:dec07a29b:n3en:04,nl,,"N3-EN (Enduro) - Expert"
+urn:val:signal:dec07a29b:n3en:04,en,,"N3-EN (Enduro) - Expert"
+urn:val:signal:dec07a29b:n3en:04,de,,"N3-EN (Enduro) - Experten"
+urn:val:signal:dec07a29b:n3dhfr:00,fr,,"N3-DHFR (Descente/Freestyle) - Liaison"
+urn:val:signal:dec07a29b:n3dhfr:00,nl,,"N3-DHFR (Downhill)/Freestyle) - Verbinding"
+urn:val:signal:dec07a29b:n3dhfr:00,en,,"N3-DHFR (Downhill)/Freestyle) - Linking"
+urn:val:signal:dec07a29b:n3dhfr:00,de,,"N3-DHFR (Downhill)/Freestyle) - Verbindung"
+urn:val:signal:dec07a29b:n3dhfr:01,fr,,"N3-DHFR (Descente/Freestyle) - Facile"
+urn:val:signal:dec07a29b:n3dhfr:01,nl,,"N3-DHFR (Downhill)/Freestyle) - Gemakkelijk"
+urn:val:signal:dec07a29b:n3dhfr:01,en,,"N3-DHFR (Downhill)/Freestyle) - Easy"
+urn:val:signal:dec07a29b:n3dhfr:01,de,,"N3-DHFR (Downhill)/Freestyle) - Einfach"
+urn:val:signal:dec07a29b:n3dhfr:02,fr,,"N3-DHFR (Descente/Freestyle) - Intermédiaire"
+urn:val:signal:dec07a29b:n3dhfr:02,nl,,"N3-DHFR (Downhill)/Freestyle) - Gemiddeld"
+urn:val:signal:dec07a29b:n3dhfr:02,en,,"N3-DHFR (Downhill)/Freestyle) - Intermediate"
+urn:val:signal:dec07a29b:n3dhfr:02,de,,"N3-DHFR (Downhill)/Freestyle) - Mittlere"
+urn:val:signal:dec07a29b:n3dhfr:03,fr,,"N3-DHFR (Descente/Freestyle) - Difficile"
+urn:val:signal:dec07a29b:n3dhfr:03,nl,,"N3-DHFR (Downhill)/Freestyle) - Moeilijk"
+urn:val:signal:dec07a29b:n3dhfr:03,en,,"N3-DHFR (Downhill)/Freestyle) - Difficult"
+urn:val:signal:dec07a29b:n3dhfr:03,de,,"N3-DHFR (Downhill)/Freestyle) - Schwierig"
+urn:val:signal:dec07a29b:n3dhfr:04,fr,,"N3-DHFR (Descente/Freestyle) - Expert"
+urn:val:signal:dec07a29b:n3dhfr:04,nl,,"N3-DHFR (Downhill)/Freestyle) - Expert"
+urn:val:signal:dec07a29b:n3dhfr:04,en,,"N3-DHFR (Downhill)/Freestyle) - Expert"
+urn:val:signal:dec07a29b:n3dhfr:04,de,,"N3-DHFR (Downhill)/Freestyle) - Experten"
+urn:val:signal:dec07a29b:n7:00,fr,,"N7 (Trail) - Liaison"
+urn:val:signal:dec07a29b:n7:00,nl,,"N7 (Trail) - Verbinding"
+urn:val:signal:dec07a29b:n7:00,en,,"N7 (Trail) - Linking"
+urn:val:signal:dec07a29b:n7:00,de,,"N7 (Trail) - Verbindung"
+urn:val:signal:dec07a29b:n7:01,fr,,"N7 (Trail) - Facile"
+urn:val:signal:dec07a29b:n7:01,nl,,"N7 (Trail) - Gemakkelijk"
+urn:val:signal:dec07a29b:n7:01,en,,"N7 (Trail) - Easy"
+urn:val:signal:dec07a29b:n7:01,de,,"N7 (Trail) - Einfach"
+urn:val:signal:dec07a29b:n7:02,fr,,"N7 (Trail) - Intermédiaire"
+urn:val:signal:dec07a29b:n7:02,nl,,"N7 (Trail) - Gemiddeld"
+urn:val:signal:dec07a29b:n7:02,en,,"N7 (Trail) - Intermediate"
+urn:val:signal:dec07a29b:n7:02,de,,"N7 (Trail) - Mittlere"
+urn:val:signal:dec07a29b:n7:03,fr,,"N7 (Trail) - Difficile"
+urn:val:signal:dec07a29b:n7:03,nl,,"N7 (Trail) - Moeilijk"
+urn:val:signal:dec07a29b:n7:03,en,,"N7 (Trail) - Difficult"
+urn:val:signal:dec07a29b:n7:03,de,,"N7 (Trail) - Schwierig"
+urn:val:signal:dec07a29b:n7:04,fr,,"N7 (Trail) - Expert"
+urn:val:signal:dec07a29b:n7:04,nl,,"N7 (Trail) - Expert"
+urn:val:signal:dec07a29b:n7:04,en,,"N7 (Trail) - Expert"
+urn:val:signal:dec07a29b:n7:04,de,,"N7 (Trail) - Experten"
+urn:val:signal:dec96:cav:cerc:bleu,fr,,"Cavalier - Cercle - Bleu"
+urn:val:signal:dec96:cav:cerc:bleu,nl,,"Ruiter - Cirkel - Blauw"
+urn:val:signal:dec96:cav:cerc:bleu,en,,"Horse-rider - Circle - Blue"
+urn:val:signal:dec96:cav:cerc:bleu,de,,Reiter-Kreis-blau
+urn:val:signal:dec96:cav:cerc:jaune,fr,,"Cavalier - Cercle - Jaune"
+urn:val:signal:dec96:cav:cerc:jaune,nl,,"Ruiter - Cirkel - Geel"
+urn:val:signal:dec96:cav:cerc:jaune,en,,"Horse-rider - Circle - Yellow"
+urn:val:signal:dec96:cav:cerc:jaune,de,,Reiter-Kreis-gelb
+urn:val:signal:dec96:cav:cerc:vert,fr,,"Cavalier - Cercle - Vert"
+urn:val:signal:dec96:cav:cerc:vert,nl,,"Ruiter - Cirkel - Groen"
+urn:val:signal:dec96:cav:cerc:vert,en,,"Horse-rider - Circle - Green"
+urn:val:signal:dec96:cav:cerc:vert,de,,Reiter-Kreis-grün
+urn:val:signal:dec96:cav:couv:bleu,fr,,"Cavalier - Cercle ouvert - Bleu"
+urn:val:signal:dec96:cav:couv:bleu,nl,,"Ruiter - Open cirkel - Blauw"
+urn:val:signal:dec96:cav:couv:bleu,en,,"Horse-rider - Ring - Blue"
+urn:val:signal:dec96:cav:couv:bleu,de,,"Reiter-Offener Kreis-blau"
+urn:val:signal:dec96:cav:couv:jaune,fr,,"Cavalier - Cercle ouvert - Jaune"
+urn:val:signal:dec96:cav:couv:jaune,nl,,"Ruiter - Open cirkel - Geel"
+urn:val:signal:dec96:cav:couv:jaune,en,,"Horse-rider - Ring - Yellow"
+urn:val:signal:dec96:cav:couv:jaune,de,,"Reiter-Offener Kreis-gelb"
+urn:val:signal:dec96:cav:couv:vert,fr,,"Cavalier - Cercle ouvert - Vert"
+urn:val:signal:dec96:cav:couv:vert,nl,,"Ruiter - Open cirkel - Groen"
+urn:val:signal:dec96:cav:couv:vert,en,,"Horse-rider - Ring - Green"
+urn:val:signal:dec96:cav:couv:vert,de,,"Reiter-Offener Kreis-grün"
+urn:val:signal:dec96:cav:ddsq:bleu,fr,,"Cavalier - Demi-disque - Bleu"
+urn:val:signal:dec96:cav:ddsq:bleu,nl,,"Ruiter - Halve schijf - Blauw"
+urn:val:signal:dec96:cav:ddsq:bleu,en,,"Horse-rider - Semicircle - Blue"
+urn:val:signal:dec96:cav:ddsq:bleu,de,,Reiter-Halbscheibe-blau
+urn:val:signal:dec96:cav:ddsq:jaune,fr,,"Cavalier - Demi-disque - Jaune"
+urn:val:signal:dec96:cav:ddsq:jaune,nl,,"Ruiter - Halve schijf - Geel"
+urn:val:signal:dec96:cav:ddsq:jaune,en,,"Horse-rider - Semicircle - Yellow"
+urn:val:signal:dec96:cav:ddsq:jaune,de,,Reiter-Halbscheibe-gelb
+urn:val:signal:dec96:cav:ddsq:rouge,fr,,"Cavalier - Demi-disque - Rouge"
+urn:val:signal:dec96:cav:ddsq:rouge,nl,,"Ruiter - Halve schijf - Rood"
+urn:val:signal:dec96:cav:ddsq:rouge,en,,"Horse-rider - Semicircle - Red"
+urn:val:signal:dec96:cav:ddsq:rouge,de,,Reiter-Halbscheibe-rot
+urn:val:signal:dec96:cav:ddsq:vert,fr,,"Cavalier - Demi-disque - Vert"
+urn:val:signal:dec96:cav:ddsq:vert,nl,,"Ruiter - Halve schijf - Groen"
+urn:val:signal:dec96:cav:ddsq:vert,en,,"Horse-rider - Semicircle - Green"
+urn:val:signal:dec96:cav:ddsq:vert,de,,Reiter-Halbscheibe-grün
+urn:val:signal:dec96:cav:disq:bleu,fr,,"Cavalier - Disque - Bleu"
+urn:val:signal:dec96:cav:disq:bleu,nl,,"Ruiter - Schijf - Blauw"
+urn:val:signal:dec96:cav:disq:bleu,en,,"Horse-rider - Disc - Blue"
+urn:val:signal:dec96:cav:disq:bleu,de,,Reiter-Scheibe-blau
+urn:val:signal:dec96:cav:disq:jaune,fr,,"Cavalier - Disque - Jaune"
+urn:val:signal:dec96:cav:disq:jaune,nl,,"Ruiter - Schijf - Geel"
+urn:val:signal:dec96:cav:disq:jaune,en,,"Horse-rider - Disc - Yellow"
+urn:val:signal:dec96:cav:disq:jaune,de,,Reiter-Scheibe-gelb
+urn:val:signal:dec96:cav:disq:rouge,fr,,"Cavalier - Disque - Rouge"
+urn:val:signal:dec96:cav:disq:rouge,nl,,"Ruiter - Schijf - Rood"
+urn:val:signal:dec96:cav:disq:rouge,en,,"Horse-rider - Disc - Red"
+urn:val:signal:dec96:cav:disq:rouge,de,,Reiter-Scheibe-rot
+urn:val:signal:dec96:cav:disq:vert,fr,,"Cavalier - Disque - Vert"
+urn:val:signal:dec96:cav:disq:vert,nl,,"Ruiter - Schijf - Groen"
+urn:val:signal:dec96:cav:disq:vert,en,,"Horse-rider - Disc - Green"
+urn:val:signal:dec96:cav:disq:vert,de,,Reiter-Scheibe-grün
+urn:val:signal:dec96:cyc:bleu,fr,,"Cycliste - Bleu"
+urn:val:signal:dec96:cyc:bleu,nl,,"Fietser - Blauw"
+urn:val:signal:dec96:cyc:bleu,en,,"Cyclist - Blue"
+urn:val:signal:dec96:cyc:bleu,de,,Radfahrer-blau
+urn:val:signal:dec96:cyc:jaune,fr,,"Cycliste - Jaune"
+urn:val:signal:dec96:cyc:jaune,nl,,"Fietser - Geel"
+urn:val:signal:dec96:cyc:jaune,en,,"Cyclist - Yellow"
+urn:val:signal:dec96:cyc:jaune,de,,Radfahrer-gelb
+urn:val:signal:dec96:cyc:rouge,fr,,"Cycliste - Rouge"
+urn:val:signal:dec96:cyc:rouge,nl,,"Fietser - Rood"
+urn:val:signal:dec96:cyc:rouge,en,,"Cyclist - Red"
+urn:val:signal:dec96:cyc:rouge,de,,Radfahrer-rot
+urn:val:signal:dec96:cyc:vert,fr,,"Cycliste - Vert"
+urn:val:signal:dec96:cyc:vert,nl,,"Fietser - Groen"
+urn:val:signal:dec96:cyc:vert,en,,"Cyclist - Green"
+urn:val:signal:dec96:cyc:vert,de,,Radfahrer-grün
+urn:val:signal:dec96:pie:crx:bleu,fr,,"Piéton - Croix - Bleue"
+urn:val:signal:dec96:pie:crx:bleu,nl,,"Voetganger - Kruis - Blauw"
+urn:val:signal:dec96:pie:crx:bleu,en,,"Pedestrian - Cross - Blue"
+urn:val:signal:dec96:pie:crx:bleu,de,,Fußgänger-Kreuz-blau
+urn:val:signal:dec96:pie:crx:jaune,fr,,"Piéton - Croix - Jaune"
+urn:val:signal:dec96:pie:crx:jaune,nl,,"Voetganger - Kruis - Geel"
+urn:val:signal:dec96:pie:crx:jaune,en,,"Pedestrian - Cross - Yellow"
+urn:val:signal:dec96:pie:crx:jaune,de,,Fußgänger-Kreuz-gelb
+urn:val:signal:dec96:pie:crx:vert,fr,,"Piéton - Croix - Verte"
+urn:val:signal:dec96:pie:crx:vert,nl,,"Voetganger - Kruis - Groen"
+urn:val:signal:dec96:pie:crx:vert,en,,"Pedestrian - Cross - Green"
+urn:val:signal:dec96:pie:crx:vert,de,,Fußgänger-Kreuz-grün
+urn:val:signal:dec96:pie:los:bleu,fr,,"Piéton - Losange - Bleu"
+urn:val:signal:dec96:pie:los:bleu,nl,,"Voetganger - Ruit - Blauw"
+urn:val:signal:dec96:pie:los:bleu,en,,"Pedestrian - Diamond - Blue"
+urn:val:signal:dec96:pie:los:bleu,de,,Fußgänger-Raute-blau
+urn:val:signal:dec96:pie:los:jaune,fr,,"Piéton - Losange - Jaune"
+urn:val:signal:dec96:pie:los:jaune,nl,,"Voetganger - Ruit - Geel"
+urn:val:signal:dec96:pie:los:jaune,en,,"Pedestrian - Diamond - Yellow"
+urn:val:signal:dec96:pie:los:jaune,de,,Fußgänger-Raute-gelb
+urn:val:signal:dec96:pie:los:rouge,fr,,"Piéton - Losange - Rouge"
+urn:val:signal:dec96:pie:los:rouge,nl,,"Voetganger - Ruit - Rood"
+urn:val:signal:dec96:pie:los:rouge,en,,"Pedestrian - Diamond - Red"
+urn:val:signal:dec96:pie:los:rouge,de,,Fußgänger-Raute-rot
+urn:val:signal:dec96:pie:los:vert,fr,,"Piéton - Losange - Vert"
+urn:val:signal:dec96:pie:los:vert,nl,,"Voetganger - Ruit - Groen"
+urn:val:signal:dec96:pie:los:vert,en,,"Pedestrian - Diamond - Green"
+urn:val:signal:dec96:pie:los:vert,de,,Fußgänger-Raute-grün
+urn:val:signal:dec96:pie:rhrz:bleu,fr,,"Piéton - Rectangle horizontal - Bleu"
+urn:val:signal:dec96:pie:rhrz:bleu,nl,,"Voetganger - Horizontale rechthoek - Blauw"
+urn:val:signal:dec96:pie:rhrz:bleu,en,,"Pedestrian - Horizontal rectangle - Blue"
+urn:val:signal:dec96:pie:rhrz:bleu,de,,"Fußgänger-Rechteck horizontal-blau"
+urn:val:signal:dec96:pie:rhrz:jaune,fr,,"Piéton - Rectangle horizontal - Jaune"
+urn:val:signal:dec96:pie:rhrz:jaune,nl,,"Voetganger - Horizontale rechthoek - Geel"
+urn:val:signal:dec96:pie:rhrz:jaune,en,,"Pedestrian - Horizontal rectangle - Yellow"
+urn:val:signal:dec96:pie:rhrz:jaune,de,,"Fußgänger-Rechteck horizontal-gelb"
+urn:val:signal:dec96:pie:rhrz:rouge,fr,,"Piéton - Rectangle horizontal - Rouge"
+urn:val:signal:dec96:pie:rhrz:rouge,nl,,"Voetganger - Horizontale rechthoek - Rood"
+urn:val:signal:dec96:pie:rhrz:rouge,en,,"Pedestrian - Horizontal rectangle - red"
+urn:val:signal:dec96:pie:rhrz:rouge,de,,"Fußgänger-Rechteck horizontal-rot"
+urn:val:signal:dec96:pie:rhrz:vert,fr,,"Piéton - Rectangle horizontal - Vert"
+urn:val:signal:dec96:pie:rhrz:vert,nl,,"Voetganger - Horizontale rechthoek - Groen"
+urn:val:signal:dec96:pie:rhrz:vert,en,,"Pedestrian - Horizontal rectangle - Green"
+urn:val:signal:dec96:pie:rhrz:vert,de,,"Fußgänger-Rechteck horizontal-grün"
+urn:val:signal:dec96:pie:rinc:bleu,fr,,"Piéton - Rectangle avec incrustation - Bleu"
+urn:val:signal:dec96:pie:rinc:bleu,nl,,"Voetganger - Rechthoek met inzetsel - Blauw"
+urn:val:signal:dec96:pie:rinc:bleu,en,,"Pedestrian - Rectangle with inlay - Blue"
+urn:val:signal:dec96:pie:rinc:bleu,de,,"Fußgänger-Rechteck mit Einbettung-blau"
+urn:val:signal:dec96:pie:rinc:jaune,fr,,"Piéton - Rectangle avec incrustation - Jaune"
+urn:val:signal:dec96:pie:rinc:jaune,nl,,"Voetganger - Rechthoek met inzetsel - Geel"
+urn:val:signal:dec96:pie:rinc:jaune,en,,"Pedestrian - Rectangle with inlay - Yellow"
+urn:val:signal:dec96:pie:rinc:jaune,de,,"Fußgänger-Rechteck mit Einbettung-gelb"
+urn:val:signal:dec96:pie:rinc:rouge,fr,,"Piéton - Rectangle avec incrustation - Rouge"
+urn:val:signal:dec96:pie:rinc:rouge,nl,,"Voetganger - Rechthoek met inzetsel - Rood"
+urn:val:signal:dec96:pie:rinc:rouge,en,,"Pedestrian - Rectangle with inlay - Red"
+urn:val:signal:dec96:pie:rinc:rouge,de,,"Fußgänger-Rechteck mit Einbettung-rot"
+urn:val:signal:dec96:pie:rinc:vert,fr,,"Piéton - Rectangle avec incrustation - Vert"
+urn:val:signal:dec96:pie:rinc:vert,nl,,"Voetganger - Rechthoek met inzetsel - Groen"
+urn:val:signal:dec96:pie:rinc:vert,en,,"Pedestrian - Rectangle with inlay - Green"
+urn:val:signal:dec96:pie:rinc:vert,de,,"Fußgänger-Rechteck mit Einbettung-grün"
+urn:val:signal:dec96:pie:rvrt:bleu,fr,,"Piéton - Rectangle vertical - Bleu"
+urn:val:signal:dec96:pie:rvrt:bleu,nl,,"Voetganger - Verticale rechthoek - Blauw"
+urn:val:signal:dec96:pie:rvrt:bleu,en,,"Pedestrian - Vertical rectangle - Blue"
+urn:val:signal:dec96:pie:rvrt:bleu,de,,"Fußgänger-Rechteck vertikal-blau"
+urn:val:signal:dec96:pie:rvrt:jaune,fr,,"Piéton - Rectangle vertical - Jaune"
+urn:val:signal:dec96:pie:rvrt:jaune,nl,,"Voetganger - Verticale rechthoek - Geel"
+urn:val:signal:dec96:pie:rvrt:jaune,en,,"Pedestrian - Vertical rectangle - Yellow"
+urn:val:signal:dec96:pie:rvrt:jaune,de,,Fußgänger-Rechteck-vertikal-gelb
+urn:val:signal:dec96:pie:rvrt:rouge,fr,,"Piéton - Rectangle vertical - Rouge"
+urn:val:signal:dec96:pie:rvrt:rouge,nl,,"Voetganger - Verticale rechthoek - Rood"
+urn:val:signal:dec96:pie:rvrt:rouge,en,,"Pedestrian - Vertical rectangle - Red"
+urn:val:signal:dec96:pie:rvrt:rouge,de,,Fußgänger-Rechteck-vertikal-rot
+urn:val:signal:dec96:pie:rvrt:vert,fr,,"Piéton - Rectangle vertical - Vert"
+urn:val:signal:dec96:pie:rvrt:vert,nl,,"Voetganger - Verticale rechthoek - Groen"
+urn:val:signal:dec96:pie:rvrt:vert,en,,"Pedestrian - Vertical rectangle - Green"
+urn:val:signal:dec96:pie:rvrt:vert,de,,Fußgänger-Rechteck-vertikal-grün
+urn:val:signal:dec96:ski:bleu,fr,,"Skieur - Bleu"
+urn:val:signal:dec96:ski:bleu,nl,,"Skiër - Blauw"
+urn:val:signal:dec96:ski:bleu,en,,"Skier - Blue"
+urn:val:signal:dec96:ski:bleu,de,,Skiläufer-blau
+urn:val:signal:dec96:ski:noir,fr,,"Skieur - Noir"
+urn:val:signal:dec96:ski:noir,nl,,"Skiër - Zwart"
+urn:val:signal:dec96:ski:noir,en,,"Skier - Black"
+urn:val:signal:dec96:ski:noir,de,,Skiläufer-schwarz
+urn:val:signal:dec96:ski:rouge,fr,,"Skieur - Rouge"
+urn:val:signal:dec96:ski:rouge,nl,,"Skiër - Rood"
+urn:val:signal:dec96:ski:rouge,en,,"Skier - Red"
+urn:val:signal:dec96:ski:rouge,de,,Skiläufer-rot
+urn:val:signal:dec96:ski:vert,fr,,"Skieur - Vert"
+urn:val:signal:dec96:ski:vert,nl,,"Skiër - Groen"
+urn:val:signal:dec96:ski:vert,en,,"Skier - Green"
+urn:val:signal:dec96:ski:vert,de,,Skiläufer-grün
+urn:val:signal:dec96:tous:bleu,fr,,"Tous - Triangle rectangle - Bleu"
+urn:val:signal:dec96:tous:bleu,nl,,"Alle - Rechthoekige driehoek - Blauw"
+urn:val:signal:dec96:tous:bleu,en,,"All - Right-angled triangle - Blue"
+urn:val:signal:dec96:tous:bleu,de,,"Alle-Rechtwinkliges Dreieck-blau"
+urn:val:signal:dec96:tous:jaune,fr,,"Tous - Triangle rectangle - Jaune"
+urn:val:signal:dec96:tous:jaune,nl,,"Alle - Rechthoekige driehoek - Geel"
+urn:val:signal:dec96:tous:jaune,en,,"All - Right-angled triangle - Yellow"
+urn:val:signal:dec96:tous:jaune,de,,"Alle-Rechtwinkliges Dreieck-gelb"
+urn:val:signal:dec96:tous:rouge,fr,,"Tous - Triangle rectangle - Rouge"
+urn:val:signal:dec96:tous:rouge,nl,,"Alle - Rechthoekige driehoek - Rood"
+urn:val:signal:dec96:tous:rouge,en,,"All - Right-angled triangle - Red"
+urn:val:signal:dec96:tous:rouge,de,,"Alle-Rechtwinkliges Dreieck-rot"
+urn:val:signal:dec96:tous:vert,fr,,"Tous - Triangle rectangle - Vert"
+urn:val:signal:dec96:tous:vert,nl,,"Alle - Rechthoekige driehoek - Groen"
+urn:val:signal:dec96:tous:vert,en,,"All - Right-angled triangle - Green"
+urn:val:signal:dec96:tous:vert,de,,"Alle-Rechtwinkliges Dreieck-grün"
+urn:val:signal:autre:aucune,fr,,"Aucune signalétique"
+urn:val:signal:autre:aucune,nl,,"Geen enkele bewegwijzering"
+urn:val:signal:autre:aucune,en,,"No signage"
+urn:val:signal:autre:aucune,de,,"Keine Beschilderung"
+urn:val:signal:autre:nrec,fr,,"Non reconnue (avant 96, dérogation)"
+urn:val:signal:autre:nrec,nl,,"Niet erkend, voorheen 96, afwijking"
+urn:val:signal:autre:nrec,en,,"Not recognised (before 1996, exempt)"
+urn:val:signal:autre:nrec,de,,"Nicht anerkannt (vor 96, Beeinträchtigung)"
+urn:val:signal:gr:gr,fr,,"Grande randonnée"
+urn:val:signal:gr:gr,nl,,"Grote wandeling"
+urn:val:signal:gr:gr,en,,"Long hike"
+urn:val:signal:gr:gr,de,,"Große Wanderung"
+urn:val:signal:gr:grp,fr,,"Grande randonnée de pays"
+urn:val:signal:gr:grp,nl,,"Grote landwandeling"
+urn:val:signal:gr:grp,en,,"Long country hike "
+urn:val:signal:gr:grp,de,,"Große Wanderung auf dem Land"
+urn:val:revet:0,fr,,0%
+urn:val:revet:0,nl,,0%
+urn:val:revet:0,en,,0%
+urn:val:revet:0,de,,0%
+urn:val:revet:25,fr,,0-25%
+urn:val:revet:25,nl,,0-25%
+urn:val:revet:25,en,,0-25%
+urn:val:revet:25,de,,0-25%
+urn:val:revet:50,fr,,25-50%
+urn:val:revet:50,nl,,25-50%
+urn:val:revet:50,en,,25-50%
+urn:val:revet:50,de,,25-50%
+urn:val:revet:75,fr,,50-75%
+urn:val:revet:75,nl,,50-75%
+urn:val:revet:75,en,,50-75%
+urn:val:revet:75,de,,50-75%
+urn:val:revet:100,fr,,75-100%
+urn:val:revet:100,nl,,75-100%
+urn:val:revet:100,en,,75-100%
+urn:val:revet:100,de,,75-100%
+urn:val:infusgdiff:facile,fr,,Facile
+urn:val:infusgdiff:facile,nl,,Gemakkelijk
+urn:val:infusgdiff:facile,en,,Easy
+urn:val:infusgdiff:facile,de,,Leicht
+urn:val:infusgdiff:moyen,fr,,Intermédiaire
+urn:val:infusgdiff:moyen,nl,,Intermediair
+urn:val:infusgdiff:moyen,en,,Middle
+urn:val:infusgdiff:moyen,de,,Intermediär
+urn:val:infusgdiff:diff,fr,,Difficile
+urn:val:infusgdiff:diff,nl,,Moeilijk
+urn:val:infusgdiff:diff,en,,Difficult
+urn:val:infusgdiff:diff,de,,Schwierig
+urn:val:infusgdiff:expert,fr,,Expert
+urn:val:infusgdiff:expert,nl,,Gemiddeld
+urn:val:infusgdiff:expert,en,,Medium
+urn:val:infusgdiff:expert,de,,Mittel
+urn:val:accessi:perfautroul:nonprev,fr,,"Fiche informative"
+urn:val:accessi:perfautroul:coupmain,fr,,"Coup de main ponctuel"
+urn:val:accessi:perfautroul:auton,fr,,"En autonomie"
+urn:val:accessi:permardif:nonprev,fr,,"Fiche informative"
+urn:val:accessi:permardif:coupmain,fr,,"Coup de main ponctuel"
+urn:val:accessi:permardif:auton,fr,,"En autonomie"
+urn:val:accessi:perave:nonprev,fr,,"Fiche informative"
+urn:val:accessi:perave:coupmain,fr,,"Coup de main ponctuel"
+urn:val:accessi:perave:auton,fr,,"En autonomie"
+urn:val:accessi:permalvoy:nonprev,fr,,"Fiche informative"
+urn:val:accessi:permalvoy:coupmain,fr,,"Coup de main ponctuel"
+urn:val:accessi:permalvoy:auton,fr,,"En autonomie"
+urn:val:accessi:persou:nonprev,fr,,"Fiche informative"
+urn:val:accessi:persou:coupmain,fr,,"Coup de main ponctuel"
+urn:val:accessi:persou:auton,fr,,"En autonomie"
+urn:val:accessi:permalent:nonprev,fr,,"Fiche informative"
+urn:val:accessi:permalent:coupmain,fr,,"Coup de main ponctuel"
+urn:val:accessi:permalent:auton,fr,,"En autonomie"
+urn:val:accessi:perdifcomp:nonprev,fr,,"Fiche informative"
+urn:val:accessi:perdifcomp:coupmain,fr,,"Coup de main ponctuel"
+urn:val:accessi:perdifcomp:auton,fr,,"En autonomie"
+urn:val:note:type:note,fr,Note,Note
+urn:val:note:type:note,nl,Note,Notitie
+urn:val:note:type:note,en,Note,Note
+urn:val:note:type:note,de,Note,Hinweis
+urn:val:note:type:question,fr,Question,Question
+urn:val:note:type:question,nl,Question,Vraag
+urn:val:note:type:question,en,Question,Question
+urn:val:note:type:question,de,Question,Frage
+urn:val:note:type:comment,fr,Commentaire,Commentaire
+urn:val:note:type:comment,nl,Commentaire,Commentaar
+urn:val:note:type:comment,en,Commentaire,Comment
+urn:val:note:type:comment,de,Commentaire,Kommentar
+urn:val:note:type:suggest,fr,Suggestion,Suggestion
+urn:val:note:type:suggest,nl,Suggestion,Suggestie
+urn:val:note:type:suggest,en,Suggestion,Suggestion
+urn:val:note:type:suggest,de,Suggestion,Vorschlag
+urn:val:note:type:warn,fr,Alerte,Alerte
+urn:val:note:type:warn,nl,Alerte,Waarschuwing
+urn:val:note:type:warn,en,Alerte,Warning
+urn:val:note:type:warn,de,Alerte,Alert

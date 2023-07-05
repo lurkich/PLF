@@ -34,7 +34,7 @@ $db = odbc_connect("Driver={Microsoft Access Driver (*.mdb, *.accdb)};Dbq=" . $G
 $result = odbc_exec($db, $sql_cmd);
 odbc_longreadlen($result, 300000);      // !!!!!!!! this is the maximum record length. 
 
-$headers = "[\r\n\t{\r\n\t\t\"type\" : \"FeatureCollection\"," .
+$headers = "\r\n\t{\r\n\t\t\"type\" : \"FeatureCollection\"," .
     "\r\n\t\t\"name\" : \"NewFeatureType\"," .
     "\r\n\t\t\"features\" : [";
 
@@ -135,7 +135,7 @@ $headers = ",\r\n\t\t\t\t\"properties\" : {" .
     "\r\n\t\t\t}" . 
     "\r\n\t\t]" . 
     "\r\n\t}" . 
-    "\r\n]";
+    "\r\n";
 
 fwrite($fp, $headers);
 

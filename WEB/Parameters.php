@@ -32,7 +32,7 @@ $tbl_CC = "plf_cc";
  */
 
  $MySql_Server = "localhost";
- $MySql_DB = "plf_arlon";
+ $MySql_DB = "plf";
  $MySql_Login = "lurkich";
  $MySql_Password = "Chri12!!";
 

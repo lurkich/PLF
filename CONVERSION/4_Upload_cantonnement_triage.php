@@ -32,13 +32,16 @@ drop_Table($tbl_Triages);
 
 $tbl_Definition_canton = [];
 
-$tbl_Definition_canton["numero"] = "INTEGER";
+$tbl_Definition_canton["num_canton"] = "INTEGER";
 $tbl_Definition_canton["nom"] = "TEXT (255)";
 $tbl_Definition_canton["tel"] = "TEXT (255)";
 $tbl_Definition_canton["direction"] = "TEXT (255)";
 $tbl_Definition_canton["email"] = "TEXT (255)";
 $tbl_Definition_canton["attache"] = "TEXT (255)";
-$tbl_Definition_canton["adresse"] = "TEXT (255)";
+$tbl_Definition_canton["CP"] = "TEXT (255)";
+$tbl_Definition_canton["localite"] = "TEXT (50)";
+$tbl_Definition_canton["rue"] = "TEXT (255)";
+$tbl_Definition_canton["numero"] = "TEXT (20)";
 $tbl_Definition_canton["localisation"] = "TEXT (255)";
 
 
@@ -48,7 +51,7 @@ Create_Table($tbl_Cantonnements, $tbl_Definition_canton);
 
 $tbl_Definition_triage = [];
 
-$tbl_Definition_triage["numero"] = "INTEGER";
+$tbl_Definition_triage["num_triage"] = "INTEGER";
 $tbl_Definition_triage["nom"] = "TEXT (255)";
 $tbl_Definition_triage["nom_Prepose"] = "TEXT (255)";
 $tbl_Definition_triage["gsm_Prepose"] = "TEXT (255)";
@@ -106,7 +109,10 @@ while (!feof($csv_file)) {
                   " '$fields[5]', " .
                   " '$fields[6]', " .
                   " '$fields[7]', " .
-                  " '$fields[8]' " .
+                  " '$fields[8]', " .
+                  " '$fields[9]', " .
+                  " '$fields[10]', " .
+                  " '$fields[11]' " .
                   ")";
 
 
@@ -114,7 +120,7 @@ while (!feof($csv_file)) {
     try {
         $sql_result = $db_conn->query($sql_insert);
     } catch (PDOException $e) {
-        echo ("Error : " . $e->getMessage() . "SQL Command : ");
+        echo ("Error : " . $e->getMessage() . "SQL Command : \n");
         echo "$sql_insert\n\n";
     }
 }
@@ -196,17 +202,20 @@ while (!feof($csv_file)) {
  $sql_cmd = "
      CREATE VIEW $view_Cantons_Triages AS 
      SELECT $tbl_Cantonnements.tbl_id AS Canton_tbl_id,
-     $tbl_Cantonnements.numero AS num_canton,
+     $tbl_Cantonnements.num_canton AS num_canton,
      $tbl_Cantonnements.nom AS nom_canton,
      $tbl_Cantonnements.tel AS tel_canton,
      $tbl_Cantonnements.direction AS direction_canton,
      $tbl_Cantonnements.email AS email_canton,
      $tbl_Cantonnements.attache AS attache_canton,
-     $tbl_Cantonnements.adresse AS adresse_canton,
-     $tbl_Cantonnements.localisation AS locatlisation_canton,
+     $tbl_Cantonnements.CP AS CP_canton,
+     $tbl_Cantonnements.localite AS localite_canton,
+     $tbl_Cantonnements.rue AS rue_canton,
+     $tbl_Cantonnements.numero AS numero_canton,
+     $tbl_Cantonnements.localisation AS localisation_canton,
 
      $tbl_Triages.tbl_id AS tbl_id,
-     $tbl_Triages.numero AS num_triage,
+     $tbl_Triages.num_triage AS num_triage,
      $tbl_Triages.nom AS nom_triage,
      $tbl_Triages.nom_Prepose AS nom_Prepose,
      $tbl_Triages.gsm_Prepose AS gsm_Prepose 

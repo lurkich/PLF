@@ -205,14 +205,20 @@ class PLF
             "direction_canton",
             "email_canton",
             "attache_canton",
-            "adresse_canton",
+            "CP_canton",
+            "localite_canton",
+            "rue_canton",
+            "numero_canton",
             "localisation_canton",
             "Code_CC",
             "Nom_CC",
             "President_CC",
             "Secretaire_CC",
             "email_CC",
-            "adresse_CC",
+            "CP_CC",
+            "localite_CC",
+            "rue_CC",
+            "numero_CC",
             "localisation_CC",
             "site_internet_CC",
             "logo_CC",
@@ -620,16 +626,19 @@ class PLF
 
         // Build SQL statement
 
-        $sql_cmd = "SELECT DISTINCT numero, 
+        $sql_cmd = "SELECT DISTINCT num_canton, 
                         nom, 
                         tel,
                         direction,
                         email,
                         attache,
-                        adresse,
+                        CP,
+                        localite,
+                        rue,
+                        numero,
                         localisation
                         FROM $GLOBALS[tbl_cantonnements] ORDER BY ";
-        $sql_cmd .= "numero";
+        $sql_cmd .= "num_canton";
 
 
         // Process SQL command
@@ -638,12 +647,15 @@ class PLF
 
             foreach ($db_connection->query($sql_cmd) as $record) {
 
-                self::$List_Array[$record["numero"]] = ["nom" => $record["nom"], 
+                self::$List_Array[$record["num_canton"]] = ["nom" => $record["nom"], 
                                                             "tel" => $record["tel"],
                                                             "direction" => $record["direction"],
                                                             "email" => $record["email"],
                                                             "attache" => $record["attache"],
-                                                            "adresse" => $record["adresse"],
+                                                            "CP" => $record["CP"],
+                                                            "localite" => $record["localite"],
+                                                            "rue" => $record["rue"],
+                                                            "numero" => $record["numero"],
                                                             "localisation" => $record["localisation"]
                                                         ];
             }
@@ -854,7 +866,10 @@ class PLF
                         President, 
                         Secretaire, 
                         email, 
-                        adresse, 
+                        CP, 
+                        localite, 
+                        rue, 
+                        numero, 
                         localisation, 
                         site_internet, 
                         logo 
@@ -873,7 +888,10 @@ class PLF
                                                        "president" => $record["President"],
                                                        "secretaire" => $record["Secretaire"],
                                                        "email" => $record["email"],
-                                                       "adresse" => $record["adresse"],
+                                                       "CP" => $record["CP"],
+                                                       "localite" => $record["localite"],
+                                                       "rue" => $record["rue"],
+                                                       "numero" => $record["numero"],
                                                        "localisation" => $record["localisation"],
                                                        "site_internet" => $record["site_internet"],
                                                        "logo" => $record["logo"],
@@ -1952,10 +1970,10 @@ class PLF
 
         // Build SQL statement
 
-        $sql_cmd = "SELECT Numero ";
+        $sql_cmd = "SELECT num_canton ";
         $sql_cmd .= "FROM $GLOBALS[tbl_cantonnements] ";
         $sql_cmd .= " WHERE ";
-        $sql_cmd .= " Numero = '" . "$Num_Canton' ";
+        $sql_cmd .= " num_canton = '" . "$Num_Canton' ";
         $sql_cmd .= " LIMIT 1";
 
 

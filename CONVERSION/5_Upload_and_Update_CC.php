@@ -185,7 +185,10 @@ function Upload_plf_CC($tbl_CC, $File_CC)
     $tbl_Definition_CC["President"] = "TEXT (255)";
     $tbl_Definition_CC["Secretaire"] = "TEXT (255)";
     $tbl_Definition_CC["email"] = "TEXT (255)";
-    $tbl_Definition_CC["adresse"] = "TEXT (255)";
+    $tbl_Definition_CC["CP"] = "TEXT (255)";
+    $tbl_Definition_CC["localite"] = "TEXT (255)";
+    $tbl_Definition_CC["rue"] = "TEXT (255)";
+    $tbl_Definition_CC["numero"] = "TEXT (255)";
     $tbl_Definition_CC["localisation"] = "TEXT (255)";
     $tbl_Definition_CC["site_internet"] = "TEXT (255)";
     $tbl_Definition_CC["logo"] = "TEXT (255)";
@@ -250,17 +253,31 @@ function Upload_plf_CC($tbl_CC, $File_CC)
 
         $x++; 
 
-        $sql_cmd = "INSERT INTO  $tbl_CC (Code, Nom, President, Secretaire, email, adresse, localisation, site_internet, logo  " .
+        $sql_cmd = "INSERT INTO  $tbl_CC (Code, 
+                                          Nom, 
+                                          President, 
+                                          Secretaire, 
+                                          email,
+                                          CP,
+                                          localite,
+                                          rue,
+                                          numero,
+                                          localisation, 
+                                          site_internet, 
+                                          logo  " .
             ")  VALUES ( " .
             " '" . $rec[0] . "', " .
             " '" . $rec[1] . "', " .
             " '" . $rec[2] . "', " .
             " '" . $rec[3] . "', " .
-            " '" . "AA" . $x . "', " .
-            " '" . "BB" . $x . "', " .
-            " '" . "CC" . $x . "', " .
-            " '" . "DD" . $x . "', " .
-            " '" . "EE" . $x . "' " .
+            " '" . "email-" . $x . "', " .
+            " '" . "CP-" . $x . "', " .
+            " '" . "Local-" . $x . "', " .
+            " '" . "rue-" . $x . "', " .
+            " '" . "num-" . $x . "', " .
+            " '" . "localis-" . $x . "', " .
+            " '" . "site-" . $x . "', " .
+            " '" . "logo-" . $x . "' " .
             ")";
 
         try {
