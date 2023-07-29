@@ -7,24 +7,244 @@ require __DIR__ . "/functions.php";
 
 
 
+//goto Test1_new;
+goto Test2_new;
+//goto Test3_new;
+//goto Test4_new;
+//goto Test5_new;
+//goto Test6_new;
+//goto Test7_new;
+//goto Test8_new;
+//goto Test12_new;
+
 
 //goto Test1;
 //goto Test2;
+//goto Test2a;
 //goto Test3;
+//goto Test3a;
 //goto Test4;
-goto Test5;
+//goto Test4a;
+//goto Test5;
 //goto Test6;
 //goto Test7;
 //goto Test8;
 //goto Test9;
+//goto Test9a;
 //goto Test10;
+//goto Test10a;
 //goto Test11;
+//goto Test11a;
+
+
+/**
+ *    **    **    ******   **        **        **
+ *    ****  **    **        **      ****      **
+ *    ** ** **    *****      **    **  **    **
+ *    **  ****    **          **  **    **  **
+ *    **   ***    **           ****      ****
+ *    **    **    ******        **        **
+ */
 
 
 
-/**********************************************************************************************
- * 
- *  Call to retrieve list of territories
+Test1_new:
+
+$list_Territoires = PLF::SPW_Get_Territoire_List();
+
+if ($List_Territoires[0] < 0) {
+
+   echo $List_Territoires[1];
+
+   //
+   // .... traitement de l'erreur
+   //
+}
+
+
+
+
+
+
+
+Test2_new:
+
+$Territories_Info = PLF::SPW_Get_Territoire_Info("7113041054");
+
+if ($Territories_Info[0] < 0) {
+
+   echo $$Territories_Info[1];
+
+   //
+   // .... traitement de l'erreur
+   //
+}
+
+
+
+
+Test3_new:
+
+$List_Chasse_Territories_By_Date = PLF::SPW_Get_Chasse_By_Date(Chasse_Date: "6-10-2023");
+
+if ($List_Chasse_Territories_By_Date[0] < 0) {
+
+   echo $List_Chasse_Territories_By_Date[1];
+
+   //
+   // .... traitement de l'erreur
+   //
+}
+
+if ($List_Chasse_Territories_By_Date[0] == -14) {
+
+   echo "Pas de chasse pour cette date.";
+}
+
+
+
+
+
+
+
+Test4_new:
+
+
+$List_Chasse_Dates_By_Territories = PLF::SPW_Get_Chasse_By_Territoire(Territoire_Name: "7113184002");
+
+if ($List_Chasse_Dates_By_Territories[0] < 0) {
+
+   echo $List_Chasse_Dates_By_Territories[1];
+
+   //
+   // .... traitement de l'erreur
+   //
+}
+
+
+
+if ($List_Chasse_Dates_By_Territories[0] == -15) {
+
+
+   echo "Pas de date de chasse pour ce territoire.";
+}
+
+
+
+
+
+Test5_new:
+
+$List_Cantons = PLF::SPW_Get_Canton_List();
+
+if ($List_Cantons[0] < 0) {
+
+   echo $List_Cantons[1];
+
+   //
+   // .... traitement de l'erreur
+   //
+}
+
+
+
+
+
+
+Test6_new:
+
+$List_Territoire_By_Canton = PLF::SPW_Get_Territoire_By_Canton(Num_Canton: "912");
+
+if ($List_Territoire_By_Canton[0] < 0) {
+
+   echo $List_Territoire_By_Canton[1];
+
+   //
+   // .... traitement de l'erreur
+   //
+}
+
+
+if ($List_Territoire_By_Canton[0] == 0) {
+
+
+   echo "Pas de Territoire pour ce canton.";
+}
+
+
+
+
+
+
+
+Test7_new:
+
+$List_CC = PLF::SPW_Get_CC_List();
+
+if ($List_CC[0] < 0) {
+
+   echo $List_CC[1];
+
+   //
+   // .... traitement de l'erreur
+   //
+}
+
+
+
+Test8_new:
+
+$List_Territoire_By_CC = PLF::SPW_Get_Territoire_By_CC(Code_CC: "CCFARM");
+
+if ($List_Territoire_By_CC[0] < 0) {
+
+   echo $List_Territoire_By_CC[1];
+
+   //
+   // .... traitement de l'erreur
+   //
+}
+
+
+
+
+
+
+Test12_new:
+
+$Territoire_Geometry = PLF::SPW_Territoire_JSON(Territoire_Name: "7113041008");
+
+if ($Territoire_Geometry[0] < 0) {
+
+   echo $Territoire_Geometry[1];
+
+   //
+   // .... traitement de l'erreur
+   //
+
+} else {
+
+   $fp = fopen("C:\Users\chris\OneDrive\Documents\\Result_DA_Numero.json", 'w');
+   fwrite($fp, $Territoire_Geometry[2]);
+}
+
+
+
+
+
+
+
+
+
+
+
+/**
+ *     ******    **       *******
+ *    ********   **       ********
+ *    **    **   **       **     ** 
+ *    **    **   **       **     ** 
+ *    ********   *******  ******** 
+ *     ******    *******  ******* 
  */
 
 
@@ -44,8 +264,6 @@ if ($List_Territoires[0] < 0) {
 }
 
 
-
-
 $List_Territoires = PLF::Get_Territoire_List();
 
 if ($List_Territoires[0] < 0) {
@@ -60,10 +278,9 @@ if ($List_Territoires[0] < 0) {
 
 
 
-/**********************************************************************************************
- * 
- *  Retrieve all information for a territoire
- */
+
+
+
 
 
 Test2:
@@ -81,11 +298,7 @@ if ($Territories_Info[0] < 0) {
 }
 
 
-
-
-
-
-
+Test2a:
 
 $Territories_Info = PLF::Get_Territoire_Info(Territoire_Name: "9133383017");
 
@@ -105,14 +318,6 @@ if ($Territories_Info[0] < 0) {
 
 
 
-
-
-
-
-/**********************************************************************************************
- * 
- *  Call to retrieve list of chasse territories by date 
- */
 
 
 Test3:
@@ -135,8 +340,7 @@ if ($List_Chasse_Territories_By_Date[0] == 0) {
 
 
 
-
-
+Test3a:
 
 $List_Chasse_Territories_By_Date = PLF::Get_Chasse_By_Date(Chasse_Date: "3-10-2021");
 
@@ -160,11 +364,6 @@ if ($List_Chasse_Territories_By_Date[0] == 0) {
 
 
 
-
-/**********************************************************************************************
- * 
- *  Call to retrieve list of chasse_dates for a territories 
- */
 
 
 Test4:
@@ -190,10 +389,9 @@ if ($List_Chasse_Dates_By_Territories[0] == 0) {
 
 
 
+Test4a:
 
-
-
-$List_Chasse_Dates_By_Territories = PLF::Get_Chasse_By_Territoire(Territoire_Name: "911050100199");
+$List_Chasse_Dates_By_Territories = PLF::Get_Chasse_By_Territoire(Territoire_Name: "9110501001");
 
 if ($List_Chasse_Dates_By_Territories[0] < 0) {
 
@@ -224,7 +422,7 @@ if ($List_Chasse_Dates_By_Territories[0] == 0) {
  */
 
 
- Test5:
+Test5:
 
 $List_Cantons = PLF::Get_Canton_List();
 
@@ -283,7 +481,7 @@ if ($List_Territoire_By_Canton[0] == 0) {
  */
 
 
- Test7:
+Test7:
 
 $List_CC = PLF::Get_CC_List();
 
@@ -307,26 +505,26 @@ if ($List_CC[0] < 0) {
  */
 
 
- Test8:
+Test8:
 
- $List_Territoire_By_CC = PLF::Get_Territoire_By_CC(Code_CC: "CCFARM");
- 
- if ($List_Territoire_By_CC[0] < 0) {
- 
-    echo $List_Territoire_By_CC[1];
- 
-    //
-    // .... traitement de l'erreur
-    //
- }
- 
- 
- 
- if ($List_Territoire_By_CC[0] == 0) {
- 
- 
-    echo "Pas de Territoire pour ce conseil cynégétique.";
- }
+$List_Territoire_By_CC = PLF::Get_Territoire_By_CC(Code_CC: "CCFARM");
+
+if ($List_Territoire_By_CC[0] < 0) {
+
+   echo $List_Territoire_By_CC[1];
+
+   //
+   // .... traitement de l'erreur
+   //
+}
+
+
+
+if ($List_Territoire_By_CC[0] == 0) {
+
+
+   echo "Pas de Territoire pour ce conseil cynégétique.";
+}
 
 
 
@@ -353,6 +551,7 @@ if ($RC_Insert[0] < 0) {
 }
 
 
+Test9a:
 
 $RC_Insert = PLF::Chasse_Date_New(Territoire_Name: "9110501001", Chasse_Date: "27-07-24");
 
@@ -384,6 +583,8 @@ if ($RC_Delete == false) {
    exit;
 }
 
+
+Test10a;
 
 $RC_Delete = PLF::Chasse_Date_Delete(Territoire_Name: "9110501001", Chasse_Date: "27-07-24");
 
@@ -420,12 +621,11 @@ if ($Territoire_Geometry[0] < 0) {
 
    $fp = fopen("C:\Users\chris\OneDrive\Documents\\Result_Territories_id.json", 'w');
    fwrite($fp, $Territoire_Geometry[2]);
-   
 }
 
 
 
-
+Test11a:
 
 
 $Territoire_Geometry = PLF::Territoire_JSON(Territoire_Name: "9420000058");
@@ -442,7 +642,6 @@ if ($Territoire_Geometry[0] < 0) {
 
    $fp = fopen("C:\Users\chris\OneDrive\Documents\\Result_DA_Numero.json", 'w');
    fwrite($fp, $Territoire_Geometry[2]);
-   
 }
 
 

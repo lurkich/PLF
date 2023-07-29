@@ -1,18 +1,29 @@
 {
 	"folders": [
-		{
-			"path": "."
-		}
+        {
+            "path": "."
+        },
+        {
+            "path": "Tests"
+        },
+        {
+            "path": "../www/PartageonsLaForet"
+        }
     ],
     "settings": {},
     "launch": {
         "version": "0.2.0",
         "configurations": [
+            
             {
                 "name": "Listen for Xdebug",
                 "type": "php",
                 "request": "launch",
-                "port": 9003
+                "port": 9003,
+                // "hostname": "127.0.0.1",
+                // "pathMappings": {
+                //     "/var/www/site": "${workspaceFolder/tests}/",
+                //   }
             },
             {
                 "name": "Launch currently open script",
@@ -40,8 +51,8 @@
                     "localhost:0"
                 ],
                 "program": "",
-                "cwd": "${workspaceRoot}",
-                "port": 9003,
+                "cwd": "${workspaceRoot:Tests}",
+                "port": 9005,
                 "serverReadyAction": {
                     "pattern": "Development Server \\(http://localhost:([0-9]+)\\) started",
                     "uriFormat": "http://localhost:%s",
@@ -50,10 +61,11 @@
             },
             {
                 "type": "msedge",
-                "name": "http://localhost/PartageonsLaForet/",
+                "name": "http://localhost/PartageonsLaForet/PLF/WEB/",
                 "request": "launch",
-                "url": "http://localhost/PartageonsLaForet/"
+                "url": "http://localhost/PartageonsLaForet/PLF/WEB/"
             }
+
         ]
     }
 }

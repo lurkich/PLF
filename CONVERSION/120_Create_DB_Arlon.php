@@ -111,24 +111,24 @@ foreach ($db_conn->query($sql_cmd) as $record) {
 
  $sql_cmd = "
      CREATE VIEW view_Cantons_Triages AS 
-     SELECT plf_Cantonnements.tbl_id AS Canton_tbl_id,
-     plf_Cantonnements.num_canton AS num_canton,
-     plf_Cantonnements.nom AS nom_canton,
-     plf_Cantonnements.tel AS tel_canton,
-     plf_Cantonnements.direction AS direction_canton,
-     plf_Cantonnements.email AS email_canton,
-     plf_Cantonnements.attache AS attache_canton,
-     plf_Cantonnements.CP AS CP_canton,
-     plf_Cantonnements.localite AS localite_canton,
-     plf_Cantonnements.rue AS rue_canton,
-     plf_Cantonnements.numero AS numero_canton,
-     plf_Cantonnements.localisation AS locatlisation_canton,
+     SELECT plf_cantonnements.tbl_id AS Canton_tbl_id,
+     plf_cantonnements.num_canton AS num_canton,
+     plf_cantonnements.nom AS nom_canton,
+     plf_cantonnements.tel AS tel_canton,
+     plf_cantonnements.direction AS direction_canton,
+     plf_cantonnements.email AS email_canton,
+     plf_cantonnements.attache AS attache_canton,
+     plf_cantonnements.CP AS CP_canton,
+     plf_cantonnements.localite AS localite_canton,
+     plf_cantonnements.rue AS rue_canton,
+     plf_cantonnements.numero AS numero_canton,
+     plf_cantonnements.localisation AS locatlisation_canton,
      plf_Triages.tbl_id AS tbl_id,
      plf_Triages.num_triage AS num_triage,
      plf_Triages.nom AS nom_triage,
      plf_Triages.nom_Prepose AS nom_Prepose,
      plf_Triages.gsm_Prepose AS gsm_Prepose 
-     FROM (plf_Triages INNER JOIN plf_Cantonnements ON((plf_Triages.Ptr_Canton = plf_Cantonnements.tbl_id)));
+     FROM (plf_Triages INNER JOIN plf_cantonnements ON((plf_Triages.Ptr_Canton = plf_cantonnements.tbl_id)));
      ";
 
 
@@ -186,18 +186,18 @@ foreach ($db_conn->query($sql_cmd) as $record) {
     `plf_territoires`.`id` AS `id`,
     `plf_territoires`.`Member_CC` AS `Member_CC`,
     `plf_territoires`.`ptr_CC` AS `ptr_CC`,
-    `plf_cc`.`Code` AS `Code_CC`,
-    `plf_cc`.`Nom` AS `Nom_CC`,
-    `plf_cc`.`President` AS `President_CC`,
-    `plf_cc`.`Secretaire` AS `Secretaire_CC`,
-    `plf_cc`.`email` AS `email_CC`,
-    `plf_cc`.`CP` AS `CP_CC`,
-    `plf_cc`.`localite` AS `localite_CC`,
-    `plf_cc`.`rue` AS `rue_CC`,
-    `plf_cc`.`numero` AS `numero_CC`,
-    `plf_cc`.`localisation` AS `localisation_CC`,
-    `plf_cc`.`site_internet` AS `site_internet_CC`,
-    `plf_cc`.`logo` AS `logo_CC`,
+    `plf_CC`.`Code` AS `Code_CC`,
+    `plf_CC`.`Nom` AS `Nom_CC`,
+    `plf_CC`.`President` AS `President_CC`,
+    `plf_CC`.`Secretaire` AS `Secretaire_CC`,
+    `plf_CC`.`email` AS `email_CC`,
+    `plf_CC`.`CP` AS `CP_CC`,
+    `plf_CC`.`localite` AS `localite_CC`,
+    `plf_CC`.`rue` AS `rue_CC`,
+    `plf_CC`.`numero` AS `numero_CC`,
+    `plf_CC`.`localisation` AS `localisation_CC`,
+    `plf_CC`.`site_internet` AS `site_internet_CC`,
+    `plf_CC`.`logo` AS `logo_CC`,
     `plf_territoires`.`ptr_Canton` AS `ptr_Canton`,
     `plf_cantonnements`.`num_canton` AS `num_canton`,
     `plf_cantonnements`.`nom` AS `nom_canton`,
@@ -215,7 +215,7 @@ foreach ($db_conn->query($sql_cmd) as $record) {
     `plf_triages`.`nom` AS `nom_triage`,
     `plf_triages`.`nom_Prepose` AS `nom_Prepose`,
     `plf_triages`.`gsm_Prepose` AS `gsm_Prepose` 
-    from (((`plf_territoires` left join `plf_cc` on((`plf_territoires`.`ptr_CC` = `plf_cc`.`tbl_ID`))) 
+    from (((`plf_territoires` left join `plf_CC` on((`plf_territoires`.`ptr_CC` = `plf_CC`.`tbl_ID`))) 
     left join `plf_cantonnements` on((`plf_territoires`.`ptr_Canton` = `plf_cantonnements`.`tbl_id`))) 
     left join `plf_triages` on((`plf_territoires`.`ptr_Triage` = `plf_triages`.`tbl_id`)));
     ";

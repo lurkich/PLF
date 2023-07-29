@@ -19,7 +19,7 @@ class PLF
      * 
      *################################################################################*/
 
-     private static $Return_Codes = Array(
+    private static $Return_Codes = array(
 
         -1 => "Aucun record trouvé",
         -2 => "Le territoire n'existe pas",
@@ -33,9 +33,1010 @@ class PLF
         -10 => "La combinaison date chasse / territoire existe déjà",
         -11 => "Le canton n'existe pas",
         -12 => "Le conseil cynégétique n'existe pas",
+        -13 => "La base de données MySql n'est pas accessible.",
+        -14 => "pas de chasse pour cette date.",
+        -15 => "pas de dates pour cette chasse",
+        -16 => "Aucun cantons trouvés",
+        -17 => "pas de territoire pour ce canton",
+        -18 => "pas de territoire pour ce conseil cynégétique",
         -999 => "Autres erreurs"
 
-     );
+    );
+
+
+    /**
+     *    **    **    ******   **        **        **
+     *    ****  **    **        **      ****      **
+     *    ** ** **    *****      **    **  **    **
+     *    **  ****    **          **  **    **  **
+     *    **   ***    **           ****      ****
+     *    **    **    ******        **        **
+     */
+
+
+
+
+    /**-------------------------------------------------------------------------------------------------------------------------------------------
+     * 
+     *    Retourne la liste des territoires basés sur "N_LOT"
+     * 
+     *      Input     : Database "plf_spw_territoires"
+     *     
+     *      Appel     : Get_Territoire_List()
+     * 
+     *      Arguments : néant
+     * 
+     *      Output    : Array contenant 3 éléments
+     *                      Array[0] : Code retour.
+     *                                  xx : entier >= 0 contenant le nombre de territoires 
+     *                                  autres : voir le tableau
+     *                      Array[1] : Message d'erreur éventuel (voir tableau)
+     *                      Array[2] : Array indexé qui contient chacun une associate array
+     *                                      TRI SUR "Nomenclature"
+     *                                      DISTINCT (s'il y a plusieurs territoire avec le même id, seul le premier est sélectionné.)
+     *                                 Structure - Array[<index>] = ["Territories_id   = <Territories_id>, 
+     *                                                               "Territories_name = <Territories_Name>]
+     * 
+     *-------------------------------------------------------------------------------------------------------------------------------------------*/
+
+    public static function SPW_Get_Territoire_List(): array | false
+    {
+
+
+        self::$RC = 0;
+        self::$RC_Msg = "";
+        self::$List_Array = [];
+
+
+        // Make a new database connection and test if connection is OK
+
+        $database = new Database($GLOBALS["MySql_Server"], $GLOBALS["MySql_DB"], $GLOBALS["MySql_Login"], $GLOBALS["MySql_Password"]);
+
+        $db_conn = $database->getConnection();
+
+        if ($db_conn == false) {
+
+            self::$RC = -13;
+            self::$RC_Msg = $database->Get_Error_Message();
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);;
+        }
+
+
+        // Build SQL statement and pass it to the database and prccess the statement.
+
+        $gateway = new FunctionsGateway($database);
+
+        $sql_cmd = "SELECT DISTINCT N_LOT FROM $GLOBALS[spw_tbl_territoires] ORDER BY N_LOT";
+
+        $gateway->set_Sql_Statement($sql_cmd);
+
+        $results = $gateway->Get_List_Territoires();
+
+        // Check if everything went OK
+
+        if ($results[0] == "error") {
+
+            switch ($results[1]) {
+
+                case 1054:                 // invalid column name     
+                case 1064:                 // SQL syntax error
+                    self::$RC = -6;
+                    self::$RC_Msg = $results[2];
+                    return array(self::$RC, self::$RC_Msg, self::$List_Array);
+
+                default:                    // other errors
+                    self::$RC = -999;
+                    self::$RC_Msg = $database->Get_Error_Message();
+                    return array(self::$RC, self::$RC_Msg, self::$List_Array);;
+            }
+        }
+
+
+        // process the data and return the result
+
+        self::$RC = 0;
+
+        foreach ($results as $result => $value) {
+
+            array_push(self::$List_Array, [
+                "DA_Numero" => $value["N_LOT"],
+                "DA_Nom" => "N/A",
+                "Territories_id" => "obsolete",
+                "Territories_Name" => "obsolete"
+            ]);
+
+            self::$RC++;      // the number of records = last $value (index number) + 1
+
+        }
+
+
+        return array(self::$RC, self::$RC_Msg, self::$List_Array);
+    }
+
+
+
+    /**-------------------------------------------------------------------------------------------------------------------------------------------
+     * 
+     *    Retourne toutes les informations concernant un territoire "N_LOT"
+     * 
+     *      Input     : Database "view_spw_territoires"
+     *     
+     *      Appel     : Get_Territoire_Info(<numéro de territoire>)
+     * 
+     *      Arguments : Numéro de territoire = N_LOT
+     * 
+     *      Output    : Array contenant 3 éléments
+     *                      Array[0] : Code retour.
+     *                                  xx : entier >= 0 contenant le nombre d'information pour le territoire sélectionné 
+     *                                  autres : voir le tableau
+     *                      Array[1] : Message d'erreur éventuel
+     *                      Array[2] : Associative array qui contient toutes les informations du territoire ("N_LOT")
+     *                                      sans objet
+     *                                      DISTINCT (s'il y a plusieurs territoire avec le même numero, seul le premier est sélectionné.)
+     *                                 Structure - Array[clé] = valeur
+     * 
+     *-------------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+
+    public static function SPW_Get_Territoire_Info(string $Territoire_Name): array | false
+    {
+
+
+        self::$RC = 0;
+        self::$RC_Msg = "";
+        self::$List_Array = [];
+
+
+        // Make a new database connection and test if connection is OK
+
+        $database = new Database($GLOBALS["MySql_Server"], $GLOBALS["MySql_DB"], $GLOBALS["MySql_Login"], $GLOBALS["MySql_Password"]);
+
+        $db_conn = $database->getConnection();
+
+        if ($db_conn == false) {
+
+            self::$RC = -13;
+            self::$RC_Msg = $database->Get_Error_Message();
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);;
+        }
+
+        // Build SQL statement and pass it to the database and prccess the statement.
+
+        $gateway = new FunctionsGateway($database);
+
+        $sql_cmd = "SELECT DISTINCT SAISON,
+                                    N_LOT,
+                                    ugc,
+                                    nomugc,
+                                    description,
+                                    CAN,
+                                    FIRST_CANTON 
+                    FROM $GLOBALS[spw_view_territoires] 
+                    WHERE N_LOT = $Territoire_Name 
+                    ORDER BY SAISON, N_LOT";
+
+        $gateway->set_Sql_Statement($sql_cmd);
+
+        $results = $gateway->Get_Territoire_Info();
+
+
+        // Check if everything went OK
+
+        if ($results[0] == "error") {
+
+            switch ($results[1]) {
+
+                case 1054:                 // invalid column name     
+                case 1064:                 // SQL syntax error
+                    self::$RC = -6;
+                    self::$RC_Msg = $results[2];
+                    return array(self::$RC, self::$RC_Msg, self::$List_Array);
+
+                default:                    // other errors
+                    self::$RC = -999;
+                    self::$RC_Msg = $database->Get_Error_Message();
+                    return array(self::$RC, self::$RC_Msg, self::$List_Array);;
+            }
+        }
+
+
+
+        // process the data and return the result
+
+        self::$RC = 0;
+
+        foreach ($results as $result => $value) {
+
+            array_push(self::$List_Array, [
+                "DA_Numero" => $value["N_LOT"],
+                "SAISON" => $value["SAISON"],
+                "Territories_id" => "obsolete",
+                "Territories_Name" => "obsolete",
+                "num_canton" => $value["CAN"],
+                "nom_canton" => $value["FIRST_CANTON"],
+                "Code_CC" => $value["ugc"],
+                "Nom_CC" => $value["nomugc"],
+                "Description_CC" => $value["description"],
+                "DA_Nom" => "N/A",
+                "TITULAIRE_" => "N/A",
+                "NOM_TITULA" => "N/A",
+                "PRENOM_TIT" => "N/A",
+                "TITULAIRE1" => "N/A",
+                "COMMENTAIR" => "N/A",
+                "DATE_MAJ" => "Pas nécessaire",
+                "ESRI_OID" => "Pas nécessaire",
+                "tel_canton" => "N/A",
+                "direction_canton" => "N/A",
+                "email_canton" => "N/A",
+                "attache_canton" => "N/A",
+                "CP_canton" => "N/A",
+                "localite_canton" => "N/A",
+                "rue_canton" => "N/A",
+                "numero_canton" => "N/A",
+                "latitude_canton" => "Peut-être calculé",
+                "longitude_canton" => "Peut-être calculé",
+                "President_CC" => "N/A",
+                "Secretaire_CC" => "N/A",
+                "email_CC" => "N/A",
+                "CP_CC" => "N/A",
+                "localite_CC" => "N/A",
+                "rue_CC" => "N/A",
+                "numero_CC" => "N/A",
+                "latitude_CC" => "Peut-être calculé",
+                "longitude_CC" => "Peut-être calculé",
+                "site_internet_CC" => "N/A",
+                "logo_CC" => "N/A",
+                "num_triage" => "N/A",
+                "nom_triage" => "N/A",
+                "nom_Prepose" => "N/A",
+                "gsm_Prepose" => "N/A"
+            ]);
+
+
+
+
+            self::$RC++;      // the number of records = last $value (index number) + 1
+
+        }
+
+
+        return array(self::$RC, self::$RC_Msg, self::$List_Array);
+    }
+
+
+    /**-------------------------------------------------------------------------------------------------------------------------------------------
+     * 
+     *    Retourne la liste des territoires par date de chasse
+     * 
+     *      Input     : Database "PLF_spw_chasses_fermeture"
+     *     
+     *      Appel     : Get_Chasse_By_Date(Chasse_Date: <Date Chasse>)
+     * 
+     *      Arguments : Date_Chasse    = date de la chasse (format JJ-MM-AAAA et doit être valide)     * 
+     * 
+     *      Output    : Array contenant 3 éléments
+     *                      Array[0] : Code retour.
+     *                                  xx : entier >= 0 contenant le nombre de territoires
+     *                                  autres : voir le tableau
+     *                      Array[1] : Message d'erreur éventuel
+     *                      Array[2] : Array indexé qui contient un array avec le numéro de territoire et la saison
+     *                                      TRI sur saison et numéro de territoire
+     *                                 Structure - Array[index] = Array[<Numero du territoire>,<SAISON>[]
+     * 
+     *-------------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+    public static function SPW_Get_Chasse_By_Date(string $Chasse_Date): array | false
+    {
+
+
+        self::$RC = 0;
+        self::$RC_Msg = "";
+        self::$List_Array = [];
+
+
+        // check date validity. Format DD-MM-YYYY et date is valid
+
+        $Errors_Values = self::__Check_If_Date_Is_Valid($Chasse_Date);
+
+        if (!empty($Errors_Values)) {
+
+            self::$RC = -4;
+            self::$RC_Msg = $Errors_Values;
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
+        }
+
+
+
+        // Make a new database connection and test if connection is OK
+
+        $database = new Database($GLOBALS["MySql_Server"], $GLOBALS["MySql_DB"], $GLOBALS["MySql_Login"], $GLOBALS["MySql_Password"]);
+
+        $db_conn = $database->getConnection();
+
+        if ($db_conn == false) {
+
+            self::$RC = -13;
+            self::$RC_Msg = $database->Get_Error_Message();
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);;
+        }
+
+
+
+        // Build SQL statement and pass it to the database and prccess the statement.
+
+        $gateway = new FunctionsGateway($database);
+
+        $date_Chasse_Sql = PLF::__Convert_2_Sql_Date(Date_DD_MM_YYYY: $Chasse_Date);
+
+        $sql_cmd = "SELECT SAISON,
+                           N_LOT
+                    FROM $GLOBALS[spw_chasses_fermeture] 
+                    WHERE DATE_CHASSE = '$date_Chasse_Sql' 
+                    ORDER BY SAISON, N_LOT";
+
+        $gateway->set_Sql_Statement($sql_cmd);
+
+        $results = $gateway->Get_Chasse_By_Date();
+
+        // Check if everything went OK
+
+        if (count($results) == 0) {
+            self::$RC = -14;
+            self::$RC_Msg = self::$Return_Codes[self::$RC];
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
+        }
+
+        if ($results[0] == "error") {
+
+            switch ($results[1]) {
+
+                case 1054:                 // invalid column name     
+                case 1064:                 // SQL syntax error
+                    self::$RC = -6;
+                    self::$RC_Msg = $results[2];
+                    return array(self::$RC, self::$RC_Msg, self::$List_Array);
+
+                default:                    // other errors
+                    self::$RC = -999;
+                    self::$RC_Msg = $database->Get_Error_Message();
+                    return array(self::$RC, self::$RC_Msg, self::$List_Array);;
+            }
+        }
+
+
+        // process the data and return the result
+
+        self::$RC = 0;
+
+        foreach ($results as $result => $value) {
+
+            array_push(self::$List_Array, $value["N_LOT"]);
+
+
+
+
+            self::$RC++;      // the number of records = last $value (index number) + 1
+
+        }
+
+
+        return array(self::$RC, self::$RC_Msg, self::$List_Array);
+    }
+
+
+    /**-------------------------------------------------------------------------------------------------------------------------------------------
+     * 
+     *    Retourne la liste des territoires par date de chasse
+     * 
+     *      Input     : Database "PLF_spw_chasses_fermeture"
+     *     
+     *      Appel     : Get_Chasse_By_Date(Chasse_Date: <Date Chasse>)
+     * 
+     *      Arguments : Date_Chasse    = date de la chasse (format JJ-MM-AAAA et doit être valide)     * 
+     * 
+     *      Output    : Array contenant 3 éléments
+     *                      Array[0] : Code retour.
+     *                                  xx : entier >= 0 contenant le nombre de territoires
+     *                                  autres : voir le tableau
+     *                      Array[1] : Message d'erreur éventuel
+     *                      Array[2] : Array indexé qui contient un array avec le numéro de territoire et la saison
+     *                                      TRI sur saison et numéro de territoire
+     *                                 Structure - Array[index] = Array[<Numero du territoire>,<SAISON>[]
+     * 
+     *-------------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+    public static function SPW_Get_Chasse_By_Territoire(string $Territoire_Name): array | false
+    {
+
+
+        self::$RC = 0;
+        self::$RC_Msg = "";
+        self::$List_Array = [];
+
+
+        // Make a new database connection and test if connection is OK
+
+        $database = new Database($GLOBALS["MySql_Server"], $GLOBALS["MySql_DB"], $GLOBALS["MySql_Login"], $GLOBALS["MySql_Password"]);
+
+        $db_conn = $database->getConnection();
+
+        if ($db_conn == false) {
+
+            self::$RC = -13;
+            self::$RC_Msg = $database->Get_Error_Message();
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);;
+        }
+
+
+
+        // Build SQL statement and pass it to the database and prccess the statement.
+
+        $gateway = new FunctionsGateway($database);
+
+
+        $sql_cmd = "SELECT DATE_CHASSE
+                     FROM $GLOBALS[spw_chasses_fermeture] 
+                     WHERE N_LOT = $Territoire_Name
+                     ORDER BY DATE_CHASSE";
+
+        $gateway->set_Sql_Statement($sql_cmd);
+
+        $results = $gateway->Get_Chasse_By_Date();
+
+        // Check if everything went OK
+
+        if (count($results) == 0) {
+            self::$RC = -15;
+            self::$RC_Msg = self::$Return_Codes[self::$RC];
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
+        }
+
+        if ($results[0] == "error") {
+
+            switch ($results[1]) {
+
+                case 1054:                 // invalid column name     
+                case 1064:                 // SQL syntax error
+                    self::$RC = -6;
+                    self::$RC_Msg = $results[2];
+                    return array(self::$RC, self::$RC_Msg, self::$List_Array);
+
+                default:                    // other errors
+                    self::$RC = -999;
+                    self::$RC_Msg = $database->Get_Error_Message();
+                    return array(self::$RC, self::$RC_Msg, self::$List_Array);;
+            }
+        }
+
+
+
+
+        // process the data and return the result
+
+        self::$RC = 0;
+
+        foreach ($results as $result => $value) {
+
+            $sqlDate = new DateTime($value["DATE_CHASSE"]);
+            array_push(self::$List_Array, $sqlDate->format('d-m-Y'));
+
+            self::$RC++;      // the number of records = last $value (index number) + 1
+
+        }
+
+
+        return array(self::$RC, self::$RC_Msg, self::$List_Array);
+    }
+
+
+    /**-------------------------------------------------------------------------------------------------------------------------------------------
+     * 
+     *    Retourne la liste des cantons
+     * 
+     *      Input     : Database "PLF_spw_cantonnements"
+     *     
+     *      Appel     : SPW_Get_Canton_List()
+     * 
+     *      Arguments : Néant     * 
+     * 
+     *      Output    : Array contenant 3 éléments
+     *                      Array[0] : Code retour.
+     *                                  xx : entier >= 0 contenant le nombre de cantons
+     *                                  autres : voir le tableau
+     *                      Array[1] : Message d'erreur éventuel
+     *                      Array[2] : Associative array qui contient chacun une associate array
+     *                                      TRI SUR "Num_Canton"
+     *                                      DISTINCT (s'il y a plusieurs cantons avec le même numéro, seul le premier est sélectionné.)
+     *                                 Structure - Array[<num_canton>] = <infos du canton>
+     * 
+     *-------------------------------------------------------------------------------------------------------------------------------------------*/
+
+    public static function SPW_Get_Canton_List(): array | false
+
+    {
+        self::$RC = 0;
+        self::$RC_Msg = "";
+        self::$List_Array = [];
+
+
+        // Make a new database connection and test if connection is OK
+
+        $database = new Database($GLOBALS["MySql_Server"], $GLOBALS["MySql_DB"], $GLOBALS["MySql_Login"], $GLOBALS["MySql_Password"]);
+
+        $db_conn = $database->getConnection();
+
+        if ($db_conn == false) {
+
+            self::$RC = -13;
+            self::$RC_Msg = $database->Get_Error_Message();
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);;
+        }
+
+
+
+        // Build SQL statement and pass it to the database and prccess the statement.
+
+        $gateway = new FunctionsGateway($database);
+
+        $sql_cmd = "SELECT DISTINCT CAN, 
+                                    FIRST_CANTON
+                    FROM $GLOBALS[spw_tbl_cantonnements] 
+                    ORDER BY CAN";
+
+
+        $gateway->set_Sql_Statement($sql_cmd);
+
+        $results = $gateway->Get_Chasse_By_Date();
+
+        // Check if everything went OK
+
+        if (count($results) == 0) {
+            self::$RC = -16;
+            self::$RC_Msg = self::$Return_Codes[self::$RC];
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
+        }
+
+        if ($results[0] == "error") {
+
+            switch ($results[1]) {
+
+                case 1054:                 // invalid column name     
+                case 1064:                 // SQL syntax error
+                    self::$RC = -6;
+                    self::$RC_Msg = $results[2];
+                    return array(self::$RC, self::$RC_Msg, self::$List_Array);
+
+                default:                    // other errors
+                    self::$RC = -999;
+                    self::$RC_Msg = $database->Get_Error_Message();
+                    return array(self::$RC, self::$RC_Msg, self::$List_Array);;
+            }
+        }
+
+
+
+
+        // process the data and return the result
+
+        self::$RC = 0;
+
+        foreach ($results as $result => $value) {
+
+            self::$List_Array[$value["CAN"]] = [
+                            "nom" => $value["FIRST_CANTON"],
+                            "tel" => "N/A",
+                            "direction" => "N/A",
+                            "email" => "N/A",
+                            "attache" => "N/A",
+                            "CP" => "N/A",
+                            "localite" => "N/A",
+                            "rue" => "N/A",
+                            "numero" => "N/A",
+                            "latitude" => "Peut-être calculé",
+                            "longitude" => "Peut-être calculé"
+            ];
+
+
+            self::$RC++;      // the number of records = last $value (index number) + 1
+
+        }
+
+
+        return array(self::$RC, self::$RC_Msg, self::$List_Array);
+    }
+
+
+    /**-------------------------------------------------------------------------------------------------------------------------------------------
+     * 
+     *    Retourne la liste des territoires par numéro de canton
+     * 
+     *      Input     : Database "view_spw_territoires"
+     *     
+     *      Appel     : Get_Territoire_By_Canton(Num_Canton: <numéro de canton>)
+     * 
+     *      Arguments : Num_Canton     = <Numéro du canton>
+     *                  
+     *      Output    : Array contenant 3 éléments
+     *                      Array[0] : Code retour.
+     *                                  xx : entier >= 0 contenant le nombre de territoires
+     *                                  autres : voir le tableau
+     *                      Array[1] : Message d'erreur éventuel
+     *                      Array[2] : Array indexé qui contient un array avec le numéro du territoires
+     *                                      TRI sur "numéro de territoire"
+     *                                      DISTINCT : n'affiche qu'une seule occurence territories
+     *                                 Structure - Array[index] = Array[<numéro de territoire>]
+     * 
+     *-------------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+    public static function SPW_Get_Territoire_By_Canton(string $Num_Canton): array | false
+    {
+
+        self::$RC = 0;
+        self::$RC_Msg = "";
+        self::$List_Array = [];
+
+
+        // Make a new database connection and test if connection is OK
+
+        $database = new Database($GLOBALS["MySql_Server"], $GLOBALS["MySql_DB"], $GLOBALS["MySql_Login"], $GLOBALS["MySql_Password"]);
+
+        $db_conn = $database->getConnection();
+
+        if ($db_conn == false) {
+
+            self::$RC = -13;
+            self::$RC_Msg = $database->Get_Error_Message();
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array
+            );;
+        }
+
+
+
+        // Build SQL statement and pass it to the database and prccess the statement.
+
+        $gateway = new FunctionsGateway($database);
+
+        $sql_cmd = "SELECT DISTINCT N_LOT 
+                    FROM $GLOBALS[spw_view_territoires] 
+                    WHERE CAN = '$Num_Canton'
+                    ORDER BY N_LOT";
+
+
+        $gateway->set_Sql_Statement($sql_cmd);
+
+        $results = $gateway->Get_Chasse_By_Date();
+
+        // Check if everything went OK
+
+        if (count($results) == 0) {
+            self::$RC = -17;
+            self::$RC_Msg = self::$Return_Codes[self::$RC];
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
+        }
+
+        if ($results[0] == "error") {
+
+            switch ($results[1]) {
+
+                case 1054:                 // invalid column name     
+                case 1064:                 // SQL syntax error
+                    self::$RC = -6;
+                    self::$RC_Msg = $results[2];
+                    return array(self::$RC, self::$RC_Msg, self::$List_Array);
+
+                default:                    // other errors
+                    self::$RC = -999;
+                    self::$RC_Msg = $database->Get_Error_Message();
+                    return array(self::$RC, self::$RC_Msg, self::$List_Array);;
+            }
+        }
+
+
+
+
+        // process the data and return the result
+
+        self::$RC = 0;
+
+        foreach ($results as $result => $value) {
+
+            array_push(self::$List_Array, [
+                $value["N_LOT"]
+            ]);
+
+
+            self::$RC++;      // the number of records = last $value (index number) + 1
+
+        }
+
+
+        return array(self::$RC, self::$RC_Msg, self::$List_Array);
+    }
+
+
+    /**-------------------------------------------------------------------------------------------------------------------------------------------
+     * 
+     *    Retourne la liste des conseils cynégétiques
+     * 
+     *      Input     : Database "plf_spw_cc"
+     *     
+     *      Appel     : SPW_Get_CC_List()
+     * 
+     *      Arguments : Néant     * 
+     * 
+     *      Output    : Array contenant 3 éléments
+     *                      Array[0] : Code retour.
+     *                                  xx : entier >= 0 contenant le nombre de cantons
+     *                                  autres : voir le tableau
+     *                      Array[1] : Message d'erreur éventuel
+     *                      Array[2] : Associative array qui contient chacun une associate array
+     *                                      TRI SUR "Code_CC"
+     *                                      DISTINCT (s'il y a plusieurs cantons avec le même code_cc, seul le premier est sélectionné.)
+     *                                 Structure - Array[<Code_CC>] = ["nom_CC"]      = <nom_CC>, 
+     *                                                                ["president"]   = <president>,
+     *                                                                ["secreataire"] = <secretaire> 
+     * 
+     *-------------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+    public static function SPW_Get_CC_List(): array | false
+    {
+
+        self::$RC = 0;
+        self::$RC_Msg = "";
+        self::$List_Array = [];
+
+
+        // Make a new database connection and test if connection is OK
+
+        $database = new Database($GLOBALS["MySql_Server"], $GLOBALS["MySql_DB"], $GLOBALS["MySql_Login"], $GLOBALS["MySql_Password"]);
+
+        $db_conn = $database->getConnection();
+
+        if ($db_conn == false) {
+
+            self::$RC = -13;
+            self::$RC_Msg = $database->Get_Error_Message();
+
+            return array(
+                self::$RC, self::$RC_Msg, self::$List_Array
+            );;
+        }
+
+
+
+        // Build SQL statement and pass it to the database and prccess the statement.
+
+        $gateway = new FunctionsGateway($database);
+
+        $sql_cmd = "SELECT DISTINCT ugc,
+                                    nomugc,
+                                    description 
+                    FROM $GLOBALS[spw_tbl_cc] 
+                    ORDER BY ugc";
+
+
+        $gateway->set_Sql_Statement($sql_cmd);
+
+        $results = $gateway->Get_Chasse_By_Date();
+
+        // Check if everything went OK
+
+        if (count($results) == 0) {
+            self::$RC = -17;
+            self::$RC_Msg = self::$Return_Codes[self::$RC];
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
+        }
+
+        if ($results[0] == "error") {
+
+            switch ($results[1]) {
+
+                case 1054:                 // invalid column name     
+                case 1064:                 // SQL syntax error
+                    self::$RC = -6;
+                    self::$RC_Msg = $results[2];
+                    return array(self::$RC, self::$RC_Msg, self::$List_Array);
+
+                default:                    // other errors
+                    self::$RC = -999;
+                    self::$RC_Msg = $database->Get_Error_Message();
+                    return array(self::$RC, self::$RC_Msg, self::$List_Array);;
+            }
+        }
+
+
+
+
+
+        // process the data and return the result
+
+        self::$RC = 0;
+
+        foreach ($results as $result => $value) {
+
+            self::$List_Array[$value["ugc"]] = [
+                "nom" => $value["nomugc"],
+                "description" => $value["description"],
+                "president" => "N/A",
+                "secretaire" => "N/A",
+                "email" => "N/A",
+                "CP" => "N/A",
+                "localite" => "N/A",
+                "rue" => "N/A",
+                "numero" => "N/A",
+                "site_internet" => "N/A",
+                "logo" => "N/A",
+                "latitude" => "peut être calculé",
+                "longitude" => "peut être calculé",
+            ];
+
+
+            self::$RC++;      // the number of records = last $value (index number) + 1
+
+        }
+
+
+        return array(self::$RC, self::$RC_Msg, self::$List_Array);
+    }
+
+
+
+    /**-------------------------------------------------------------------------------------------------------------------------------------------
+     * 
+     *    Crée un fichier json pour un territoire donné
+     * 
+     *      Input     : plf_swp_territoires
+     *     
+     *      Appel     : SPW_Territoire_JSON(<numéro de territoire>)
+     * 
+     *      Arguments : numéro de territoire 
+     * 
+     *      Output    : Array contenant 3 éléments
+     *                      Array[0] : Code retour.
+     *                                  xx : entier >= 0 contenant le nombre de cantons
+     *                                  autres : voir le tableau
+     *                      Array[1] : Message d'erreur éventuel
+     *                      Array[2] : Array indexé qui contient le SHAPE du territoire
+     *                                 Structure - Array[0] = SHAPE 
+     * 
+     *-------------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+    public static function SPW_Territoire_JSON(string $Territoire_Name) : array | false
+    {
+
+        self::$RC = 0;
+        self::$RC_Msg = "";
+        self::$List_Array = [];
+
+
+        // Make a new database connection and test if connection is OK
+
+        $database = new Database($GLOBALS["MySql_Server"], $GLOBALS["MySql_DB"], $GLOBALS["MySql_Login"], $GLOBALS["MySql_Password"]);
+
+        $db_conn = $database->getConnection();
+
+        if ($db_conn == false) {
+
+            self::$RC = -13;
+            self::$RC_Msg = $database->Get_Error_Message();
+
+            return array(
+                self::$RC, self::$RC_Msg, self::$List_Array
+            );;
+        }
+
+
+
+        // Build SQL statement and pass it to the database and prccess the statement.
+
+        $gateway = new FunctionsGateway($database);
+
+        $sql_cmd = "SELECT DISTINCT SHAPE,
+                                    N_LOT
+                    FROM $GLOBALS[spw_tbl_territoires] 
+                    WHERE N_LOT = '$Territoire_Name'";
+
+
+        $gateway->set_Sql_Statement($sql_cmd);
+
+        $results = $gateway->Get_Chasse_By_Date();
+
+        // Check if everything went OK
+
+        if (count($results) == 0) {
+            self::$RC = -2;
+            self::$RC_Msg = self::$Return_Codes[self::$RC];
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
+        }
+
+        if ($results[0] == "error") {
+
+            switch ($results[1]) {
+
+                case 1054:                 // invalid column name     
+                case 1064:                 // SQL syntax error
+                    self::$RC = -6;
+                    self::$RC_Msg = $results[2];
+                    return array(self::$RC, self::$RC_Msg, self::$List_Array);
+
+                default:                    // other errors
+                    self::$RC = -999;
+                    self::$RC_Msg = $database->Get_Error_Message();
+                    return array(self::$RC, self::$RC_Msg, self::$List_Array);;
+            }
+        }
+
+
+
+
+
+        // process the data and return the result
+
+        self::$RC = 0;
+
+        $value = $results[0];
+
+        $Geometry = $value['SHAPE'];
+        $Territories_name = "N/A";
+        $DA_Numero = $value['N_LOT'];
+
+
+
+        $headers = "\t{\r\n\t\t\"type\" : \"FeatureCollection\"," .
+        "\r\n\t\t\"name\" : \"NewFeatureType\"," .
+        "\r\n\t\t\"features\" : [\r\n\t\t\t{\r\n\t\t\t\t\"type\" : \"Feature\",\r\n\t\t\t\t\"geometry\" : ";
+
+        $footer = "\r\n\t\t\t\t}\r\n\t\t\t}\r\n\t\r\n\t\t]\r\n\t}\r\n";
+
+        // convert some string characters to valid ones 
+
+        $Geometry = preg_replace('/("type": "MultiPolygon")/', '\t$1', $Geometry);
+        $Geometry = preg_replace('/("coordinates")/', '\t$1', $Geometry);
+
+        $Geometry = preg_replace('/\\\n[\\\t]+(\d)/', "$1", $Geometry);
+        $Geometry = preg_replace('/(\d)\\\n[\\\t]+\]/', "$1]", $Geometry);
+        $Geometry = preg_replace('/\\\n}"/', "\r\n\t}" . '"', $Geometry);
+
+        $Geometry = preg_replace('/\\\n/', "\r\n\t\t\t", $Geometry);
+
+        $Geometry = preg_replace('/\\\t/', "\t", $Geometry);
+
+        $Geometry = preg_replace('/^"/', "", $Geometry, 1);   // replace first quote by empty string
+        $Geometry = preg_replace('/"$/', "", $Geometry, 1);   // replace last quote by empty string
+
+
+        $Nomenclature = ",\r\n\t\t\t\t\"properties\": {\r\n\t\t\t\t\t\"Nomenclature\": \"" . $DA_Numero . "\", \r\n";
+        $Territories_name = "\t\t\t\t\t\"Territories_name\": \"" . $Territories_name . "\" ";
+
+        $Geometry = $headers . $Geometry . $Nomenclature .  $Territories_name . $footer;
+
+        return array(self::$RC, self::$RC_Msg, $Geometry);
+
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -44,31 +1045,135 @@ class PLF
 
     /**-------------------------------------------------------------------------------------------------------------------------------------------
      * 
-     *    Retourne la liste des territoires basés sur "Territories_id" OU "Nomenclature" (DA_Numero)
+     *    Retourne la liste des territoires par conseil cynégétique
      * 
-     *      Input     : Database "PLF_Territoires"
+     *      Input     : Database "view_spw_territoires"
      *     
-     *      Appel     : Get_Territoire_List(TypeTerritoire: "T")
-     *                  Get_Territoire_List()
+     *      Appel     : SPW_Get_Territoire_By_CC(Num_Canton: <numéro de canton>)
      * 
-     *      Arguments : TypeTerritoire = "T"            Selection basée sur "Territories_id"
-     *                                 = non spécifié   Selection basée sur "Nomenclature"
-     * 
+     *      Arguments : Code_CC     = <code du conseil cynégétique>
+     *                  
      *      Output    : Array contenant 3 éléments
      *                      Array[0] : Code retour.
-     *                                  xx : entier >= 0 contenant le nombre de territoires 
-     *                                  -5 : Erreur MySql
-     *                                  -6 : Commande SQL invalide
+     *                                  xx : entier >= 0 contenant le nombre de territoires
+     *                                  autres : voir le tableau
      *                      Array[1] : Message d'erreur éventuel
-     *                      Array[2] : Array indexé qui contient chacun une associate array
-     *                                      TRI SUR "Territories_Id" OU "Nomenclature"
-     *                                      DISTINCT (s'il y a plusieurs territoire avec le même id, seul le premier est sélectionné.)
-     *                                 Structure - Array[<index>] = ["DA_Numero"]      = <DA_Numero>, 
-     *                                                               "DA_Nom"]         = <DA_Nom>, 
-     *                                                               "Territories_id   = <Territories_id>, 
-     *                                                               "Territories_name = <Territories_Name>]
+     *                      Array[2] : Array indexé qui contient un array avec le numéro du territoires
+     *                                      TRI sur "numéro de territoire"
+     *                                      DISTINCT : n'affiche qu'une seule occurence territories
+     *                                 Structure - Array[index] = Array[<numéro de territoire>]
      * 
      *-------------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+     public static function SPW_Get_Territoire_By_CC($Code_CC)
+     {
+ 
+         self::$RC = 0;
+         self::$RC_Msg = "";
+         self::$List_Array = [];
+ 
+ 
+         // Make a new database connection and test if connection is OK
+ 
+         $database = new Database($GLOBALS["MySql_Server"], $GLOBALS["MySql_DB"], $GLOBALS["MySql_Login"], $GLOBALS["MySql_Password"]);
+ 
+         $db_conn = $database->getConnection();
+ 
+         if ($db_conn == false) {
+ 
+             self::$RC = -13;
+             self::$RC_Msg = $database->Get_Error_Message();
+ 
+             return array(self::$RC, self::$RC_Msg, self::$List_Array
+             );;
+         }
+ 
+ 
+ 
+         // Build SQL statement and pass it to the database and prccess the statement.
+ 
+         $gateway = new FunctionsGateway($database);
+ 
+         $sql_cmd = "SELECT DISTINCT N_LOT 
+                     FROM $GLOBALS[spw_view_territoires] 
+                     WHERE ugc = '$Code_CC'
+                     ORDER BY N_LOT";
+ 
+ 
+         $gateway->set_Sql_Statement($sql_cmd);
+ 
+         $results = $gateway->Get_Chasse_By_Date();
+ 
+         // Check if everything went OK
+ 
+         if (count($results) == 0) {
+             self::$RC = -18;
+             self::$RC_Msg = self::$Return_Codes[self::$RC];
+             return array(self::$RC, self::$RC_Msg, self::$List_Array);
+         }
+ 
+         if ($results[0] == "error") {
+ 
+             switch ($results[1]) {
+ 
+                 case 1054:                 // invalid column name     
+                 case 1064:                 // SQL syntax error
+                     self::$RC = -6;
+                     self::$RC_Msg = $results[2];
+                     return array(self::$RC, self::$RC_Msg, self::$List_Array);
+ 
+                 default:                    // other errors
+                     self::$RC = -999;
+                     self::$RC_Msg = $database->Get_Error_Message();
+                     return array(self::$RC, self::$RC_Msg, self::$List_Array);;
+             }
+         }
+ 
+ 
+ 
+ 
+         // process the data and return the result
+ 
+         self::$RC = 0;
+ 
+         foreach ($results as $result => $value) {
+ 
+             array_push(self::$List_Array, [
+                 $value["N_LOT"]
+             ]);
+ 
+ 
+             self::$RC++;      // the number of records = last $value (index number) + 1
+ 
+         }
+ 
+ 
+         return array(self::$RC, self::$RC_Msg, self::$List_Array);
+     }
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     public static function Get_Territoire_List($TypeTerritoire = NULL)
@@ -110,10 +1215,12 @@ class PLF
 
             foreach ($db_connection->query($sql_cmd) as $record) {
 
-                array_push(self::$List_Array, ["DA_Numero" => $record["DA_Numero"] , 
-                                               "DA_Nom" => $record["DA_Nom"], 
-                                               "Territories_id" => $record["Territories_id"], 
-                                               "Territories_Name" => $record["Territories_Name"]]  );
+                array_push(self::$List_Array, [
+                    "DA_Numero" => $record["DA_Numero"],
+                    "DA_Nom" => $record["DA_Nom"],
+                    "Territories_id" => $record["Territories_id"],
+                    "Territories_Name" => $record["Territories_Name"]
+                ]);
             }
         } catch (Exception $e) {
 
@@ -136,14 +1243,6 @@ class PLF
         self::$RC = count(self::$List_Array);
         return array(self::$RC, self::$RC_Msg, self::$List_Array);
     }
-
-
-
-
-
-
-
-
 
 
 
@@ -209,7 +1308,8 @@ class PLF
             "localite_canton",
             "rue_canton",
             "numero_canton",
-            "localisation_canton",
+            "latitude_canton",
+            "longitude_canton",
             "Code_CC",
             "Nom_CC",
             "President_CC",
@@ -219,7 +1319,8 @@ class PLF
             "localite_CC",
             "rue_CC",
             "numero_CC",
-            "localisation_CC",
+            "latitude_CC",
+            "longitude_CC",
             "site_internet_CC",
             "logo_CC",
             "num_triage",
@@ -304,12 +1405,6 @@ class PLF
         self::$RC = count(self::$List_Array);
         return array(self::$RC, self::$RC_Msg, self::$List_Array);
     }
-
-
-
-
-
-
 
 
     /**-------------------------------------------------------------------------------------------------------------------------------------------
@@ -435,14 +1530,6 @@ class PLF
         self::$RC = count(self::$List_Array);
         return array(self::$RC, self::$RC_Msg, self::$List_Array);
     }
-
-
-
-
-
-
-
-
 
 
     /**-------------------------------------------------------------------------------------------------------------------------------------------
@@ -573,11 +1660,6 @@ class PLF
     }
 
 
-
-
-
-
-
     /**-------------------------------------------------------------------------------------------------------------------------------------------
      * 
      *    Retourne la liste des cantons
@@ -636,7 +1718,8 @@ class PLF
                         localite,
                         rue,
                         numero,
-                        localisation
+                        latitude,
+                        longitude
                         FROM $GLOBALS[tbl_cantonnements] ORDER BY ";
         $sql_cmd .= "num_canton";
 
@@ -647,17 +1730,19 @@ class PLF
 
             foreach ($db_connection->query($sql_cmd) as $record) {
 
-                self::$List_Array[$record["num_canton"]] = ["nom" => $record["nom"], 
-                                                            "tel" => $record["tel"],
-                                                            "direction" => $record["direction"],
-                                                            "email" => $record["email"],
-                                                            "attache" => $record["attache"],
-                                                            "CP" => $record["CP"],
-                                                            "localite" => $record["localite"],
-                                                            "rue" => $record["rue"],
-                                                            "numero" => $record["numero"],
-                                                            "localisation" => $record["localisation"]
-                                                        ];
+                self::$List_Array[$record["num_canton"]] = [
+                    "nom" => $record["nom"],
+                    "tel" => $record["tel"],
+                    "direction" => $record["direction"],
+                    "email" => $record["email"],
+                    "attache" => $record["attache"],
+                    "CP" => $record["CP"],
+                    "localite" => $record["localite"],
+                    "rue" => $record["rue"],
+                    "numero" => $record["numero"],
+                    "latitude" => $record["latitude"],
+                    "longitude" => $record["longitude"]
+                ];
             }
         } catch (Exception $e) {
 
@@ -801,17 +1886,6 @@ class PLF
 
 
 
-
-
-
-
-
-
-
-
-
-
-
     /**-------------------------------------------------------------------------------------------------------------------------------------------
      * 
      *    Retourne la liste des conseils cynégétiques
@@ -838,30 +1912,30 @@ class PLF
      *-------------------------------------------------------------------------------------------------------------------------------------------*/
 
 
-     public static function Get_CC_List()
-     {
- 
-         self::$RC = 0;
-         self::$RC_Msg = "";
-         self::$List_Array = [];
- 
- 
-         // Connect to database
- 
-         $db_connection = PLF::__Open_DB();
- 
-         if ($db_connection == NULL) {
- 
-             self::$RC = -5;
-             self::$RC_Msg = PLF::Get_Error();
- 
-             return array(self::$RC, self::$RC_Msg, self::$List_Array);;
-         }
- 
- 
-         // Build SQL statement
- 
-         $sql_cmd = "SELECT DISTINCT Code, 
+    public static function Get_CC_List()
+    {
+
+        self::$RC = 0;
+        self::$RC_Msg = "";
+        self::$List_Array = [];
+
+
+        // Connect to database
+
+        $db_connection = PLF::__Open_DB();
+
+        if ($db_connection == NULL) {
+
+            self::$RC = -5;
+            self::$RC_Msg = PLF::Get_Error();
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);;
+        }
+
+
+        // Build SQL statement
+
+        $sql_cmd = "SELECT DISTINCT Code, 
                         Nom, 
                         President, 
                         Secretaire, 
@@ -870,68 +1944,57 @@ class PLF
                         localite, 
                         rue, 
                         numero, 
-                        localisation, 
                         site_internet, 
-                        logo 
+                        logo,
+                        latitude, 
+                        longitude
                     FROM $GLOBALS[tbl_CC] ORDER BY ";
-         $sql_cmd .= "Code";
- 
- 
-         // Process SQL command
- 
-         try {
- 
-             foreach ($db_connection->query($sql_cmd) as $record) {
- 
-
-                 self::$List_Array[$record["Code"]] = ["nom" => $record["Code"], 
-                                                       "president" => $record["President"],
-                                                       "secretaire" => $record["Secretaire"],
-                                                       "email" => $record["email"],
-                                                       "CP" => $record["CP"],
-                                                       "localite" => $record["localite"],
-                                                       "rue" => $record["rue"],
-                                                       "numero" => $record["numero"],
-                                                       "localisation" => $record["localisation"],
-                                                       "site_internet" => $record["site_internet"],
-                                                       "logo" => $record["logo"],
-                                                    ];
-             }
-         } catch (Exception $e) {
- 
-             self::$RC = -6;
-             self::$RC_Msg = 'Error SELECT ' . " - ";
-             self::$RC_Msg .= $e->getMessage() . " - ";
-             self::$RC_Msg .= $sql_cmd;
- 
-             return array(self::$RC, self::$RC_Msg, self::$List_Array);
-         }
- 
- 
-         // Close Database
- 
-         PLF::__Close_DB($db_connection);
- 
- 
-         // return values
- 
-         self::$RC = count(self::$List_Array);
-         return array(self::$RC, self::$RC_Msg, self::$List_Array);
-     }
- 
-
-     
+        $sql_cmd .= "Code";
 
 
+        // Process SQL command
+
+        try {
+
+            foreach ($db_connection->query($sql_cmd) as $record) {
 
 
+                self::$List_Array[$record["Code"]] = [
+                    "nom" => $record["Code"],
+                    "president" => $record["President"],
+                    "secretaire" => $record["Secretaire"],
+                    "email" => $record["email"],
+                    "CP" => $record["CP"],
+                    "localite" => $record["localite"],
+                    "rue" => $record["rue"],
+                    "numero" => $record["numero"],
+                    "site_internet" => $record["site_internet"],
+                    "logo" => $record["logo"],
+                    "latitude" => $record["latitude"],
+                    "longitude" => $record["longitude"],
+                ];
+            }
+        } catch (Exception $e) {
+
+            self::$RC = -6;
+            self::$RC_Msg = 'Error SELECT ' . " - ";
+            self::$RC_Msg .= $e->getMessage() . " - ";
+            self::$RC_Msg .= $sql_cmd;
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
+        }
 
 
+        // Close Database
+
+        PLF::__Close_DB($db_connection);
 
 
+        // return values
 
-
-
+        self::$RC = count(self::$List_Array);
+        return array(self::$RC, self::$RC_Msg, self::$List_Array);
+    }
 
 
 
@@ -1436,11 +2499,8 @@ class PLF
         // Execute SQL statement
 
 
-        if (strtolower($GLOBALS['DB_MSAccess_or_MySql']) == "msaccess") {
-            $Territory_Data = PLF::__Read_Geometry_MSAccess(sql_cmd: $sql_cmd);
-        } else {
-            $Territory_Data = PLF::__Read_Geometry_MySql(sql_cmd: $sql_cmd);
-        }
+
+        $Territory_Data = PLF::__Read_Geometry_MySql(sql_cmd: $sql_cmd);
 
         if ($Territory_Data[0] < 0) {
 
@@ -1451,9 +2511,13 @@ class PLF
         }
 
 
-        $headers = "\r\n\t{\r\n\t\t\"type\" : \"FeatureCollection\"," .
+        $headers = "\t{\r\n\t\t\"type\" : \"FeatureCollection\"," .
             "\r\n\t\t\"name\" : \"NewFeatureType\"," .
             "\r\n\t\t\"features\" : [\r\n\t\t\t{\r\n\t\t\t\t\"type\" : \"Feature\",\r\n\t\t\t\t\"geometry\" : ";
+
+        // $headers = "\r\n\t{\r\n\t\t\"type\" : \"FeatureCollection\"," .
+        //     "\r\n\t\t\"name\" : \"NewFeatureType\"," .
+        //     "\r\n\t\t\"features\" : [\r\n\t\t\t{\r\n\t\t\t\t\"type\" : \"Feature\",\r\n\t\t\t\t\"geometry\" : ";
 
         $footer = "\r\n\t\t\t\t}\r\n\t\t\t}\r\n\t\r\n\t\t]\r\n\t}\r\n";
 
@@ -1500,47 +2564,17 @@ class PLF
      * 
      */
 
-    private static function __Open_DB()
+    public static function __Open_DB()
     {
 
+        try {
 
-        switch (strtolower($GLOBALS['DB_MSAccess_or_MySql'])) {
-
-
-
-            case strtolower("MSAccess"):
-                try {
-
-                    $db_conn = new PDO("odbc:Driver={Microsoft Access Driver (*.mdb, *.accdb)};Dbq=" . $GLOBALS['db_file_name'] . ";Uid=; Pwd=;array(PDO::MYSQL_ATTR_MAX_BUFFER_SIZE=>1024*1024*50)");
-                    $db_conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                } catch (PDOException $e) {
-                    self::$RC_Msg =  'Error opening MsAccess database' . " - ";
-                    self::$RC_Msg .= $e->getMessage() . " - ";
-                    return NULL;
-                }
-
-                break;
-
-
-
-
-
-            case strtolower("MySql"):
-
-                try {
-
-                    $db_conn = new mysqli($GLOBALS['MySql_Server'], $GLOBALS['MySql_Login'], $GLOBALS['MySql_Password'], $GLOBALS['MySql_DB']);
-                } catch (Exception $e) {
-                    self::$RC_Msg =  'Error opening MySql database' . " - ";
-                    self::$RC_Msg .= $e->getMessage() . " - ";
-                    return NULL;
-                }
-
-
-                break;
+            $db_conn = new mysqli($GLOBALS['MySql_Server'], $GLOBALS['MySql_Login'], $GLOBALS['MySql_Password'], $GLOBALS['MySql_DB']);
+        } catch (Exception $e) {
+            self::$RC_Msg =  'Error connecting MySql database' . " - ";
+            self::$RC_Msg .= $e->getMessage() . " - ";
+            return NULL;
         }
-
-
 
 
 
@@ -1548,10 +2582,367 @@ class PLF
     }
 
 
-    private static function __Close_DB($db_conn)
+    public static function __Close_DB($db_conn)
     {
         unset($db_conn);
     }
+
+
+
+    /**
+     *                **************> NEW VERSION <******************
+     * 
+     *    Create the MySql table base on definition array
+     * 
+     *      Output    : MySql table
+     *       
+     *      Arguments : Table Name
+     *                  Array with table/column definitions
+     *
+     *      Return    : Possible return codes :
+     *                      -2 Territoire does not exist
+     *                      -5 MySql error
+     */
+
+    public static function __Create_DB_Table(string $table_Name, array $tbl_definition)
+    {
+
+
+        $sql_Create = "";
+
+        PLF::__drop_Table($table_Name);
+
+        /**
+         * 
+         *  Connect to the database
+         *  
+         */
+
+        $db_conn = PLF::__Open_DB();
+
+        if ($db_conn == NULL) {
+
+            self::$RC = -5;
+            self::$RC_Msg = PLF::Get_Error();
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
+        }
+
+
+
+
+
+        /**
+         * 
+         *  build SQL statement
+         *  
+         */
+
+        $sql_unique_key = "";
+        $sql_Create = "CREATE TABLE $table_Name ( ";
+
+
+        foreach ($tbl_definition as $column_info => $column_detail) {
+
+            if ($column_info == "PK") {
+
+                $sql_Create .= " PRIMARY KEY ( " . $column_detail . " ) ";
+            } elseif ($column_info == "UK") {
+
+                $sql_unique_key = " ALTER TABLE " . $table_Name;
+                $sql_unique_key .= " ADD UNIQUE INDEX uk_" . $table_Name . " ( " . $column_detail . ")";
+            } else {
+
+
+
+                $sql_Create .= $column_detail["NAME"] . " " . $column_detail["TYPE"];
+
+                // if (empty($column_detail["NULL"]) == false) {
+                $sql_Create .= " " . $column_detail["NULL"];
+                // } 
+                // if (empty($column_detail["DEFAULT"]) == false) {
+                $sql_Create .= " " . $column_detail["DEFAULT"];
+                // }
+
+                $sql_Create .= ", ";
+            }
+        }
+
+        $sql_Create .= " ) ENGINE = INNODB, CHARACTER SET utf8mb4, COLLATE utf8mb4_unicode_ci;";
+
+
+
+
+
+        try {
+            $sql_result = $db_conn->query($sql_Create);
+            if (empty($sql_unique_key) == false) {
+                $sql_result = $db_conn->query($sql_unique_key);
+            }
+        } catch (PDOException $e) {
+            self::$RC_Msg =  'Error Create Table' . " - ";
+            self::$RC_Msg .= $e->getMessage() . " - ";
+            self::$RC_Msg .= $sql_Create . "\n";
+        } catch (mysqli_sql_exception $e) {
+            self::$RC_Msg =  'Error Create Table' . " - ";
+            self::$RC_Msg .= $e->getMessage() . " - ";
+            self::$RC_Msg .= $sql_Create . "\n";
+            echo ("sql_cmd : " . $sql_Create . "\n");
+        }
+
+
+        unset($db_conn);
+    }
+
+
+
+    /**
+     *                **************> DEPRECATED - USE THE NEWER VERSION <******************
+     * 
+     *    Create the MySql table base on definition array
+     * 
+     *      Output    : MySql table
+     *       
+     *      Arguments : Table Name
+     *                  Array with table/column definitions
+     *
+     *      Return    : Possible return codes :
+     *                      -2 Territoire does not exist
+     *                      -5 MySql error
+     */
+
+
+    public static function __Create_Table(string $table_Name, array $tbl_definition)
+    {
+
+
+
+        $sql_Create = "";
+
+        PLF::__drop_Table($table_Name);
+
+        /**
+         * 
+         *  Connect to the database
+         *  
+         */
+
+        $db_conn = PLF::__Open_DB();
+
+        if ($db_conn == NULL) {
+
+            self::$RC = -5;
+            self::$RC_Msg = PLF::Get_Error();
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
+        }
+
+
+        $sql_Create = "CREATE TABLE $table_Name ( ";
+        $sql_Create .= " tbl_id int NOT NULL AUTO_INCREMENT, PRIMARY KEY (tbl_id), ";
+
+        foreach ($tbl_definition as $row => $definition) {
+            $sql_Create .= "" . $row . " ";
+
+            $sql_Create .= " " . $definition . " ";
+
+            $sql_Create .= ", ";
+        }
+
+        $sql_Create = substr($sql_Create, 0, strlen($sql_Create) - 2);
+        $sql_Create .= ")";
+
+
+        try {
+            $sql_result = $db_conn->query($sql_Create);
+        } catch (PDOException $e) {
+            self::$RC_Msg =  'Error Create Table' . " - ";
+            self::$RC_Msg .= $e->getMessage() . " - ";
+            self::$RC_Msg .= $sql_Create . "\n";
+        } catch (mysqli_sql_exception $e) {
+            self::$RC_Msg =  'Error Create Table' . " - ";
+            self::$RC_Msg .= $e->getMessage() . " - ";
+            self::$RC_Msg .= $sql_Create . "\n";
+            echo ("sql_cmd : " . $sql_Create . "\n");
+        }
+
+
+        unset($db_conn);
+    }
+
+
+    /**
+     *    Drop MySql table
+     * 
+     *      Arguments : Table Name
+     *
+     *      Return    : Possible return codes :
+     *                      -2 Territoire does not exist
+     *                      -5 MySql error
+     */
+
+
+    public static function __drop_Table(string $table_Name)
+    {
+
+
+        $sql_delete = "";
+
+
+        /**
+         * 
+         *  Connect to the database
+         *  
+         */
+
+        $db_conn = PLF::__Open_DB();
+
+        if ($db_conn == NULL) {
+
+            self::$RC = -5;
+            self::$RC_Msg = PLF::Get_Error();
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
+        }
+
+
+        $sql_delete = "DROP TABLE IF EXISTS $table_Name";
+
+        try {
+            $sql_delete = $db_conn->query($sql_delete);
+        } catch (PDOException $e) {
+            echo ("Error : " . $e->getMessage() . "\n");
+        } catch (mysqli_sql_exception $e) {
+            if ($e->getCode() == 1051) {                    // table does not exist
+                echo ("Error : " . $e->getMessage() . "\n");
+            }
+            echo ("Error Code : " . $e->getCode() . " - " . $e->getMessage());
+        }
+
+
+
+        unset($b_conn);
+    }
+
+
+
+    /**
+     * 
+     * 
+     *  create table column
+     * 
+     */
+
+    public static function __Add_Table_Column(string $table_Name, string $col_name, string $col_type)
+    {
+
+
+
+        $sql_Cmd = "";
+
+
+        /**
+         * 
+         *  Connect to the database
+         *  
+         */
+
+        $db_conn = PLF::__Open_DB();
+
+        if ($db_conn == NULL) {
+
+            self::$RC = -5;
+            self::$RC_Msg = PLF::Get_Error();
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
+        }
+
+
+        $sql_Cmd = "ALTER TABLE " . $table_Name .
+            " ADD COLUMN " . $col_name . " " . $col_type;
+
+
+        try {
+            $sql_result = $db_conn->query($sql_Cmd);
+        } catch (PDOException $e) {
+            self::$RC_Msg =  'Error Create Table Column ' . " - ";
+            self::$RC_Msg .= $e->getMessage() . " - ";
+            self::$RC_Msg .= $sql_Cmd . "\n";
+        } catch (mysqli_sql_exception $e) {
+            self::$RC_Msg =  'Error Create Table Column ' . " - ";
+            self::$RC_Msg .= $e->getMessage() . " - ";
+            self::$RC_Msg .= $sql_Cmd . "\n";
+            echo ("sql_cmd : " . $sql_Cmd . "\n");
+        }
+
+
+        unset($db_conn);
+    }
+
+
+
+
+    /**
+     * 
+     * 
+     *  delete table column
+     * 
+     */
+
+    public static function __Delete_Table_Column(string $table_Name, string $col_name)
+    {
+
+
+
+        $sql_Cmd = "";
+
+
+        /**
+         * 
+         *  Connect to the database
+         *  
+         */
+
+        $db_conn = PLF::__Open_DB();
+
+        if ($db_conn == NULL) {
+
+            self::$RC = -5;
+            self::$RC_Msg = PLF::Get_Error();
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
+        }
+
+
+        $sql_Cmd = "ALTER TABLE " . $table_Name .
+            " DROP COLUMN IF EXISTS " . $col_name;
+
+
+        try {
+            $sql_result = $db_conn->query($sql_Cmd);
+        } catch (PDOException $e) {
+            self::$RC_Msg =  'Error drop Table column ' . " - ";
+            self::$RC_Msg .= $e->getMessage() . " - ";
+            self::$RC_Msg .= $sql_Cmd . "\n";
+        } catch (mysqli_sql_exception $e) {
+            if ($e->getCode() == 1064) {        // column does not exists
+
+            } else {
+                self::$RC_Msg =  'Error drop Table column ' . " - ";
+                self::$RC_Msg .= $e->getMessage() . " - ";
+                self::$RC_Msg .= $sql_Cmd . "\n";
+                echo ("sql_cmd : " . $sql_Cmd . "\n");
+            }
+        }
+
+
+        unset($db_conn);
+    }
+
+
+
+
+
 
 
     public static function Get_Error()
@@ -1626,66 +3017,6 @@ class PLF
 
         return array($RC, $RC_Msg, $List_Array);
     }
-
-
-
-
-
-
-
-
-
-    /**
-     * 
-     *  because the value of geometry can be very long, the way it is read is different for MySql and for MsAccess
-     * 
-     */
-
-    private static function __Read_Geometry_MSAccess($sql_cmd)
-    {
-
-
-        $Territory_Data = [];
-
-
-        /**
-         * 
-         *  Connect to the database and set settings
-         *  
-         */
-
-
-        $db = odbc_connect("Driver={Microsoft Access Driver (*.mdb, *.accdb)};Dbq=$GLOBALS[db_file_name]", "", "");
-
-
-
-        // Process SQL command
-
-        $result = odbc_exec($db, $sql_cmd);
-        odbc_longreadlen($result, 300000);      // !!!!!!!! this is the maximum record length. 
-
-
-
-        while (odbc_fetch_row($result) == true) {
-
-            $Territory_Data['geometry'] = odbc_result($result, 1);
-            $Territory_Data['DA_Numero'] = odbc_result($result, 2);
-            $Territory_Data['Territories_id'] = odbc_result($result, 3);
-            $Territory_Data['Territories_name'] = odbc_result($result, 4);
-        }
-
-
-        // Close Database
-
-        PLF::__Close_DB($db);
-
-
-
-        // return values
-
-        return $Territory_Data;
-    }
-
 
 
 
@@ -1839,7 +3170,6 @@ class PLF
             foreach ($db_connection->query($sql_cmd) as $record) {
 
                 $records_found = true;
-
             }
         } catch (Exception $e) {
 
@@ -1918,7 +3248,6 @@ class PLF
             foreach ($db_connection->query($sql_cmd) as $record) {
 
                 $records_found = true;
-
             }
         } catch (Exception $e) {
 

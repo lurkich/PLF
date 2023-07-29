@@ -1,5 +1,21 @@
 <?php
+declare(strict_types=1);
 
+
+require_once __DIR__ . "../vendor/autoload.php";
+
+
+
+// header("Content-type: application/json; charset=UTF-8");
+header("Content-type: text/plain; charset=UTF-8");
+
+
+spl_autoload_register(function ($class_name) {
+    include "library/" . $class_name . '.php';
+});
+
+set_error_handler("ErrorHandler::handleError");
+set_exception_handler("ErrorHandler::handleException");
 
 /**
  * 
@@ -7,29 +23,14 @@
  * 
  */
 
-$DB_MSAccess_or_MySql = "MySql";
-//$DB_MSAccess_or_MySql = "MSAccess";
+ $duplicate_Chasses_Records = 0;
+ $duplicate_Territoires_Records = 0;
 
+ $total_Chasses_Records = 0;
+ $total_Territoires_Records = 0;
 
+//   ---> Database information and list of tables and views
 
-$tbl_Territoires = "plf_territoires";
-$tbl_Chasses = "plf_chasses";
-$View_Territoires = "view_territoires";
-$tbl_cantonnements = "plf_cantonnements";
-$tbl_triages = "plf_triages";
-$tbl_CC = "plf_cc";
-
-
-
-
- 
-
-
-/**
- * 
- * Database Information for MYSql
- * 
- */
 
  $MySql_Server = "localhost";
  $MySql_DB = "plf";
@@ -38,19 +39,43 @@ $tbl_CC = "plf_cc";
 
 
 
+ $tbl_cantonnements = "plf_cantonnements";
+ $tbl_CC = "plf_cc";
+ $tbl_triages = "plf_triages";
+ $tbl_Territoires = "plf_territoires";
+ $tbl_Chasses = "plf_chasses";
+
+ $View_Territoires = "view_territoires";
+
+ $spw_tbl_cantonnements = "plf_spw_cantonnements";
+ $spw_tbl_cc = "plf_spw_cc";
+ $spw_tbl_territoires = "plf_spw_territoires";
+ $spw_chasses_fermeture = "plf_spw_chasses_fermeture";
+ $spw_view_territoires = "view_spw_territoires";
+
 
 /**
  * 
- * Database Information for MsAccess
+ *  SPW territories and chasse (ARCGIS)
+ * 
  * 
  */
 
-//  $db_file_name = "C:\Users\chris\OneDrive\IT\PartageonsLaForet\Territoires_Arlon.accdb";
- $db_file_name = "C:\Users\chris\OneDrive\IT\PartageonsLaForet\Data\PLF.accdb";
 
- $Login = "";
- $Password = "";
+// rest url information. 
+$spw_URL = "https://geoservices3.test.wallonie.be/arcgis/rest/services";
+$spw_Folder = "APP_DNFEXT";
+$spw_Service = "CHASSE_DATEFERM";
+$spw_MapServer_Constant = "MapServer";
+$spw_Index_Territoire = "1";
+$spw_Index_Chasse_Fermeture_OK = "0";
+$spw_Index_Chasse = "2";
 
-//  $DB_Connect= new PDO("odbc:Driver={Microsoft Access Driver (*.mdb, *.accdb)};Dbq=" . $db_file_name . ";Uid=$Login; Pwd=$Password;");
-//  $DB_Connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+// json output file.
+$spw_Territoires_Json_File = "API/tmp/spw_Territoires";
+$spw_Chasses_Json_File = "API/tmp/spw_Chasses";
+
+
+
 

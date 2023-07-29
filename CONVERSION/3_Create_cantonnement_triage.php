@@ -50,7 +50,8 @@ while(! feof($file_in_cantonnements)) {
             "localite" => "localite",
             "rue" => "rue",
             "numero" => "numero",
-            "localisation" => "Localisation"
+            "altitude" => "altitude",
+            "longitude" => "longitude"
         );
 
         fwrite($file_out_cantonnements, join(";", $tbl_cantons) . "\n");
@@ -90,7 +91,17 @@ while(! feof($file_in_cantonnements)) {
     $array_items[5] = str_replace("\"", "", $array_items[5]);
     $array_items[6] = str_replace("\"", "", $array_items[6]);
     $array_items[7] = str_replace("\"", "", $array_items[7]);
-    
+    $array_items[8] = str_replace("\"", "", $array_items[8]);
+    $array_items[9] = str_replace("\"", "", $array_items[9]);
+    $array_items[10] = str_replace("\"", "", $array_items[10]);
+    $array_items[11] = str_replace("\"", "", $array_items[11]);
+    $array_items[12] = str_replace("\"", "", $array_items[12]);
+    $array_items[13] = str_replace("\"", "", $array_items[13]);
+    $array_items[14] = str_replace("\"", "", $array_items[14]);
+    $array_items[15] = str_replace("\"", "", $array_items[15]);
+    $array_items[16] = str_replace("\"", "", $array_items[16]);
+
+
     // normalize phone numbers
     
     $array_items[5] = Normalize_Phone_Number($array_items[5]);
@@ -111,14 +122,15 @@ while(! feof($file_in_cantonnements)) {
             "Num_Canton" => mb_convert_encoding($array_items[2], 'Windows-1252', 'UTF-8'),
             "Nom" =>  mb_convert_encoding($array_items[6], 'Windows-1252', 'UTF-8'),
             "TEL" =>  mb_convert_encoding($array_items[7], 'Windows-1252', 'UTF-8'),
-            "direction" =>  mb_convert_encoding("DIR-" . $Record_ID_Canton, 'Windows-1252', 'UTF-8'),
-            "email" =>  mb_convert_encoding("eMail-" . $Record_ID_Canton, 'Windows-1252', 'UTF-8'),
-            "attache" =>  mb_convert_encoding("att-" . $Record_ID_Canton, 'Windows-1252', 'UTF-8'),
-            "CP" =>  mb_convert_encoding("CP-" . $Record_ID_Canton, 'Windows-1252', 'UTF-8'),
-            "localite" =>  mb_convert_encoding("local-" . $Record_ID_Canton, 'Windows-1252', 'UTF-8'),
-            "rue" =>  mb_convert_encoding("rue-" . $Record_ID_Canton, 'Windows-1252', 'UTF-8'),
-            "numero" =>  mb_convert_encoding("num-" . $Record_ID_Canton, 'Windows-1252', 'UTF-8'),
-            "localisation" =>  mb_convert_encoding("localis-" . $Record_ID_Canton, 'Windows-1252', 'UTF-8'),
+            "direction" =>  mb_convert_encoding($array_items[8] , 'Windows-1252', 'UTF-8'),
+            "email" =>  mb_convert_encoding($array_items[9] , 'Windows-1252', 'UTF-8'),
+            "attache" =>  mb_convert_encoding($array_items[10], 'Windows-1252', 'UTF-8'),
+            "CP" =>  mb_convert_encoding($array_items[11] , 'Windows-1252', 'UTF-8'),
+            "localite" =>  mb_convert_encoding($array_items[12], 'Windows-1252', 'UTF-8'),
+            "rue" =>  mb_convert_encoding($array_items[13], 'Windows-1252', 'UTF-8'),
+            "numero" =>  mb_convert_encoding($array_items[14], 'Windows-1252', 'UTF-8'),
+            "latitude" =>  mb_convert_encoding($array_items[15], 'Windows-1252', 'UTF-8'),
+            "longitude" =>  mb_convert_encoding($array_items[16], 'Windows-1252', 'UTF-8'),
         );
 
         

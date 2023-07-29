@@ -24,7 +24,7 @@ $file_name_out_triages = "C:\Users\chris\OneDrive\IT\PartageonsLaForet\Data\PHP_
 
 // Step 4 - Upload cantonnement / Triages
 
-$tbl_Cantonnements = "tbl_04_Cantonnements";
+$tbl_Cantonnements = "tbl_04_cantonnements";
 $tbl_Triages = "tbl_04_Triages";
 $view_Cantons_Triages = "view_cantons_triages";
 
