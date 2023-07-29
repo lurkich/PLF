@@ -584,8 +584,6 @@ if ($RC_Delete == false) {
 }
 
 
-Test10a;
-
 $RC_Delete = PLF::Chasse_Date_Delete(Territoire_Name: "9110501001", Chasse_Date: "27-07-24");
 
 if ($RC_Delete == false) {
