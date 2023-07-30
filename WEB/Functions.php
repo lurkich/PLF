@@ -111,7 +111,7 @@ class PLF
 
         $gateway->set_Sql_Statement($sql_cmd);
 
-        $results = $gateway->Get_List_Territoires();
+        $results = $gateway->DB_Query();
 
         // Check if everything went OK
 
@@ -220,7 +220,7 @@ class PLF
 
         $gateway->set_Sql_Statement($sql_cmd);
 
-        $results = $gateway->Get_Territoire_Info();
+        $results = $gateway->DB_Query();
 
 
         // Check if everything went OK
@@ -382,7 +382,7 @@ class PLF
 
         $gateway->set_Sql_Statement($sql_cmd);
 
-        $results = $gateway->Get_Chasse_By_Date();
+        $results = $gateway->DB_Query();
 
         // Check if everything went OK
 
@@ -489,7 +489,7 @@ class PLF
 
         $gateway->set_Sql_Statement($sql_cmd);
 
-        $results = $gateway->Get_Chasse_By_Date();
+        $results = $gateway->DB_Query();
 
         // Check if everything went OK
 
@@ -595,7 +595,7 @@ class PLF
 
         $gateway->set_Sql_Statement($sql_cmd);
 
-        $results = $gateway->Get_Chasse_By_Date();
+        $results = $gateway->DB_Query();
 
         // Check if everything went OK
 
@@ -715,7 +715,7 @@ class PLF
 
         $gateway->set_Sql_Statement($sql_cmd);
 
-        $results = $gateway->Get_Chasse_By_Date();
+        $results = $gateway->DB_Query();
 
         // Check if everything went OK
 
@@ -829,7 +829,7 @@ class PLF
 
         $gateway->set_Sql_Statement($sql_cmd);
 
-        $results = $gateway->Get_Chasse_By_Date();
+        $results = $gateway->DB_Query();
 
         // Check if everything went OK
 
@@ -952,7 +952,7 @@ class PLF
 
         $gateway->set_Sql_Statement($sql_cmd);
 
-        $results = $gateway->Get_Chasse_By_Date();
+        $results = $gateway->DB_Query();
 
         // Check if everything went OK
 
@@ -1103,7 +1103,7 @@ class PLF
  
          $gateway->set_Sql_Statement($sql_cmd);
  
-         $results = $gateway->Get_Chasse_By_Date();
+         $results = $gateway->DB_Query();
  
          // Check if everything went OK
  

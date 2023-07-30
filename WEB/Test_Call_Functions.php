@@ -8,15 +8,16 @@ require __DIR__ . "/functions.php";
 
 
 //goto Test1_new;
-goto Test2_new;
+//goto Test2_new;
 //goto Test3_new;
 //goto Test4_new;
 //goto Test5_new;
 //goto Test6_new;
 //goto Test7_new;
-//goto Test8_new;
+goto Test8_new;
 //goto Test12_new;
 
+exit;
 
 //goto Test1;
 //goto Test2;
@@ -50,7 +51,7 @@ goto Test2_new;
 
 Test1_new:
 
-$list_Territoires = PLF::SPW_Get_Territoire_List();
+$List_Territoires = PLF::SPW_Get_Territoire_List();
 
 if ($List_Territoires[0] < 0) {
 
@@ -73,7 +74,7 @@ $Territories_Info = PLF::SPW_Get_Territoire_Info("7113041054");
 
 if ($Territories_Info[0] < 0) {
 
-   echo $$Territories_Info[1];
+   echo $Territories_Info[1];
 
    //
    // .... traitement de l'erreur
@@ -290,7 +291,7 @@ $Territories_Info = PLF::Get_Territoire_Info(Territoire_Name: "AR210", TypeTerri
 
 if ($Territories_Info[0] < 0) {
 
-   echo $List_Territoires[1];
+   echo $Territories_Info[1];
 
    //
    // .... traitement de l'erreur
@@ -304,7 +305,7 @@ $Territories_Info = PLF::Get_Territoire_Info(Territoire_Name: "9133383017");
 
 if ($Territories_Info[0] < 0) {
 
-   echo $List_Territoires[1];
+   echo $Territories_Info[1];
 
    //
    // .... traitement de l'erreur

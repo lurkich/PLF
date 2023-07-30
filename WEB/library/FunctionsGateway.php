@@ -23,7 +23,10 @@ class FunctionsGateway
         $this->sql_cmd = $sql_cmd;
     }
 
-    public function Get_List_Territoires(): array
+
+
+
+    public function DB_Query(): array
     {
 
 
@@ -57,86 +60,6 @@ class FunctionsGateway
 
         return $data;
     }
-
-
-
-    public function Get_Territoire_Info(): array
-    {
-
-
-        $data = [];
-
-        try {
-
-            $stmt = $this->conn->query($this->sql_cmd);
-        } catch (PDOException $e) {
-            $data = [
-                "error",
-                $e->errorInfo[1],
-                $e->errorInfo[2]
-            ];
-            return $data;
-        } catch (Exception $e) {
-            $data = [
-                "error",
-                $e->getCode(),
-                $e->getMessage()
-            ];
-            return $data;
-        }
-
-
-
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-
-            $data[] = $row;
-        }
-
-        return $data;
-    }
-
-
-
-
-    public function Get_Chasse_By_Date(): array
-    {
-
-
-        $data = [];
-
-        try {
-
-            $stmt = $this->conn->query($this->sql_cmd);
-        } catch (PDOException $e) {
-            $data = [
-                "error",
-                $e->errorInfo[1],
-                $e->errorInfo[2]
-            ];
-            return $data;
-        } catch (Exception $e) {
-            $data = [
-                "error",
-                $e->getCode(),
-                $e->getMessage()
-            ];
-            return $data;
-        }
-
-
-
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-
-            $data[] = $row;
-        }
-
-        return $data;
-    }
-
-
-
-
-
 
 
 
