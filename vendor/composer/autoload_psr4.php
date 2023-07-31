@@ -6,5 +6,6 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    '' => array($baseDir . '/src'),
+    'PHPMailer\\PHPMailer\\' => array($vendorDir . '/phpmailer/phpmailer/src'),
+    'JsonMachine\\' => array($vendorDir . '/halaxa/json-machine/src'),
 );

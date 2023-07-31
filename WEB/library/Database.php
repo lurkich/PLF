@@ -11,9 +11,10 @@ class Database
     public function __construct(private $host,
                                 private $name,
                                 private $user,
-                                private $password)
-    {
+                                private $password) {
+    
         $this->_error_message = "";
+    
     }
 
 
@@ -33,12 +34,19 @@ class Database
             ]);
     
         } catch (PDOException $e) {
-            if ($e->getCode() == 2002 ) {                   // Database is unreachable
-                $this->_error_message = $e->getMessage();
-                return false;
-            }
+
+
+            switch ($e->getCode()) {
+                case 2002:                      // Database is unreachable
+                    throw new pdoDBException(0, $e, "Unable to access database : " . $e->getMessage(), );
+                
+                default:
+                    throw new pdoDBException(0, $e, "unexpected error : " . $e->getMessage(), );
+
+                }
+
         } catch (Exception $e) {
-            $x = 2;
+
         }
 
         return $connection;

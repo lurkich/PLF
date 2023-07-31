@@ -4,7 +4,7 @@
 */
 
 
-
+use PHPMailer\PHPMailer\PHPMailer;
 
 
 require_once __DIR__ . "/Parameters.php";
@@ -109,24 +109,21 @@ switch ($parts[2]) {
 
 
                 } elseif ($parts[4] == 2) {     // -> api/spw/chasse/2
-                    echo "(warning) : " . implode([
-                        "0" => "", 
-                        "1" => "api",
-                        "2" => "spw",
-                        "3" => "chasses",
-                        "4" => "2"]) . PHP_EOL; 
-                    // echo ([
+
+                    // echo "(warning) : " . implode([
                     //     "0" => "", 
                     //     "1" => "api",
                     //     "2" => "spw",
                     //     "3" => "chasses",
-                    //     "4" => "2"]);
+                    //     "4" => "2"]) . PHP_EOL; 
+
 
                     $database = new Database($GLOBALS["MySql_Server"], $GLOBALS["MySql_DB"], $GLOBALS["MySql_Login"], $GLOBALS["MySql_Password"]);
-                    $gateway = new SPW_Chasses_Fermeture_OK_Gateway($database);
-                    $controller = new SPW_Chasses_Fermeture_OK_Controller($gateway);            
-                    $controller->processRequest($_SERVER["REQUEST_METHOD"], "15");
-
+                    $gateway = new SPW_Chasses_Fermeture_OK_Gateway($database);                    
+                    $controller = new SPW_Chasses_Fermeture_OK_Controller($gateway);    
+                    array_push(errorHandler::$Run_Information, ["Info", "calling URI : api/spw/chasses/2" . PHP_EOL]); 
+                    $controller->processRequest();
+                    Send_Run_logs_By_eMail();
 
                 } else {
                     http_response_code(404);
@@ -168,14 +165,40 @@ switch ($parts[2]) {
 
 exit;
 
-// $id = $parts[2] ?? null;
+
+function Send_Run_logs_By_eMail(): void {
 
 
 
+    require_once __DIR__ . "../../vendor/autoload.php";
+    
+    $plf_mail = new PHPMailer();
+    $plf_mail->From = "Christian.lurkin@hotmail.com";
+    $plf_mail->FromName = "Christian Lurkin PLF";
+    $plf_mail->addAddress("christian.lurkin@gmail.com");
+    $plf_mail->addReplyTo("Christian.lurkin@hotmail.com");
+    $plf_mail->isHTML(true);
+    $plf_mail->Subject = "PLF logging";
+
+    $plf_mail->AltBody = "Run Log for spw API call.";
 
 
-$gateway = new ProductGateway($database);
 
-$controller = new ProductController($gateway);
+    $plf_mail->Body = "<br><i>Run Log for spw API call.</i> - run of " .date("d/m/Y H:i:s") . "<br><br>";
 
-$controller->processRequest($_SERVER["REQUEST_METHOD"], $id);
+    foreach (errorHandler::$Run_Information as $run_item) {
+
+        $run_item[1] = preg_replace("/\n/", "<br>", $run_item[1]);
+        
+        $plf_mail->Body .= "(<b>" . $run_item[0] . "</b>) - " . $run_item[1];
+
+    }
+
+    if ( !$plf_mail->send()) {
+        echo "Mailer Error: " . $plf_mail->ErrorInfo;
+    } else {
+        echo "message successfully sent.";
+    }
+
+
+}

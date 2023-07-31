@@ -6,8 +6,26 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit0df2587db1af2a477a51619f7c5c65db
 {
-    public static $fallbackDirsPsr4 = array (
-        0 => __DIR__ . '/../..' . '/src',
+    public static $prefixLengthsPsr4 = array (
+        'P' => 
+        array (
+            'PHPMailer\\PHPMailer\\' => 20,
+        ),
+        'J' => 
+        array (
+            'JsonMachine\\' => 12,
+        ),
+    );
+
+    public static $prefixDirsPsr4 = array (
+        'PHPMailer\\PHPMailer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
+        ),
+        'JsonMachine\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/halaxa/json-machine/src',
+        ),
     );
 
     public static $classMap = array (
@@ -17,7 +35,8 @@ class ComposerStaticInit0df2587db1af2a477a51619f7c5c65db
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->fallbackDirsPsr4 = ComposerStaticInit0df2587db1af2a477a51619f7c5c65db::$fallbackDirsPsr4;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit0df2587db1af2a477a51619f7c5c65db::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit0df2587db1af2a477a51619f7c5c65db::$prefixDirsPsr4;
             $loader->classMap = ComposerStaticInit0df2587db1af2a477a51619f7c5c65db::$classMap;
 
         }, null, ClassLoader::class);

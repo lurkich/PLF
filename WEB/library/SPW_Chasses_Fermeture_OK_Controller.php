@@ -4,7 +4,7 @@
 class SPW_Chasses_Fermeture_OK_Controller
 {
 
-    // private static int $_max_Record_Count = 5;
+    //private static int $_max_Record_Count = 5;
     private static int $_max_Record_Count = 2000;
 
 
@@ -24,6 +24,7 @@ class SPW_Chasses_Fermeture_OK_Controller
         $this->_Total_Chasses = 0;
         $this->_Rest_Url = "";
         $this->_iteration_Count = 0;
+        ErrorHandler::$Run_Information = [];
 
         $this->_spw_Query_Parameters = "&geometryType=esriGeometryPolygon";
         $this->_spw_Query_Parameters .= "&units=esriSRUnit_Kilometer";
@@ -45,7 +46,6 @@ class SPW_Chasses_Fermeture_OK_Controller
         $this->_spw_Query_Count_Parameters .= "&outFields=N_LOT";
         $this->_spw_Query_Count_Parameters .= "&returnGeometry=false";
         $this->_spw_Query_Count_Parameters .= "&f=pjson";
-
 
 
     }
@@ -73,11 +73,17 @@ class SPW_Chasses_Fermeture_OK_Controller
 
         $this->Process_Json_Files();
 
-        echo("(INFO) : " . $GLOBALS["duplicate_Territoires_Records"] . " duplicate territoires records." . PHP_EOL);
-        echo("(INFO) : " . $GLOBALS["duplicate_Chasses_Records"] . " duplicate chasses records." . PHP_EOL);
-        echo("(INFO) : End of process." . $GLOBALS["total_Territoires_Records"] . " new territoires and " . $GLOBALS["total_Chasses_Records"] . " new chasses dates.");
+        array_push(errorHandler::$Run_Information, ["Info", $GLOBALS["duplicate_Territoires_Records"] . " duplicate territoires records." . PHP_EOL]);
+        array_push(errorHandler::$Run_Information, ["Info", $GLOBALS["duplicate_Chasses_Records"] . " duplicate chasses records." . PHP_EOL]);
+        array_push(errorHandler::$Run_Information, ["Info", $GLOBALS["total_Territoires_Records"] . " new territoires and " . $GLOBALS["total_Chasses_Records"] . " new chasses dates." . PHP_EOL]);
+        array_push(errorHandler::$Run_Information, ["Info", "End of process."]);
 
-        exit;
+
+        // echo("(INFO) : " . $GLOBALS["duplicate_Territoires_Records"] . " duplicate territoires records." . PHP_EOL);
+        // echo("(INFO) : " . $GLOBALS["duplicate_Chasses_Records"] . " duplicate chasses records." . PHP_EOL);
+        // echo("(INFO) : End of process." . $GLOBALS["total_Territoires_Records"] . " new territoires and " . $GLOBALS["total_Chasses_Records"] . " new chasses dates.");
+
+        return;
 
     }
 
@@ -140,8 +146,7 @@ class SPW_Chasses_Fermeture_OK_Controller
 
         curl_close($Curl);
 
-        return 5;
-        // return json_decode($json_Return, true)["count"];
+        return json_decode($json_Return, true)["count"];
     }
 
 
@@ -194,8 +199,9 @@ class SPW_Chasses_Fermeture_OK_Controller
             $offset = $iteration * $this->_Total_Chasses;
             $curl_Url = preg_replace("/<OFFSET>/", $offset, $curl_Url);
 
-            echo ("(INFO) - " . "processing records with offset " . $offset . PHP_EOL);
-            // echo json_encode(["processing records with offset" => $offset]);
+            array_push(errorHandler::$Run_Information, ["Info", "processing records with offset " . $offset . PHP_EOL]);
+//            echo ("(INFO) - " . "processing records with offset " . $offset . PHP_EOL);
+
     
     
             $Curl = curl_init();
@@ -206,6 +212,14 @@ class SPW_Chasses_Fermeture_OK_Controller
             $RC_Bool = curl_exec($Curl);
     
             fclose($fp);
+
+
+
+            // $this->_iteration_Count = 1;
+            // break;
+
+
+
 
         }
         
@@ -302,14 +316,10 @@ class SPW_Chasses_Fermeture_OK_Controller
 
                 ]);
 
-                echo ("(INFO) : new date chasses : KEYG = " . $KEYG . " for date = " . $DATE_CHASSE . PHP_EOL );
-                // echo json_encode([
-                //     "KEYG" => $KEYG,
-                //     "Date_Chasse" => $DATE_CHASSE
-                // ]);
                 
-    
-                // fputcsv($fp, array_merge($territory_attributes, implode(",", $territory_geometry)));
+                array_push(errorHandler::$Run_Information, ["Info", "new date chasses : KEYG = " . $KEYG . " for date = " . $DATE_CHASSE . PHP_EOL]);
+                // echo ("(INFO) : new date chasses : KEYG = " . $KEYG . " for date = " . $DATE_CHASSE . PHP_EOL );
+
             }
         }
     

@@ -4,9 +4,6 @@
             "path": "."
         },
         {
-            "path": "Tests"
-        },
-        {
             "path": "../www/PartageonsLaForet"
         }
     ],

@@ -69,11 +69,11 @@ class SPW_Chasses_Fermeture_OK_Gateway
 
         } catch (pdoException $e) {
 
-                $SQL_Error = $this->get_Sql_Error_Number($stmt);
+                $SQL_Error = $e->errorInfo[1];
 
                 switch ($SQL_Error) {
                     case 1062:
-                        echo ("(WARNING) : Duplicate record for territoire : KEYG = " . $data["KEYG"]  . PHP_EOL );
+                        array_push(errorHandler::$Run_Information, ["Warning", "Duplicate record for territoire : KEYG = " . $data["KEYG"]  . PHP_EOL]);
                         break;
                     default:
                         throw new pdoDBException(0, $e, "SQL Error :" . $this->rebuildSql($sql,$data));
@@ -140,11 +140,11 @@ class SPW_Chasses_Fermeture_OK_Gateway
 
         } catch (pdoException $e) {
 
-            $SQL_Error = $this->get_Sql_Error_Number($stmt);
+            $SQL_Error = $e->errorInfo[1];
 
             switch ($SQL_Error) {
                 case 1062:
-                    echo ("(WARNING) : Duplicate chasse record : KEYG = " . $data["KEYG"] . " and date = " . $data["DATE_CHASSE"]  . PHP_EOL );
+                    array_push(errorHandler::$Run_Information, ["Warning", " Duplicate chasse record : KEYG = " . $data["KEYG"] . " and date = " . $data["DATE_CHASSE"]  . PHP_EOL]);
                     $GLOBALS["duplicate_Chasses_Records"]++;
                     break;
                 default:
@@ -203,7 +203,7 @@ class SPW_Chasses_Fermeture_OK_Gateway
 
         } catch (pdoException $e) {
 
-            $SQL_Error = $this->get_Sql_Error_Number($stmt);
+            $SQL_Error = $e->errorInfo[1];
 
             switch ($SQL_Error) {
                 case 1062:
@@ -256,7 +256,7 @@ class SPW_Chasses_Fermeture_OK_Gateway
 
         } catch (pdoException $e) {
 
-            $SQL_Error = $this->get_Sql_Error_Number($stmt);
+            $SQL_Error = $e->errorInfo[1];
 
             switch ($SQL_Error) {
                 case 1062:
@@ -277,19 +277,19 @@ class SPW_Chasses_Fermeture_OK_Gateway
     }
 
 
-    private function get_Sql_Error_Number(PDOStatement $stmt): string {
+    // private function get_Sql_Error_Number(PDOStatement $stmt): string {
 
-        $errInfo = $stmt->errorInfo();
+    //     $errInfo = $stmt->errorInfo();
 
-        $SQL_Error = "";
+    //     $SQL_Error = "";
 
-        if (! is_null($errInfo[1])) {
-            $SQL_Error = $errInfo[1];
-        }
+    //     if (! is_null($errInfo[1])) {
+    //         $SQL_Error = $errInfo[1];
+    //     }
 
-        return $SQL_Error;
+    //     return $SQL_Error;
 
-    }
+    // }
 
 
 
