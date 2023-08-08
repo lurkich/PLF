@@ -115,8 +115,8 @@ switch ($parts[2]) {
                 
                 $Print_Mail_header = "<br><i>Run Log for SPW Chasses (1) API call.</i> - run of " .date("d/m/Y H:i:s") . "<br><br>";    
                 $database = new Database($_SERVER["MySql_Server"], $_SERVER["MySql_DB"],$_SERVER["MySql_Login"] ,$_SERVER["MySql_Password"] );
-                $gateway = new SPW_Chasses_1_Gateway($database);
-                $controller = new SPW_Chasses_1_Controller($gateway);            
+                $gateway = new SPW_Chasses_Gateway($database);
+                $controller = new SPW_Chasses_Controller($gateway);            
                 $controller->processRequest($_SERVER["REQUEST_METHOD"], "15");
                 $Print_Mail_Footer = "<br><br><i>END Run Log for SWP Chasses (1) API call.</i> - run of " . date("d/m/Y H:i:s") . "<br><br>";
                 Send_Run_logs_By_eMail();

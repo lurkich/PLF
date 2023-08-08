@@ -182,7 +182,7 @@ class SPW_Chasses_Fermeture_OK_Gateway
     public function Create_DB_Table_Territoires(string $tablename): bool 
     {
 
-// 
+ 
         $sql = "CREATE TABLE $tablename (
                     `OBJECTID` INT NULL DEFAULT NULL,
                     `SAISON` SMALLINT NOT NULL,

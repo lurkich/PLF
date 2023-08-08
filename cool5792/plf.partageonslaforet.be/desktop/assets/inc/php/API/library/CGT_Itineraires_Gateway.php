@@ -72,6 +72,7 @@ class CGT_Itineraires_Gateway
             $stmt->execute();
 
             CGT_Itineraires_Controller::__Increment_Total_Itineraires();
+            array_push(errorHandler::$Run_Information, ["Info", "new itineraire : name = " . mb_convert_encoding($data["nom"], 'Windows-1252', 'UTF-8') . PHP_EOL]);
             return $this->conn->lastInsertId();
 
         } catch (pdoException $e) {

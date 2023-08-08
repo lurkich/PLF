@@ -203,7 +203,7 @@ class SPW_Chasses_Fermeture_OK_Controller
      *   OUTPUT : json file(s)
      * 
      * =======================================================================*/
-    private function Get_Json_Data_Into_Files(): void
+    private function Get_Json_Data_Into_Files(): bool
     {
 
 
@@ -235,7 +235,7 @@ class SPW_Chasses_Fermeture_OK_Controller
     
             // replace the <OFFSET> by the correct value
 
-            $offset = $iteration * $this->_API_Total_Chasses;
+            $offset = $iteration * self::$_max_Record_Count;
             $curl_Url = preg_replace("/<OFFSET>/", $offset, $curl_Url);
 
             array_push(errorHandler::$Run_Information, ["Info", "processing records with offset " . $offset . PHP_EOL]);
@@ -249,13 +249,29 @@ class SPW_Chasses_Fermeture_OK_Controller
             curl_setopt($Curl, CURLOPT_FILE, $fp);
     
             $RC_Bool = curl_exec($Curl);
+            $headers = curl_getinfo($Curl);
+            
     
             fclose($fp);
 
+            switch ($headers["http_code"]) {
+                case 200: 
+                    break;
+                case 503:
+                    array_push(errorHandler::$Run_Information, ["CRITICAL", "SPW service unavailable : http_code = " . $headers["http_code"] . " Calling URL = " . $headers["url"] . PHP_EOL]);
+                    return false;
+                case 404:
+                    array_push(errorHandler::$Run_Information, ["CRITICAL", "SPW resource page not found : http_code = " . $headers["http_code"] . " Calling URL = " . $headers["url"] . PHP_EOL]);
+                    return false;
+                default:
+                    array_push(errorHandler::$Run_Information, ["CRITICAL", "SPW service call error : http_code = " . $headers["http_code"] . " Calling URL = " . $headers["url"] . PHP_EOL]);
+                    return false;
 
+                }
 
         }
         
+        return true;
     }
 
 

@@ -145,7 +145,7 @@ class CGT_Itineraires_Controller
 
             switch ($headers["http_code"]) {
                 case 200: 
-                    return true;
+                    break;
                 case 503:
                     array_push(errorHandler::$Run_Information, ["CRITICAL", "CGT service unavailable : http_code = " . $headers["http_code"] . " Calling URL = " . $headers["url"] . PHP_EOL]);
                     return false;
@@ -158,6 +158,7 @@ class CGT_Itineraires_Controller
                 
             }
        
+        return true;
     }
 
  
@@ -175,15 +176,13 @@ class CGT_Itineraires_Controller
 
     private function Process_Json_Files(): void {
 
-        $offre_num = 0;
 
         $json_file = $GLOBALS['cgt_Itineraires_Json_File'];
 
         $itineraires = JsonMachine\Items::fromFile($json_file, ['pointer' => '/offre']);
 
         foreach ($itineraires as $itineraire) {
-            
-            $offre_num++;
+
             $itineraire = json_decode(json_encode($itineraire), true);
 
             $DB_Fields = array();
@@ -247,7 +246,7 @@ class CGT_Itineraires_Controller
             $this->gateway->New_Itineraire($DB_Fields);
 
             
-            array_push(errorHandler::$Run_Information, ["Info", "new itineraire : name = " . mb_convert_encoding($DB_Fields["nom"], 'Windows-1252', 'UTF-8') . PHP_EOL]);
+            
 
         }
     }

@@ -56,6 +56,8 @@ set_exception_handler("ErrorHandler::handleException");
  $spw_tbl_cantonnements = "plf_spw_cantonnements";
  $spw_tbl_cc = "plf_spw_cc";
  $spw_tbl_territoires = "plf_spw_territoires";
+ $spw_tbl_territoires_1 = "plf_spw_territoires_1";
+ $spw_chasses_1 = "plf_spw_chasses_1";
  $spw_chasses_fermeture = "plf_spw_chasses_fermeture";
  $spw_view_territoires = "view_spw_territoires";
 
