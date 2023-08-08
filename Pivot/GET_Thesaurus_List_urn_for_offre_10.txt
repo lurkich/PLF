@@ -1,8 +1,8 @@
-header="Content-type: application/xml"
-header="Accept: application/xml"
+header="Content-type: application/json"
+header="Accept: application/json"
 header="ws_key: cd8680b9-43c8-4faf-a6a8-d9574e2470e3"
-url=https://pivotweb.tourismewallonie.be/PivotWeb-3.1/thesaurus/typeofr/10;fmt=xml
-output=".\\Thesaurus_Offre_10.xml"
+url=https://pivotweb.tourismewallonie.be/PivotWeb-3.1/thesaurus/typeofr/10;fmt=json
+output=".\\Thesaurus_Offre_10.json"
 request=GET
 insecure
 verbose

@@ -24,7 +24,7 @@ $id = $parts[2] ?? null;
 
 
 
-$database = new Database($GLOBALS["MySql_Server"], $GLOBALS["MySql_DB"], $GLOBALS["MySql_Login"], $GLOBALS["MySql_Password"]);
+$database = new Database($_SERVER["MySql_Server"], $_SERVER["MySql_DB"],$_SERVER["MySql_Login"] ,$_SERVER["MySql_Password"] );
 
 $gateway = new ProductGateway($database);
 

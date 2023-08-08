@@ -1,0 +1,3 @@
+RewriteEngine on
+RewriteCond %{HTTP_HOST} ^localhost$
+RewriteRule ^api/(.*)$ /desktop/assets/inc/php/API/API.php/api/$1/ [R=301,L]
