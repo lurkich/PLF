@@ -80,11 +80,16 @@ class SPW_Chasses_Controller
 
         $this->Get_Json_Data_Into_Files();
 
-        $this->gateway->Drop_DB_Table($GLOBALS["spw_chasses_1"]);
+        $this->gateway->Drop_Table($GLOBALS["spw_chasses_tmp"]);
 
-        $this->gateway->Create_DB_Table_Chasses($GLOBALS["spw_chasses_1"]);
+        $this->gateway->Create_DB_Table_Chasses($GLOBALS["spw_chasses_tmp"]);
 
         $this->Process_Json_Files();
+
+        $this->gateway->Drop_Table($GLOBALS["spw_chasses"]);
+
+        $this->gateway->Rename_Table($GLOBALS["spw_chasses_tmp"], $GLOBALS["spw_chasses"]);
+
 
         array_push(errorHandler::$Run_Information, ["Info", "" . PHP_EOL]);
         array_push(errorHandler::$Run_Information, ["Info", self::$_Duplicate_Chasses . " duplicate date chasses records." . PHP_EOL]);

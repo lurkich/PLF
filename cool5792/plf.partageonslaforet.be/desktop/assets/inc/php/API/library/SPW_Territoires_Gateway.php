@@ -19,13 +19,14 @@ class SPW_Territoires_Gateway
     public function New_Territoire(array $data) {
 
 
-        $sql = "INSERT INTO " . $GLOBALS["spw_tbl_territoires_1"] . " (" .
+        $sql = "INSERT INTO " . $GLOBALS["spw_tbl_territoires_tmp"] . " (" .
                     " OBJECTID," .
                     " KEYG," .
                     " SAISON," .
                     " N_LOT," .
                     " NUGC," .
                     " CODESERVICE," .
+                    " NUM_CANTON," .
                     " TITULAIRE_ADH_UGC," . 
                     " DATE_MAJ," .
                     " SHAPE" .
@@ -36,6 +37,7 @@ class SPW_Territoires_Gateway
                     " :N_LOT," .
                     " :NUGC," .
                     " :CODESERVICE," .
+                    " :NUM_CANTON," .
                     " :TITULAIRE_ADH_UGC," .
                     " :DATE_MAJ," . 
                     " :SHAPE)";
@@ -54,7 +56,8 @@ class SPW_Territoires_Gateway
             $stmt->bindValue(":SHAPE", $data["SHAPE"] ?? "", PDO::PARAM_LOB);
             $stmt->bindValue(":NUGC", $data["NUGC"], PDO::PARAM_INT);
             $stmt->bindValue(":CODESERVICE", $data["CODESERVICE"], PDO::PARAM_STR);
-            $stmt->bindValue(":TITULAIRE_ADH_UGC", $data["TITULAIRE_ADH_UGC"], PDO::PARAM_STR);
+            $stmt->bindValue(":NUM_CANTON", $data["NUM_CANTON"], PDO::PARAM_STR);
+            $stmt->bindValue(":TITULAIRE_ADH_UGC", $data["TITULAIRE_ADH_UGC"], PDO::PARAM_BOOL);
             $stmt->bindValue(":DATE_MAJ", $data["DATE_MAJ"], PDO::PARAM_STR);
 
 
@@ -84,24 +87,19 @@ class SPW_Territoires_Gateway
     }
 
 
+    public function Drop_Table(string $tableName) {
 
- 
-    public function drop_DB_table(string $tablename): bool {
+        $rc = Database::drop_Table($this->conn, $tableName);
 
-        $sql = "DROP TABLE IF EXISTS $tablename";
-
-        $stmt = $this->conn->prepare($sql);
-
-        $RC = $stmt->execute();
-
-        if ($RC) {
-            return json_encode("Table successfully deleted.");
-        }
-
-        return json_encode("Error deleting table. " . $stmt->errorInfo());
-    
     }
 
+
+    public function Rename_Table(string $Table_tmp, string $Table_final) {
+
+
+        $rc = Database::rename_Table($this->conn, $Table_tmp, $Table_final);
+
+    }
 
     public function Create_DB_Table_Territoires(string $tablename): bool 
     {
@@ -113,8 +111,9 @@ class SPW_Territoires_Gateway
                     `KEYG` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_unicode_ci',
                     `N_LOT` VARCHAR(10) NOT NULL COLLATE 'utf8mb4_unicode_ci',
                     `CODESERVICE` VARCHAR(9) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+                    `NUM_CANTON` VARCHAR(3) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
                     `NUGC` SMALLINT NULL DEFAULT NULL,
-                    `TITULAIRE_ADH_UGC` VARCHAR(1) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+                    `TITULAIRE_ADH_UGC` TINYINT(1) NOT NULL,
                     `DATE_MAJ` DATE NULL DEFAULT NULL,
                     `SHAPE` MEDIUMBLOB NULL DEFAULT NULL,
                     PRIMARY KEY (`N_LOT`, `SAISON`) USING BTREE,
@@ -149,7 +148,54 @@ class SPW_Territoires_Gateway
     }
 
 
+    public function Create_View_Territoires() {
 
+        
+
+        $sql = "CREATE VIEW " . $GLOBALS["spw_view_territoires"] . " AS
+                SELECT
+                    `plf_spw_territoires`.`KEYG` AS `KEYG`,
+                    `plf_spw_territoires`.`SAISON` AS `SAISON`,
+                    `plf_spw_territoires`.`N_LOT` AS `N_LOT`,
+                    `plf_spw_territoires`.`CODESERVICE` AS `CODESERVICE`,
+                    `plf_spw_cantonnements`.`CAN` AS `CANTONNEMENT`,
+                    `plf_spw_cantonnements`.`FIRST_CANTON` AS `FIRST_CANTON`,
+                    `plf_spw_cc`.`ugc` AS `CODE_UGC`,
+                    `plf_spw_cc`.`nomugc` AS `NOM_UGC`,
+                    `plf_spw_cc`.`description` AS `DESCRIPTION_UGC`,
+                    `plf_spw_cc`.`valide` AS `VALIDE_UGC`,
+                    `plf_spw_territoires`.`TITULAIRE_ADH_UGC` AS `TITULAIRE_ADH_UGC`,
+                    `plf_spw_territoires`.`DATE_MAJ` AS `DATE_MAJ`,
+                    `plf_spw_territoires`.`SHAPE` AS `SHAPE`,
+                    `plf_spw_territoires`.`NUM_CANTON` AS `NUM_CANTON`
+                FROM ((`plf_spw_territoires`
+                LEFT JOIN `plf_spw_cc`
+                ON ((`plf_spw_territoires`.`NUGC` = `plf_spw_cc`.`nugc`)))
+                LEFT JOIN `plf_spw_cantonnements`
+                ON ((`plf_spw_territoires`.`NUM_CANTON` = `plf_spw_cantonnements`.`CAN`)))";
+    
+        try {
+
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+
+        } catch (pdoException $e) {
+
+            $SQL_Error = $e->errorInfo[1];
+
+            switch ($SQL_Error) {
+
+                default:
+                    throw new pdoDBException(0, $e, "SQL Error :" . $sql);
+
+            }
+        } catch (Exception $e) {
+
+        }    
+
+        return true;
+
+    }
 
 
 

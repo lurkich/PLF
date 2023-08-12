@@ -3,6 +3,7 @@
 *  DEBUGGING : XDEBUG_SESSION=thunder
 */
 
+$Print_Mail_Title = "";
 $Print_Mail_header = "";
 $Print_Mail_Footer = "";
 
@@ -40,13 +41,8 @@ $parts = array_flip($parts);
  *  0 = ""
  *  1 = "api"
  *  2 = "spw"
- *  3 = "chasses"
- *  4 = "2"
- *
- *  0 = ""
- *  1 = "api"
- *  2 = "spw"
  *  3 = "territoires"
+ *  4 = "2"
  *
  *  0 = ""
  *  1 = "api"
@@ -64,129 +60,113 @@ if ($parts[1] != "API") {
 
 
 
+if ($parts[2] == "CGT" and $parts[3] == "ITINERAIRES") {
 
-
-switch ($parts[2]) {
+    echo json_encode([
+        "0" => "", 
+        "1" => "api",
+        "2" => "cgt",
+        "3" => "itineraires"
+        ]);
     
-    case "CGT":       // -> api/cgt/itineraires
-
-        switch ($parts[3]) {
-            case "ITINERAIRES":
-
-                echo json_encode([
-                    "0" => "", 
-                    "1" => "api",
-                    "2" => "cgt",
-                    "3" => "itineraires"
-                ]);
-                $Print_Mail_header = "<br><i>Run Log for CGT Itineraires API call.</i> - run of " .date("d/m/Y H:i:s") . "<br><br>";        
-                $database = new Database($_SERVER["MySql_Server"], $_SERVER["MySql_DB"],$_SERVER["MySql_Login"] ,$_SERVER["MySql_Password"] );
-                $gateway = new CGT_Itineraires_Gateway($database);
-                $controller = new CGT_Itineraires_Controller($gateway);            
-                array_push(errorHandler::$Run_Information, ["Info", "calling URI : api/cgt/itineraires" . PHP_EOL]); 
-                $controller->processRequest();
-                $Print_Mail_Footer = "<br><br><i>END Run Log for CGT itineraires API call.</i> - run of " . date("d/m/Y H:i:s") . "<br><br>";
-                Send_Run_logs_By_eMail();
-                break;
-
-            default:
-                http_response_code(404);
-        }
-
-        break;
 
 
+    $Print_Mail_Title = "Upload CGT Itineraires.";
+    $Print_Mail_header = "<br><i>Run Log for CGT Itineraires API call.</i> - run of " .date("d/m/Y H:i:s") . "<br><br>";     
+  
+    $database = new Database($_SERVER["MySql_Server"], $_SERVER["MySql_DB"],$_SERVER["MySql_Login"] ,$_SERVER["MySql_Password"] );
+    $database->update_LastRuntime("cron_itineraires", $start=true); 
 
-    case "SPW":
+    $gateway = new CGT_Itineraires_Gateway($database);
+    $controller = new CGT_Itineraires_Controller($gateway); 
+
+    array_push(errorHandler::$Run_Information, ["Info", "calling URI : api/cgt/itineraires" . PHP_EOL]); 
+    $controller->processRequest();
     
-        switch ($parts[3]) {
-    
-            case "CHASSES":                  
-            
-                if ($parts[4] == 1) {           // -> api/spw/chasse/1
-                   
-                    echo json_encode([
-                        "0" => "",
-                        "1" => "api",
-                        "2" => "spw",
-                        "3" => "chasses",
-                        "4" => "1"]);
-                
-                
-                $Print_Mail_header = "<br><i>Run Log for SPW Chasses (1) API call.</i> - run of " .date("d/m/Y H:i:s") . "<br><br>";    
-                $database = new Database($_SERVER["MySql_Server"], $_SERVER["MySql_DB"],$_SERVER["MySql_Login"] ,$_SERVER["MySql_Password"] );
-                $gateway = new SPW_Chasses_Gateway($database);
-                $controller = new SPW_Chasses_Controller($gateway);            
-                $controller->processRequest($_SERVER["REQUEST_METHOD"], "15");
-                $Print_Mail_Footer = "<br><br><i>END Run Log for SWP Chasses (1) API call.</i> - run of " . date("d/m/Y H:i:s") . "<br><br>";
-                Send_Run_logs_By_eMail();
+    $Print_Mail_Footer = "<br><br><i>END Run Log for CGT itineraires API call.</i> - run of " . date("d/m/Y H:i:s") . "<br><br>";
 
-                } elseif ($parts[4] == 2) {     // -> api/spw/chasse/2
+    $database->update_LastRuntime("cron_itineraires", $start=false);
 
-                    // echo "(warning) : " . implode([
-                    //     "0" => "", 
-                    //     "1" => "api",
-                    //     "2" => "spw",
-                    //     "3" => "chasses",
-                    //     "4" => "2"]) . PHP_EOL; 
+    Send_Run_logs_By_eMail();
 
-                    $Print_Mail_header = "<br><i>Run Log for SPW Territoires/Chasses (2) API call.</i> - run of " .date("d/m/Y H:i:s") . "<br><br>";    
-                    $database = new Database($_SERVER["MySql_Server"], $_SERVER["MySql_DB"],$_SERVER["MySql_Login"] ,$_SERVER["MySql_Password"] );
-                    $gateway = new SPW_Chasses_Fermeture_OK_Gateway($database);                    
-                    $controller = new SPW_Chasses_Fermeture_OK_Controller($gateway);    
-                    array_push(errorHandler::$Run_Information, ["Info", "calling URI : api/spw/chasses/2" . PHP_EOL]); 
-                    $controller->processRequest();
-                    $Print_Mail_Footer = "<br><br><i>END Run Log for SPW Territoires/Chasses (2) API call.</i> - run of " . date("d/m/Y H:i:s") . "<br><br>";
-                    Send_Run_logs_By_eMail();
-                    break;
+    return;
 
-                } else {
-                    http_response_code(404);
-                }
-                
-                break;
+}
+
+if ($parts[2] == "SPW" and $parts[3] == "TERRITOIRES" and $parts[4] == "1") {
+
+    echo json_encode([
+        "0" => "", 
+        "1" => "api",
+        "2" => "spw",
+        "3" => "territoires",
+        "4" => "1",
+        ]);
 
 
-            case "TERRITOIRES":                 // // -> api/spw/territoires
-                
-                echo json_encode([
-                    "0" => "",
-                    "1" => "api",
-                    "2" => "spw",
-                    "3" => "territoires"]);
+        $Print_Mail_Title = "Upload SPW Territoires.";
+        $Print_Mail_header = "<br><i>Run Log for SPW Territoires API call.</i> - run of " .date("d/m/Y H:i:s") . "<br><br>"; 
 
-            
-                $Print_Mail_header = "<br><i>Run Log for SPW Territoires API call.</i> - run of " .date("d/m/Y H:i:s") . "<br><br>";                    
-                $database = new Database($_SERVER["MySql_Server"], $_SERVER["MySql_DB"],$_SERVER["MySql_Login"] ,$_SERVER["MySql_Password"] );
-                $gateway = new SPW_Territoires_Gateway($database);
-                $controller = new SPW_Territoires_Controller($gateway);            
-                $controller->processRequest($_SERVER["REQUEST_METHOD"], "15");
-                $Print_Mail_Footer = "<br><br><i>END Run Log for SPW Territoires API call.</i> - run of " . date("d/m/Y H:i:s") . "<br><br>";                
-                Send_Run_logs_By_eMail();
-                break;
+        $database = new Database($_SERVER["MySql_Server"], $_SERVER["MySql_DB"],$_SERVER["MySql_Login"] ,$_SERVER["MySql_Password"] );
+        $database->update_LastRuntime("cron_territoires", $start=true);
+        
+        $gateway = new SPW_Territoires_Gateway($database);
+        $controller = new SPW_Territoires_Controller($gateway);   
+        
+        array_push(errorHandler::$Run_Information, ["Info", "calling URI : api/spw/territoires/1" . PHP_EOL]);         
+        $controller->processRequest();
+        
+        $Print_Mail_Footer = "<br><br><i>END Run Log for SPW Territoires (1) API call.</i> - run of " . date("d/m/Y H:i:s") . "<br><br>";
+        
+        $database->update_LastRuntime("cron_territoires", $start=false);
+        
+        Send_Run_logs_By_eMail();
 
+        return;
 
-            default:
-                http_response_code(404);
-                break;
-        }
-
-        break;
+}
 
 
+if ($parts[2] == "SPW" and $parts[3] == "CHASSES" and $parts[4] == "2") {
 
-    default:
-        http_response_code(404);
-        break;
+    echo json_encode([
+        "0" => "", 
+        "1" => "api",
+        "2" => "spw",
+        "3" => "chasses",
+        "4" => "2",
+        ]);
 
-    }
+
+        $Print_Mail_Title = "Upload SPW Chasses.";
+        $Print_Mail_header = "<br><i>Run Log for SPW Chasses API call.</i> - run of " .date("d/m/Y H:i:s") . "<br><br>";    
+       
+        $database = new Database($_SERVER["MySql_Server"], $_SERVER["MySql_DB"],$_SERVER["MySql_Login"] ,$_SERVER["MySql_Password"] );
+        $database->update_LastRuntime("cron_chasses", $start=true);
+       
+        $gateway = new SPW_Chasses_Gateway($database);
+        $controller = new SPW_Chasses_Controller($gateway);   
+       
+        array_push(errorHandler::$Run_Information, ["Info", "calling URI : api/spw/territoires/1" . PHP_EOL]);         
+       
+        $controller->processRequest();
+       
+        $Print_Mail_Footer = "<br><br><i>END Run Log for SPW Chasses API call.</i> - run of " . date("d/m/Y H:i:s") . "<br><br>";
+       
+        $database->update_LastRuntime("cron_chasses", $start=false);
+       
+        Send_Run_logs_By_eMail();
+
+        return;
+
+}
 
 
-exit;
 
 
 function Send_Run_logs_By_eMail(): void {
 
+    global $Print_Mail_Title;
     global $Print_Mail_header;
     global $Print_Mail_Footer;
 
@@ -196,10 +176,19 @@ function Send_Run_logs_By_eMail(): void {
     $plf_mail = new PHPMailer();
     $plf_mail->From = "Christian.lurkin@hotmail.com";
     $plf_mail->FromName = "Christian Lurkin PLF";
-    $plf_mail->addAddress("christian.lurkin@gmail.com");
+
+
+   
+    foreach($_ENV as $key => $mailRecipient) {
+
+        if ( strtoupper($key) == "LOGMAIL") {
+            $plf_mail->addAddress($mailRecipient);
+        }
+    }
+
     $plf_mail->addReplyTo("Christian.lurkin@hotmail.com");
     $plf_mail->isHTML(true);
-    $plf_mail->Subject = "PLF logging";
+    $plf_mail->Subject = "PLF logging - " . $Print_Mail_Title;
 
     $plf_mail->AltBody = "Run Log for spw API call.";
 

@@ -29,8 +29,6 @@ spl_autoload_register(function ($class_name) {
 });
 
 
-
-// header("Content-type: application/json; charset=UTF-8");
 header("Content-type: text/plain; charset=UTF-8");
 
 
@@ -40,34 +38,32 @@ set_error_handler("ErrorHandler::handleError");
 set_exception_handler("ErrorHandler::handleException");
 
 
+date_default_timezone_set("Europe/Brussels");
+
  
 //   ---> Database information and list of tables and views
 
+$spw_tbl_cantonnements = "plf_spw_cantonnements";
+$spw_tbl_cc = "plf_spw_cc";
 
+$spw_tbl_territoires = "plf_spw_territoires";
+$spw_tbl_territoires_tmp = "plf_spw_territoires_tmp";
 
- $tbl_cantonnements = "plf_cantonnements";
- $tbl_CC = "plf_cc";
- $tbl_triages = "plf_triages";
- $tbl_Territoires = "plf_territoires";
- $tbl_Chasses = "plf_chasses";
+$spw_chasses = "plf_spw_chasses";
+$spw_chasses_tmp = "plf_spw_chasses_tmp";
 
- $View_Territoires = "view_territoires";
+$spw_view_territoires = "view_spw_territoires";
 
- $spw_tbl_cantonnements = "plf_spw_cantonnements";
- $spw_tbl_cc = "plf_spw_cc";
- $spw_tbl_territoires = "plf_spw_territoires";
- $spw_tbl_territoires_1 = "plf_spw_territoires_1";
- $spw_chasses_1 = "plf_spw_chasses_1";
- $spw_chasses_fermeture = "plf_spw_chasses_fermeture";
- $spw_view_territoires = "view_spw_territoires";
+$cgt_itineraires = "plf_cgt_itineraires";
+$cgt_itineraires_tmp = "plf_cgt_itineraires_tmp";
 
- $cgt_itineraires = "plf_cgt_itineraires";
+$plf_infos = "plf_infos";
+
 
 
 /**
  * 
  *  SPW territories and chasse (ARCGIS)
- * 
  * 
  */
 
@@ -92,7 +88,6 @@ $spw_Chasses_Json_File = __DIR__ . "/API/tmp/spw_Chasses";
  * 
  *  CGT itineraires (PIVOT)
  * 
- * 
  */
 
 // rest url information. 
@@ -100,3 +95,27 @@ $cgt_URL = "https://pivotweb.tourismewallonie.be/PivotWeb-3.1/query/";
 
  // json output file.
 $cgt_Itineraires_Json_File = __DIR__ ."/API/tmp/cgt_Itineraires.json";
+
+
+
+
+
+
+/**
+ * 
+ *  OLD STUFF 
+ * 
+ */
+
+
+  
+// ---> Old database information
+
+// $tbl_cantonnements = "plf_cantonnements";
+// $tbl_CC = "plf_cc";
+// $tbl_triages = "plf_triages";
+// $tbl_Territoires = "plf_territoires";
+// $tbl_Chasses = "plf_chasses";
+// $View_Territoires = "view_territoires";
+// $spw_chasses_fermeture = "plf_spw_chasses_fermeture";
+

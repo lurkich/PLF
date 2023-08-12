@@ -80,11 +80,17 @@ class SPW_Territoires_Controller
 
         $this->Get_Json_Data_Into_Files();
 
-        $this->gateway->Drop_DB_Table($GLOBALS["spw_tbl_territoires_1"]);
+        $this->gateway->Drop_Table($GLOBALS["spw_tbl_territoires_tmp"]);
 
-        $this->gateway->Create_DB_Table_Territoires($GLOBALS["spw_tbl_territoires_1"]);
+        $this->gateway->Create_DB_Table_Territoires($GLOBALS["spw_tbl_territoires_tmp"]);
 
         $this->Process_Json_Files();
+        
+        $this->gateway->Drop_Table($GLOBALS["spw_tbl_territoires"]);
+
+        $this->gateway->Rename_Table($GLOBALS["spw_tbl_territoires_tmp"], $GLOBALS["spw_tbl_territoires"]);
+
+        $this->gateway->Create_View_Territoires();
 
         array_push(errorHandler::$Run_Information, ["Info", "" . PHP_EOL]);
         array_push(errorHandler::$Run_Information, ["Info", self::$_Duplicate_Territoires . " duplicate territoires records." . PHP_EOL]);
@@ -261,7 +267,7 @@ class SPW_Territoires_Controller
 
         ///// _______________________
         ///// TO REMOVE AFTER TESTING
-        //$this->_iteration_Count = 3;        
+        /// $this->_iteration_Count = 3;        
         ///// _______________________
 
 
@@ -294,8 +300,17 @@ class SPW_Territoires_Controller
                 $N_LOT = $territoire["properties"]["N_LOT"];
                 $SHAPE = $territory_geometry;
                 $NUGC = $territoire["properties"]["NUGC"];
+
+
+                if ($territoire["properties"]["TITULAIRE_ADH_UGC"] == "O") {
+                    $territoire["properties"]["TITULAIRE_ADH_UGC"] = true;
+                } else {
+                    $territoire["properties"]["TITULAIRE_ADH_UGC"] = false;
+                }
+                
                 $TITULAIRE_ADH_UGC = $territoire["properties"]["TITULAIRE_ADH_UGC"];
                 $CODESERVICE = $territoire["properties"]["CODESERVICE"];
+                $NUM_CANTON = substr($CODESERVICE,-3);
   
 
                 $this->gateway->New_Territoire([
@@ -306,6 +321,7 @@ class SPW_Territoires_Controller
                     "SHAPE" => $SHAPE,
                     "NUGC" => $NUGC,
                     "CODESERVICE" => $CODESERVICE,
+                    "NUM_CANTON" => $NUM_CANTON,
                     "TITULAIRE_ADH_UGC" => $TITULAIRE_ADH_UGC,
                     "DATE_MAJ" => $local_date
                 ]);

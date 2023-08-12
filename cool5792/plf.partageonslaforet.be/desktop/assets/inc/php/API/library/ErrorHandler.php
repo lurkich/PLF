@@ -12,13 +12,6 @@ class ErrorHandler {
     {
         http_response_code(500);
 
-        // echo implode(" - ", [
-        //     "code" => $exception->getCode(),
-        //     "message" => $exception->getMessage(),
-        //     "file" => $exception->getFile(),
-        //     "line" => $exception->getLine()
-        // ]);
-
 
         echo json_encode([
             "code" => $exception->getCode(),
@@ -28,12 +21,14 @@ class ErrorHandler {
         ]);
 
 
-       self::Send_eMail("ERROR", implode(" - ", [
-                        "code" => $exception->getCode(),
-                        "message" => $exception->getMessage(),
-                        "file" => $exception->getFile(),
-                        "line" => $exception->getLine()
-                    ]) );
+       self::Send_eMail("ERROR", 
+                        implode(" - ", [
+                            "code" => $exception->getCode(),
+                            "message" => $exception->getMessage(),
+                            "file" => $exception->getFile(),
+                            "line" => $exception->getLine()
+                            ]),
+                        print_r($exception->getTrace(), true ));
 
     }
 
@@ -49,16 +44,18 @@ class ErrorHandler {
         }
 
 
-    public static function Send_eMail(string $info, string $message): void {
+    public static function Send_eMail(string $info, string $message, string $trace): void {
 
         
+        $trace = preg_replace("/\n/", "<br>", $trace);
+
         $plf_mail = new PHPMailer();
         $plf_mail->From = "Christian.lurkin@hotmail.com";
         $plf_mail->FromName = "Christian Lurkin PLF";
         $plf_mail->addAddress("christian.lurkin@gmail.com");
         $plf_mail->addReplyTo("Christian.lurkin@hotmail.com");
         $plf_mail->isHTML(true);
-        $plf_mail->Subject = "PLF ERROR Launcing task";
+        $plf_mail->Subject = "PLF ERROR Launching task - ";
     
         $plf_mail->AltBody = "Run Log for spw API call.";
         
@@ -70,6 +67,7 @@ class ErrorHandler {
 
     
         $plf_mail->Body .= "(<b>" . $info . "</b>) - " . $message;
+        $plf_mail->Body .= "<br>" . $trace . "<br>";
 
     
         if ( !$plf_mail->send()) {

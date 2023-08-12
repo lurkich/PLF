@@ -67,20 +67,9 @@
    "attributes": {
     "SAISON": 2023,
     "N_LOT": "6113105012",
-    "NUM": 2,
+    "NUM": 5,
     "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1697414400000,
-    "FERMETURE": "O",
-    "KEYG": "2023/6113105012"
-   }
-  },
-  {
-   "attributes": {
-    "SAISON": 2023,
-    "N_LOT": "6113105012",
-    "NUM": 3,
-    "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1698624000000,
+    "DATE_CHASSE": 1702857600000,
     "FERMETURE": "O",
     "KEYG": "2023/6113105012"
    }
@@ -100,9 +89,20 @@
    "attributes": {
     "SAISON": 2023,
     "N_LOT": "6113105012",
-    "NUM": 5,
+    "NUM": 3,
     "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1702857600000,
+    "DATE_CHASSE": 1698624000000,
+    "FERMETURE": "O",
+    "KEYG": "2023/6113105012"
+   }
+  },
+  {
+   "attributes": {
+    "SAISON": 2023,
+    "N_LOT": "6113105012",
+    "NUM": 2,
+    "MODE_CHASSE": "BATTUE",
+    "DATE_CHASSE": 1697414400000,
     "FERMETURE": "O",
     "KEYG": "2023/6113105012"
    }
@@ -144,9 +144,9 @@
    "attributes": {
     "SAISON": 2023,
     "N_LOT": "6113105013",
-    "NUM": 2,
+    "NUM": 3,
     "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1697932800000,
+    "DATE_CHASSE": 1699228800000,
     "FERMETURE": "O",
     "KEYG": "2023/6113105013"
    }
@@ -155,9 +155,9 @@
    "attributes": {
     "SAISON": 2023,
     "N_LOT": "6113105013",
-    "NUM": 3,
+    "NUM": 2,
     "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1699228800000,
+    "DATE_CHASSE": 1697932800000,
     "FERMETURE": "O",
     "KEYG": "2023/6113105013"
    }
@@ -947,9 +947,9 @@
    "attributes": {
     "SAISON": 2023,
     "N_LOT": "7113041008",
-    "NUM": 2,
+    "NUM": 3,
     "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1701475200000,
+    "DATE_CHASSE": 1703721600000,
     "FERMETURE": "O",
     "KEYG": "2023/7113041008"
    }
@@ -958,9 +958,9 @@
    "attributes": {
     "SAISON": 2023,
     "N_LOT": "7113041008",
-    "NUM": 3,
+    "NUM": 2,
     "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1703721600000,
+    "DATE_CHASSE": 1701475200000,
     "FERMETURE": "O",
     "KEYG": "2023/7113041008"
    }
@@ -980,9 +980,9 @@
    "attributes": {
     "SAISON": 2023,
     "N_LOT": "7113041009",
-    "NUM": 2,
+    "NUM": 3,
     "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1700784000000,
+    "DATE_CHASSE": 1703203200000,
     "FERMETURE": "O",
     "KEYG": "2023/7113041009"
    }
@@ -991,9 +991,9 @@
    "attributes": {
     "SAISON": 2023,
     "N_LOT": "7113041009",
-    "NUM": 3,
+    "NUM": 2,
     "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1703203200000,
+    "DATE_CHASSE": 1700784000000,
     "FERMETURE": "O",
     "KEYG": "2023/7113041009"
    }
@@ -1013,9 +1013,9 @@
    "attributes": {
     "SAISON": 2023,
     "N_LOT": "7113041010",
-    "NUM": 2,
+    "NUM": 3,
     "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1699660800000,
+    "DATE_CHASSE": 1701993600000,
     "FERMETURE": "O",
     "KEYG": "2023/7113041010"
    }
@@ -1024,9 +1024,9 @@
    "attributes": {
     "SAISON": 2023,
     "N_LOT": "7113041010",
-    "NUM": 3,
+    "NUM": 2,
     "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1701993600000,
+    "DATE_CHASSE": 1699660800000,
     "FERMETURE": "O",
     "KEYG": "2023/7113041010"
    }
@@ -1068,9 +1068,9 @@
    "attributes": {
     "SAISON": 2023,
     "N_LOT": "7113041027",
-    "NUM": 2,
+    "NUM": 3,
     "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1699574400000,
+    "DATE_CHASSE": 1703203200000,
     "FERMETURE": "O",
     "KEYG": "2023/7113041027"
    }
@@ -1079,9 +1079,9 @@
    "attributes": {
     "SAISON": 2023,
     "N_LOT": "7113041027",
-    "NUM": 3,
+    "NUM": 2,
     "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1703203200000,
+    "DATE_CHASSE": 1699574400000,
     "FERMETURE": "O",
     "KEYG": "2023/7113041027"
    }
@@ -1101,20 +1101,9 @@
    "attributes": {
     "SAISON": 2023,
     "N_LOT": "7113041037",
-    "NUM": 2,
+    "NUM": 5,
     "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1697328000000,
-    "FERMETURE": "O",
-    "KEYG": "2023/7113041037"
-   }
-  },
-  {
-   "attributes": {
-    "SAISON": 2023,
-    "N_LOT": "7113041037",
-    "NUM": 3,
-    "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1699056000000,
+    "DATE_CHASSE": 1703635200000,
     "FERMETURE": "O",
     "KEYG": "2023/7113041037"
    }
@@ -1134,9 +1123,20 @@
    "attributes": {
     "SAISON": 2023,
     "N_LOT": "7113041037",
-    "NUM": 5,
+    "NUM": 3,
     "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1703635200000,
+    "DATE_CHASSE": 1699056000000,
+    "FERMETURE": "O",
+    "KEYG": "2023/7113041037"
+   }
+  },
+  {
+   "attributes": {
+    "SAISON": 2023,
+    "N_LOT": "7113041037",
+    "NUM": 2,
+    "MODE_CHASSE": "BATTUE",
+    "DATE_CHASSE": 1697328000000,
     "FERMETURE": "O",
     "KEYG": "2023/7113041037"
    }
@@ -1156,9 +1156,9 @@
    "attributes": {
     "SAISON": 2023,
     "N_LOT": "7113041050",
-    "NUM": 2,
+    "NUM": 3,
     "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1701475200000,
+    "DATE_CHASSE": 1703721600000,
     "FERMETURE": "O",
     "KEYG": "2023/7113041050"
    }
@@ -1167,9 +1167,9 @@
    "attributes": {
     "SAISON": 2023,
     "N_LOT": "7113041050",
-    "NUM": 3,
+    "NUM": 2,
     "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1703721600000,
+    "DATE_CHASSE": 1701475200000,
     "FERMETURE": "O",
     "KEYG": "2023/7113041050"
    }
@@ -1189,9 +1189,9 @@
    "attributes": {
     "SAISON": 2023,
     "N_LOT": "7113041054",
-    "NUM": 2,
+    "NUM": 3,
     "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1700611200000,
+    "DATE_CHASSE": 1702425600000,
     "FERMETURE": "O",
     "KEYG": "2023/7113041054"
    }
@@ -1200,9 +1200,9 @@
    "attributes": {
     "SAISON": 2023,
     "N_LOT": "7113041054",
-    "NUM": 3,
+    "NUM": 2,
     "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1702425600000,
+    "DATE_CHASSE": 1700611200000,
     "FERMETURE": "O",
     "KEYG": "2023/7113041054"
    }
@@ -1222,9 +1222,9 @@
    "attributes": {
     "SAISON": 2023,
     "N_LOT": "7113184001",
-    "NUM": 2,
+    "NUM": 3,
     "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1700784000000,
+    "DATE_CHASSE": 1703203200000,
     "FERMETURE": "O",
     "KEYG": "2023/7113184001"
    }
@@ -1233,9 +1233,9 @@
    "attributes": {
     "SAISON": 2023,
     "N_LOT": "7113184001",
-    "NUM": 3,
+    "NUM": 2,
     "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1703203200000,
+    "DATE_CHASSE": 1700784000000,
     "FERMETURE": "O",
     "KEYG": "2023/7113184001"
    }
@@ -1255,31 +1255,9 @@
    "attributes": {
     "SAISON": 2023,
     "N_LOT": "7113184002",
-    "NUM": 2,
+    "NUM": 6,
     "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1699056000000,
-    "FERMETURE": "O",
-    "KEYG": "2023/7113184002"
-   }
-  },
-  {
-   "attributes": {
-    "SAISON": 2023,
-    "N_LOT": "7113184002",
-    "NUM": 3,
-    "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1700870400000,
-    "FERMETURE": "O",
-    "KEYG": "2023/7113184002"
-   }
-  },
-  {
-   "attributes": {
-    "SAISON": 2023,
-    "N_LOT": "7113184002",
-    "NUM": 4,
-    "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1702684800000,
+    "DATE_CHASSE": 1705708800000,
     "FERMETURE": "O",
     "KEYG": "2023/7113184002"
    }
@@ -1299,9 +1277,31 @@
    "attributes": {
     "SAISON": 2023,
     "N_LOT": "7113184002",
-    "NUM": 6,
+    "NUM": 4,
     "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1705708800000,
+    "DATE_CHASSE": 1702684800000,
+    "FERMETURE": "O",
+    "KEYG": "2023/7113184002"
+   }
+  },
+  {
+   "attributes": {
+    "SAISON": 2023,
+    "N_LOT": "7113184002",
+    "NUM": 3,
+    "MODE_CHASSE": "BATTUE",
+    "DATE_CHASSE": 1700870400000,
+    "FERMETURE": "O",
+    "KEYG": "2023/7113184002"
+   }
+  },
+  {
+   "attributes": {
+    "SAISON": 2023,
+    "N_LOT": "7113184002",
+    "NUM": 2,
+    "MODE_CHASSE": "BATTUE",
+    "DATE_CHASSE": 1699056000000,
     "FERMETURE": "O",
     "KEYG": "2023/7113184002"
    }
@@ -1321,20 +1321,9 @@
    "attributes": {
     "SAISON": 2023,
     "N_LOT": "7113184006",
-    "NUM": 2,
+    "NUM": 5,
     "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1696636800000,
-    "FERMETURE": "O",
-    "KEYG": "2023/7113184006"
-   }
-  },
-  {
-   "attributes": {
-    "SAISON": 2023,
-    "N_LOT": "7113184006",
-    "NUM": 3,
-    "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1698451200000,
+    "DATE_CHASSE": 1702080000000,
     "FERMETURE": "O",
     "KEYG": "2023/7113184006"
    }
@@ -1354,9 +1343,20 @@
    "attributes": {
     "SAISON": 2023,
     "N_LOT": "7113184006",
-    "NUM": 5,
+    "NUM": 3,
     "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1702080000000,
+    "DATE_CHASSE": 1698451200000,
+    "FERMETURE": "O",
+    "KEYG": "2023/7113184006"
+   }
+  },
+  {
+   "attributes": {
+    "SAISON": 2023,
+    "N_LOT": "7113184006",
+    "NUM": 2,
+    "MODE_CHASSE": "BATTUE",
+    "DATE_CHASSE": 1696636800000,
     "FERMETURE": "O",
     "KEYG": "2023/7113184006"
    }
@@ -1376,31 +1376,9 @@
    "attributes": {
     "SAISON": 2023,
     "N_LOT": "7113184008",
-    "NUM": 2,
+    "NUM": 6,
     "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1696636800000,
-    "FERMETURE": "O",
-    "KEYG": "2023/7113184008"
-   }
-  },
-  {
-   "attributes": {
-    "SAISON": 2023,
-    "N_LOT": "7113184008",
-    "NUM": 3,
-    "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1699660800000,
-    "FERMETURE": "O",
-    "KEYG": "2023/7113184008"
-   }
-  },
-  {
-   "attributes": {
-    "SAISON": 2023,
-    "N_LOT": "7113184008",
-    "NUM": 4,
-    "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1699747200000,
+    "DATE_CHASSE": 1703635200000,
     "FERMETURE": "O",
     "KEYG": "2023/7113184008"
    }
@@ -1420,9 +1398,31 @@
    "attributes": {
     "SAISON": 2023,
     "N_LOT": "7113184008",
-    "NUM": 6,
+    "NUM": 4,
     "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1703635200000,
+    "DATE_CHASSE": 1699747200000,
+    "FERMETURE": "O",
+    "KEYG": "2023/7113184008"
+   }
+  },
+  {
+   "attributes": {
+    "SAISON": 2023,
+    "N_LOT": "7113184008",
+    "NUM": 3,
+    "MODE_CHASSE": "BATTUE",
+    "DATE_CHASSE": 1699660800000,
+    "FERMETURE": "O",
+    "KEYG": "2023/7113184008"
+   }
+  },
+  {
+   "attributes": {
+    "SAISON": 2023,
+    "N_LOT": "7113184008",
+    "NUM": 2,
+    "MODE_CHASSE": "BATTUE",
+    "DATE_CHASSE": 1696636800000,
     "FERMETURE": "O",
     "KEYG": "2023/7113184008"
    }
@@ -1442,9 +1442,9 @@
    "attributes": {
     "SAISON": 2023,
     "N_LOT": "7113184010",
-    "NUM": 2,
+    "NUM": 4,
     "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1699142400000,
+    "DATE_CHASSE": 1703808000000,
     "FERMETURE": "O",
     "KEYG": "2023/7113184010"
    }
@@ -1464,9 +1464,9 @@
    "attributes": {
     "SAISON": 2023,
     "N_LOT": "7113184010",
-    "NUM": 4,
+    "NUM": 2,
     "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1703808000000,
+    "DATE_CHASSE": 1699142400000,
     "FERMETURE": "O",
     "KEYG": "2023/7113184010"
    }
@@ -2135,17 +2135,6 @@
    "attributes": {
     "SAISON": 2023,
     "N_LOT": "7123013019",
-    "NUM": 1,
-    "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1697328000000,
-    "FERMETURE": "O",
-    "KEYG": "2023/7123013019"
-   }
-  },
-  {
-   "attributes": {
-    "SAISON": 2023,
-    "N_LOT": "7123013019",
     "NUM": 3,
     "MODE_CHASSE": "BATTUE",
     "DATE_CHASSE": 1702771200000,
@@ -2160,6 +2149,17 @@
     "NUM": 2,
     "MODE_CHASSE": "BATTUE",
     "DATE_CHASSE": 1700870400000,
+    "FERMETURE": "O",
+    "KEYG": "2023/7123013019"
+   }
+  },
+  {
+   "attributes": {
+    "SAISON": 2023,
+    "N_LOT": "7123013019",
+    "NUM": 1,
+    "MODE_CHASSE": "BATTUE",
+    "DATE_CHASSE": 1697328000000,
     "FERMETURE": "O",
     "KEYG": "2023/7123013019"
    }
@@ -8460,28 +8460,6 @@
    "attributes": {
     "SAISON": 2023,
     "N_LOT": "9213062046",
-    "NUM": 8,
-    "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1700611200000,
-    "FERMETURE": "O",
-    "KEYG": "2023/9213062046"
-   }
-  },
-  {
-   "attributes": {
-    "SAISON": 2023,
-    "N_LOT": "9213062046",
-    "NUM": 7,
-    "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1700524800000,
-    "FERMETURE": "O",
-    "KEYG": "2023/9213062046"
-   }
-  },
-  {
-   "attributes": {
-    "SAISON": 2023,
-    "N_LOT": "9213062046",
     "NUM": 10,
     "MODE_CHASSE": "BATTUE",
     "DATE_CHASSE": 1700438400000,
@@ -8496,6 +8474,28 @@
     "NUM": 9,
     "MODE_CHASSE": "BATTUE",
     "DATE_CHASSE": 1702944000000,
+    "FERMETURE": "O",
+    "KEYG": "2023/9213062046"
+   }
+  },
+  {
+   "attributes": {
+    "SAISON": 2023,
+    "N_LOT": "9213062046",
+    "NUM": 8,
+    "MODE_CHASSE": "BATTUE",
+    "DATE_CHASSE": 1700611200000,
+    "FERMETURE": "O",
+    "KEYG": "2023/9213062046"
+   }
+  },
+  {
+   "attributes": {
+    "SAISON": 2023,
+    "N_LOT": "9213062046",
+    "NUM": 7,
+    "MODE_CHASSE": "BATTUE",
+    "DATE_CHASSE": 1700524800000,
     "FERMETURE": "O",
     "KEYG": "2023/9213062046"
    }
@@ -10110,17 +10110,6 @@
    "attributes": {
     "SAISON": 2023,
     "N_LOT": "9312709022",
-    "NUM": 2,
-    "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1700352000000,
-    "FERMETURE": "O",
-    "KEYG": "2023/9312709022"
-   }
-  },
-  {
-   "attributes": {
-    "SAISON": 2023,
-    "N_LOT": "9312709022",
     "NUM": 1,
     "MODE_CHASSE": "BATTUE",
     "DATE_CHASSE": 1697846400000,
@@ -10135,6 +10124,17 @@
     "NUM": 3,
     "MODE_CHASSE": "BATTUE",
     "DATE_CHASSE": 1702166400000,
+    "FERMETURE": "O",
+    "KEYG": "2023/9312709022"
+   }
+  },
+  {
+   "attributes": {
+    "SAISON": 2023,
+    "N_LOT": "9312709022",
+    "NUM": 2,
+    "MODE_CHASSE": "BATTUE",
+    "DATE_CHASSE": 1700352000000,
     "FERMETURE": "O",
     "KEYG": "2023/9312709022"
    }
@@ -11573,75 +11573,20 @@
    "attributes": {
     "SAISON": 2023,
     "N_LOT": "9330250080",
+    "NUM": 2,
+    "MODE_CHASSE": "BATTUE",
+    "DATE_CHASSE": 1696723200000,
+    "FERMETURE": "O",
+    "KEYG": "2023/9330250080"
+   }
+  },
+  {
+   "attributes": {
+    "SAISON": 2023,
+    "N_LOT": "9330250080",
     "NUM": 1,
     "MODE_CHASSE": "BATTUE",
     "DATE_CHASSE": 1696118400000,
-    "FERMETURE": "O",
-    "KEYG": "2023/9330250080"
-   }
-  },
-  {
-   "attributes": {
-    "SAISON": 2023,
-    "N_LOT": "9330250080",
-    "NUM": 9,
-    "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1702166400000,
-    "FERMETURE": "O",
-    "KEYG": "2023/9330250080"
-   }
-  },
-  {
-   "attributes": {
-    "SAISON": 2023,
-    "N_LOT": "9330250080",
-    "NUM": 8,
-    "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1701302400000,
-    "FERMETURE": "O",
-    "KEYG": "2023/9330250080"
-   }
-  },
-  {
-   "attributes": {
-    "SAISON": 2023,
-    "N_LOT": "9330250080",
-    "NUM": 7,
-    "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1700870400000,
-    "FERMETURE": "O",
-    "KEYG": "2023/9330250080"
-   }
-  },
-  {
-   "attributes": {
-    "SAISON": 2023,
-    "N_LOT": "9330250080",
-    "NUM": 6,
-    "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1700352000000,
-    "FERMETURE": "O",
-    "KEYG": "2023/9330250080"
-   }
-  },
-  {
-   "attributes": {
-    "SAISON": 2023,
-    "N_LOT": "9330250080",
-    "NUM": 5,
-    "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1699747200000,
-    "FERMETURE": "O",
-    "KEYG": "2023/9330250080"
-   }
-  },
-  {
-   "attributes": {
-    "SAISON": 2023,
-    "N_LOT": "9330250080",
-    "NUM": 4,
-    "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1698537600000,
     "FERMETURE": "O",
     "KEYG": "2023/9330250080"
    }
@@ -11661,9 +11606,64 @@
    "attributes": {
     "SAISON": 2023,
     "N_LOT": "9330250080",
-    "NUM": 2,
+    "NUM": 4,
     "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1696723200000,
+    "DATE_CHASSE": 1698537600000,
+    "FERMETURE": "O",
+    "KEYG": "2023/9330250080"
+   }
+  },
+  {
+   "attributes": {
+    "SAISON": 2023,
+    "N_LOT": "9330250080",
+    "NUM": 5,
+    "MODE_CHASSE": "BATTUE",
+    "DATE_CHASSE": 1699747200000,
+    "FERMETURE": "O",
+    "KEYG": "2023/9330250080"
+   }
+  },
+  {
+   "attributes": {
+    "SAISON": 2023,
+    "N_LOT": "9330250080",
+    "NUM": 6,
+    "MODE_CHASSE": "BATTUE",
+    "DATE_CHASSE": 1700352000000,
+    "FERMETURE": "O",
+    "KEYG": "2023/9330250080"
+   }
+  },
+  {
+   "attributes": {
+    "SAISON": 2023,
+    "N_LOT": "9330250080",
+    "NUM": 7,
+    "MODE_CHASSE": "BATTUE",
+    "DATE_CHASSE": 1700870400000,
+    "FERMETURE": "O",
+    "KEYG": "2023/9330250080"
+   }
+  },
+  {
+   "attributes": {
+    "SAISON": 2023,
+    "N_LOT": "9330250080",
+    "NUM": 8,
+    "MODE_CHASSE": "BATTUE",
+    "DATE_CHASSE": 1701302400000,
+    "FERMETURE": "O",
+    "KEYG": "2023/9330250080"
+   }
+  },
+  {
+   "attributes": {
+    "SAISON": 2023,
+    "N_LOT": "9330250080",
+    "NUM": 9,
+    "MODE_CHASSE": "BATTUE",
+    "DATE_CHASSE": 1702166400000,
     "FERMETURE": "O",
     "KEYG": "2023/9330250080"
    }
@@ -11683,9 +11683,9 @@
    "attributes": {
     "SAISON": 2023,
     "N_LOT": "9330326006",
-    "NUM": 4,
+    "NUM": 2,
     "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1703289600000,
+    "DATE_CHASSE": 1699574400000,
     "FERMETURE": "O",
     "KEYG": "2023/9330326006"
    }
@@ -11705,9 +11705,9 @@
    "attributes": {
     "SAISON": 2023,
     "N_LOT": "9330326006",
-    "NUM": 2,
+    "NUM": 4,
     "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1699574400000,
+    "DATE_CHASSE": 1703289600000,
     "FERMETURE": "O",
     "KEYG": "2023/9330326006"
    }
@@ -11727,17 +11727,6 @@
    "attributes": {
     "SAISON": 2023,
     "N_LOT": "9331199002",
-    "NUM": 3,
-    "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1702771200000,
-    "FERMETURE": "O",
-    "KEYG": "2023/9331199002"
-   }
-  },
-  {
-   "attributes": {
-    "SAISON": 2023,
-    "N_LOT": "9331199002",
     "NUM": 2,
     "MODE_CHASSE": "BATTUE",
     "DATE_CHASSE": 1699142400000,
@@ -11748,12 +11737,12 @@
   {
    "attributes": {
     "SAISON": 2023,
-    "N_LOT": "9331199011",
-    "NUM": 2,
+    "N_LOT": "9331199002",
+    "NUM": 3,
     "MODE_CHASSE": "BATTUE",
-    "DATE_CHASSE": 1699056000000,
+    "DATE_CHASSE": 1702771200000,
     "FERMETURE": "O",
-    "KEYG": "2023/9331199011"
+    "KEYG": "2023/9331199002"
    }
   },
   {
@@ -11763,6 +11752,17 @@
     "NUM": 1,
     "MODE_CHASSE": "BATTUE",
     "DATE_CHASSE": 1696723200000,
+    "FERMETURE": "O",
+    "KEYG": "2023/9331199011"
+   }
+  },
+  {
+   "attributes": {
+    "SAISON": 2023,
+    "N_LOT": "9331199011",
+    "NUM": 2,
+    "MODE_CHASSE": "BATTUE",
+    "DATE_CHASSE": 1699056000000,
     "FERMETURE": "O",
     "KEYG": "2023/9331199011"
    }

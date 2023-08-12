@@ -9,6 +9,7 @@ class CGT_Itineraires_Controller
     private string $_Query_Parameters;
     public static int $_Total_Itineraires;
     public static int $_Duplicate_Itineraires;
+    public static DateTime $_Run_Time;
 
 
 
@@ -49,13 +50,15 @@ class CGT_Itineraires_Controller
 
         if ($RC == false) { return;}
 
-        $this->gateway->Drop_DB_Table($GLOBALS["cgt_itineraires"]);
+        $this->gateway->Drop_Table($GLOBALS["cgt_itineraires_tmp"]);
         
-
-        $this->gateway->Create_DB_Table_Itineraires($GLOBALS["cgt_itineraires"]);
-
+        $this->gateway->Create_DB_Table_Itineraires($GLOBALS["cgt_itineraires_tmp"]);
 
         $this->Process_Json_Files();
+
+        $this->gateway->Drop_Table($GLOBALS["cgt_itineraires"]);
+
+        $this->gateway->Rename_Table($GLOBALS["cgt_itineraires_tmp"], $GLOBALS["cgt_itineraires"]);
 
         array_push(errorHandler::$Run_Information, ["Info", "" . PHP_EOL]);
         array_push(errorHandler::$Run_Information, ["Info", self::$_Duplicate_Itineraires . " duplicate itineraires records." . PHP_EOL]);
@@ -276,6 +279,7 @@ class CGT_Itineraires_Controller
         return "";
     
     }
+
 
 
 }

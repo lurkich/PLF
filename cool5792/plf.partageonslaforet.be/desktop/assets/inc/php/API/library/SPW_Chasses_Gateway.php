@@ -19,7 +19,7 @@ class SPW_Chasses_Gateway
     public function New_Chasse(array $data) {
 
 
-        $sql = "INSERT INTO " . $GLOBALS["spw_chasses_1"] . " (" .
+        $sql = "INSERT INTO " . $GLOBALS["spw_chasses_tmp"] . " (" .
                     " SAISON," .
                     " N_LOT," .
                     " NUM," .
@@ -78,23 +78,20 @@ class SPW_Chasses_Gateway
 
 
 
- 
-    public function drop_DB_table(string $tablename): bool {
+    public function Drop_Table(string $tableName) {
 
-        $sql = "DROP TABLE IF EXISTS $tablename";
+        $rc = Database::drop_Table($this->conn, $tableName);
 
-        $stmt = $this->conn->prepare($sql);
-
-        $RC = $stmt->execute();
-
-        if ($RC) {
-            return json_encode("Table successfully deleted.");
-        }
-
-        return json_encode("Error deleting table. " . $stmt->errorInfo());
-    
     }
 
+
+    public function Rename_Table(string $Table_tmp, string $Table_final) {
+
+        $rc = Database::rename_Table($this->conn, $Table_tmp, $Table_final);
+
+    }
+
+ 
 
     public function Create_DB_Table_Chasses(string $tablename): bool 
     {
