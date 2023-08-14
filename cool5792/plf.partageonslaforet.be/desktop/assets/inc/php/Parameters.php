@@ -53,6 +53,8 @@ $spw_chasses = "plf_spw_chasses";
 $spw_chasses_tmp = "plf_spw_chasses_tmp";
 
 $spw_view_territoires = "view_spw_territoires";
+$spw_view_cantonnements = "view_spw_cantonnements";
+$spw_view_cc = "view_spw_cc";
 
 $cgt_itineraires = "plf_cgt_itineraires";
 $cgt_itineraires_tmp = "plf_cgt_itineraires_tmp";
