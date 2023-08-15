@@ -93,6 +93,11 @@ class SPW_Territoires_Gateway
 
     }
 
+    public function Drop_View(string $viewName) {
+
+        $rc = Database::drop_View($this->conn, $viewName);
+
+    }
 
     public function Rename_Table(string $Table_tmp, string $Table_final) {
 
@@ -178,17 +183,17 @@ class SPW_Territoires_Gateway
         plf_spw_cc.nomugc AS nom_UGC,
         plf_spw_cc.description AS description_UGC,
         plf_spw_cc.valide AS valide_UGC,
-        plf_spw_cc_adresse.President AS president_UGC,
-        plf_spw_cc_adresse.Secretaire AS secretaire_UGC,
-        plf_spw_cc_adresse.email AS email_UGC,
-        plf_spw_cc_adresse.CP AS cp_UGC,
-        plf_spw_cc_adresse.localite AS localite_UGC,
-        plf_spw_cc_adresse.rue AS rue_UGC,
-        plf_spw_cc_adresse.numero AS numero_UGC,
-        plf_spw_cc_adresse.site_internet AS site_internet_UGC,
-        plf_spw_cc_adresse.logo AS logo_UGC,
-        plf_spw_cc_adresse.latitude AS latitude_UGC,
-        plf_spw_cc_adresse.longitude AS longitude_UGC
+        plf_spw_cc_adresses.President AS president_UGC,
+        plf_spw_cc_adresses.Secretaire AS secretaire_UGC,
+        plf_spw_cc_adresses.email AS email_UGC,
+        plf_spw_cc_adresses.CP AS cp_UGC,
+        plf_spw_cc_adresses.localite AS localite_UGC,
+        plf_spw_cc_adresses.rue AS rue_UGC,
+        plf_spw_cc_adresses.numero AS numero_UGC,
+        plf_spw_cc_adresses.site_internet AS site_internet_UGC,
+        plf_spw_cc_adresses.logo AS logo_UGC,
+        plf_spw_cc_adresses.latitude AS latitude_UGC,
+        plf_spw_cc_adresses.longitude AS longitude_UGC
       FROM plf_spw_territoires
         LEFT OUTER JOIN plf_spw_cc
           ON plf_spw_territoires.NUGC = plf_spw_cc.nugc
@@ -196,8 +201,8 @@ class SPW_Territoires_Gateway
           ON plf_spw_territoires.NUM_CANTON = plf_spw_cantonnements.CAN
         LEFT OUTER JOIN plf_spw_cantonnements_adresses
           ON plf_spw_cantonnements.CAN = plf_spw_cantonnements_adresses.num_canton
-        LEFT OUTER JOIN plf_spw_cc_adresse
-          ON plf_spw_cc.ugc = plf_spw_cc_adresse.Code";
+        LEFT OUTER JOIN plf_spw_cc_adresses
+          ON plf_spw_cc.ugc = plf_spw_cc_adresses.Code";
     
         try {
 

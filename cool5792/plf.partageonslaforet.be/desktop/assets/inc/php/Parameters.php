@@ -29,7 +29,7 @@ spl_autoload_register(function ($class_name) {
 });
 
 
-header("Content-type: text/plain; charset=UTF-8");
+// header("Content-type: text/plain; charset=UTF-8");
 
 
 // define the error and exception handler routines

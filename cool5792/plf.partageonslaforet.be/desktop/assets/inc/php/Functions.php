@@ -1224,16 +1224,6 @@ class PLF
 
 
 
-    //     $headers = '
-    // {
-    // "type" : "FeatureCollection",
-    // "name" : "NewFeatureType",                    
-    //     "features" : [
-    //         {
-    //           "type" : "Feature",
-    //     ';
-
-
         $headers = '
             {
                 "type" : "Feature",';
@@ -1245,7 +1235,7 @@ class PLF
 
         $properties = '
               "properties": {
-                  "Numero Lot": "<N_LOT>", 
+                  "Numero_Lot": "<N_LOT>", 
                   "Nom": "<TERRITOIRE_NAME>"
               }
             }';
@@ -1255,11 +1245,7 @@ class PLF
     
 
         $footer = "";
-        // $footer = '
-        //     }
-        //   ]
-        // }
-        //     ';
+
 
 
         $Geometry = $headers . $Geometry . $properties .  $footer;

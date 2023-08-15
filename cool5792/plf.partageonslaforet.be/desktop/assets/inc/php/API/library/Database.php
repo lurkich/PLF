@@ -71,6 +71,19 @@ class Database
     }
 
 
+    public static function drop_View(PDO $conn, string $viewname): bool {
+
+        $sql = "DROP VIEW IF EXISTS $viewname";
+
+        $stmt = $conn->prepare($sql);
+
+        $RC = $stmt->execute();
+
+        return $RC;
+
+    }
+
+
     public static function rename_Table(PDO $conn, string $old_tablename, string $new_tablename): bool {
 
         $sql = "ALTER TABLE $old_tablename RENAME $new_tablename";
