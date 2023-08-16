@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 require_once __DIR__ . "/vendor/autoload.php";
+require_once __DIR__ . "/Functions.php";
 
 
 // determine to file path of the .env file depending is call is done through batch or http
@@ -22,6 +23,7 @@ $dotenv->load();
 
 
 // Autload the API/library classes 
+
 
 
 spl_autoload_register(function ($class_name) {

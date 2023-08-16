@@ -18,6 +18,13 @@ class SPW_Chasses_Gateway
 
     public function New_Chasse(array $data) {
 
+        $Territoire_Exists = PLF::__Check_If_Territoire_Exists($data["KEYG"]);
+
+        if ( ! $Territoire_Exists) {
+
+            array_push(errorHandler::$Run_Information, ["Warning", "Territoire " . $data["KEYG"] . " does not exist for chasse " . $data["KEYG"] . PHP_EOL]);
+        }
+
 
         $sql = "INSERT INTO " . $GLOBALS["spw_chasses_tmp"] . " (" .
                     " SAISON," .

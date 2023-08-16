@@ -723,6 +723,7 @@ class PLF
             self::$List_Array[$value["CAN"]] = [
                             "nom" => $value["FIRST_CANTON"],
                             "tel" => $value["tel"],
+                            "num_canton" => $value["CAN"],
                             "direction" => $value["direction"],
                             "email" => $value["email"],
                             "attache" => $value["attache"],
@@ -973,6 +974,7 @@ class PLF
         foreach ($results as $result => $value) {
 
             self::$List_Array[$value["ugc"]] = [
+                "ugc" => $value["ugc"],
                 "nom" => $value["nomugc"],
                 "description" => $value["description"],
                 "president" => $value["president"],
@@ -1598,7 +1600,7 @@ class PLF
     }
  
  
-     private static function __Compute_Saison() : string 
+    private static function __Compute_Saison() : string 
     {
 
         $current_year = (int) date("Y");
@@ -1637,9 +1639,8 @@ class PLF
 
     // Check if the date has a valid format and is valid
 
-    private static function __Check_If_Date_Is_Valid($Date)
+    public static function __Check_If_Date_Is_Valid($Date)
     {
-
         $Date_Format = 'd-m-Y';
 
         $Error_Message = "";
@@ -1653,9 +1654,10 @@ class PLF
         } else {
             $Last_Errors = DateTimeImmutable::getLastErrors();
 
-            if (($Last_Errors["warning_count"] == 0) and
-                ($Last_Errors["error_count"] == 0)
-            ) {
+            if (($Last_Errors == false) or 
+                (($Last_Errors["warning_count"] == 0) and
+                ($Last_Errors["error_count"] == 0))
+            ){
 
                 $Error_Message = "";
                 return $Error_Message;
@@ -1678,5 +1680,48 @@ class PLF
         }
     }
 
+
+
+
+    // check if territoire exists
+
+    public static function __Check_If_Territoire_Exists($keyg): bool {
+
+        // Make a new database connection and test if connection is OK
+
+        $database = new Database($_SERVER["MySql_Server"], $_SERVER["MySql_DB"], $_SERVER["MySql_Login"], $_SERVER["MySql_Password"]);
+
+        $db_conn = $database->getConnection();
+
+        if ($db_conn == false) {
+
+            self::$RC = -13;
+            self::$RC_Msg = $database->Get_Error_Message();
+
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);;
+        }
+
+
+        // Build SQL statement and pass it to the database and prccess the statement.
+
+        $sql_cmd = "SELECT KEYG  
+                     FROM $GLOBALS[spw_tbl_territoires]  
+                     WHERE KEYG = " .  "'" . $keyg . "'";
+
+        $gateway = new Functions_Gateway($database);
+
+        $gateway->set_Sql_Statement($sql_cmd);
+
+        $results = $gateway->DB_Query();
+
+        // Check if everything went OK
+
+        if (count($results) == 0) {
+
+            return false;
+        }
+
+        return true;
+    }
 
 }

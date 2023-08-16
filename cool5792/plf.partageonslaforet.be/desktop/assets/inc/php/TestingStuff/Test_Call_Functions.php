@@ -5,6 +5,13 @@ require __DIR__ . "/../Parameters.php";
 require __DIR__ . "/../functions.php";
 
 
+$mydate = "01-10-2023";
+
+$errors = PLF::__Check_If_Date_Is_Valid($mydate);
+
+
+
+$rc = PLF::__Check_If_Territoire_Exists("2023/6113105058");
 
 
 //goto Test1_new;
