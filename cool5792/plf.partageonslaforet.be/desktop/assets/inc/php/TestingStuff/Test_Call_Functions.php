@@ -2,16 +2,7 @@
 
 
 require __DIR__ . "/../Parameters.php";
-require __DIR__ . "/../functions.php";
-
-
-$mydate = "01-10-2023";
-
-$errors = PLF::__Check_If_Date_Is_Valid($mydate);
-
-
-
-$rc = PLF::__Check_If_Territoire_Exists("2023/6113105058");
+//require __DIR__ . "/../functions.php";
 
 
 //goto Test1_new;
@@ -22,24 +13,13 @@ $rc = PLF::__Check_If_Territoire_Exists("2023/6113105058");
 //goto Test6_new;
 //goto Test7_new;
 //goto Test8_new;
-goto Test12_new;
-//goto Test13_new;
+//goto Test12_new;
+goto Test13_new;
 //goto Test14_new;
 //goto Test15_new;
 
 
 exit;
-
-
-/**
- *    **    **    ******   **        **        **
- *    ****  **    **        **      ****      **
- *    ** ** **    *****      **    **  **    **
- *    **  ****    **          **  **    **  **
- *    **   ***    **           ****      ****
- *    **    **    ******        **        **
- */
-
 
 
 Test1_new:
@@ -63,7 +43,7 @@ if ($List_Territoires[0] < 0) {
 
 Test2_new:
 
-$Territories_Info = PLF::Get_Territoire_Info("7113041054", "2023");
+$Territories_Info = PLF::Get_Territoire_Info("9310709004", "2023");
 
 if ($Territories_Info[0] < 0) {
 
@@ -218,7 +198,7 @@ if ($Territoire_Geometry[0] < 0) {
 
 } else {
 
-   $fp = fopen("C:\Users\chris\OneDrive\Documents\\Result_DA_Numero.json", 'w');
+   $fp = fopen("C:\Users\chris\OneDrive\\temp\Result_DA_Numero.json", 'w');
    fwrite($fp, $Territoire_Geometry[2]);
 }
 
@@ -235,13 +215,31 @@ if ($Territoire_Geometry[0] < 0) {
 
 } else {
 
-   $fp = fopen("C:\Users\chris\OneDrive\Documents\\Result_DA_Numero-2.json", 'w');
+   $fp = fopen("C:\Users\chris\OneDrive\temp\Result_DA_Numero-2.json", 'w');
    fwrite($fp, $Territoire_Geometry[2]);
 }
 
 
-
 Test13_new:
+
+$CC_Geometry = PLF::CC_JSON("CCFARM");
+
+if ($CC_Geometry[0] < 0) {
+
+   echo $CC_Geometry[1];
+
+   //
+   // .... traitement de l'erreur
+   //
+
+} else {
+
+   $fp = fopen("C:\Users\chris\OneDrive\\temp\Result_CC.json", 'w');
+   fwrite($fp, $CC_Geometry[2]);
+}
+
+
+Test14_new:
 
 $List_Itineraires = PLF::Get_Itineraires_List();
 
@@ -260,7 +258,7 @@ if ($List_Itineraires[0] < 0) {
 
 
 
-Test14_new:
+Test15_new:
 
 $Itineraire_Info = PLF::Get_Itineraire_Infos(10);
 
@@ -273,7 +271,7 @@ if ($Itineraire_Info[0] < 0) {
    //
 }
 
-Test15_new:
+Test16_new:
 
 $lastRunTime = PLF::Get_LastRunTime();
 

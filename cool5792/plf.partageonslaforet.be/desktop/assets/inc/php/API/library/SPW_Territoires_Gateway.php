@@ -159,50 +159,52 @@ class SPW_Territoires_Gateway
 
         $sql = "CREATE VIEW " . $GLOBALS["spw_view_territoires"] . " AS
         SELECT
-        plf_spw_territoires.KEYG AS KEYG,
-        plf_spw_territoires.SAISON AS SAISON,
-        plf_spw_territoires.N_LOT AS N_LOT,
-        plf_spw_territoires.CODESERVICE AS CODESERVICE,
-        plf_spw_cantonnements.CAN AS CANTONNEMENT,
-        plf_spw_cantonnements.FIRST_CANTON AS FIRST_CANTON,
-        plf_spw_territoires.TITULAIRE_ADH_UGC AS TITULAIRE_ADH_UGC,
-        plf_spw_territoires.DATE_MAJ AS DATE_MAJ,
-        plf_spw_territoires.SHAPE AS SHAPE,
-        plf_spw_territoires.NUM_CANTON AS NUM_CANTON,
-        plf_spw_cantonnements_adresses.tel AS tel_CANTON,
-        plf_spw_cantonnements_adresses.direction AS direction_CANTON,
-        plf_spw_cantonnements_adresses.email AS email_CANTON,
-        plf_spw_cantonnements_adresses.attache AS attache_CANTON,
-        plf_spw_cantonnements_adresses.CP AS CP_CANTON,
-        plf_spw_cantonnements_adresses.localite AS localite_CANTON,
-        plf_spw_cantonnements_adresses.rue AS rue_CANTON,
-        plf_spw_cantonnements_adresses.numero AS numero_CANTON,
-        plf_spw_cantonnements_adresses.latitude AS latitude_CANTON,
-        plf_spw_cantonnements_adresses.longitude AS longitude_CANTON,
-        plf_spw_cc.ugc AS code_UGC,
-        plf_spw_cc.nomugc AS nom_UGC,
-        plf_spw_cc.description AS description_UGC,
-        plf_spw_cc.valide AS valide_UGC,
-        plf_spw_cc_adresses.President AS president_UGC,
-        plf_spw_cc_adresses.Secretaire AS secretaire_UGC,
-        plf_spw_cc_adresses.email AS email_UGC,
-        plf_spw_cc_adresses.CP AS cp_UGC,
-        plf_spw_cc_adresses.localite AS localite_UGC,
-        plf_spw_cc_adresses.rue AS rue_UGC,
-        plf_spw_cc_adresses.numero AS numero_UGC,
-        plf_spw_cc_adresses.site_internet AS site_internet_UGC,
-        plf_spw_cc_adresses.logo AS logo_UGC,
-        plf_spw_cc_adresses.latitude AS latitude_UGC,
-        plf_spw_cc_adresses.longitude AS longitude_UGC
-      FROM plf_spw_territoires
-        LEFT OUTER JOIN plf_spw_cc
-          ON plf_spw_territoires.NUGC = plf_spw_cc.nugc
-        LEFT OUTER JOIN plf_spw_cantonnements
-          ON plf_spw_territoires.NUM_CANTON = plf_spw_cantonnements.CAN
-        LEFT OUTER JOIN plf_spw_cantonnements_adresses
-          ON plf_spw_cantonnements.CAN = plf_spw_cantonnements_adresses.num_canton
-        LEFT OUTER JOIN plf_spw_cc_adresses
-          ON plf_spw_cc.ugc = plf_spw_cc_adresses.Code";
+        `plf_spw_territoires`.`KEYG` AS `KEYG`,
+        `plf_spw_territoires`.`SAISON` AS `SAISON`,
+        `plf_spw_territoires`.`N_LOT` AS `N_LOT`,
+        `plf_spw_territoires`.`CODESERVICE` AS `CODESERVICE`,
+        `plf_spw_cantonnements`.`CAN` AS `CANTONNEMENT`,
+        `plf_spw_cantonnements`.`FIRST_CANTON` AS `FIRST_CANTON`,
+        `plf_spw_territoires`.`TITULAIRE_ADH_UGC` AS `TITULAIRE_ADH_UGC`,
+        `plf_spw_territoires`.`DATE_MAJ` AS `DATE_MAJ`,
+        `plf_spw_territoires`.`SHAPE` AS `SHAPE`,
+        `plf_spw_territoires`.`NUM_CANTON` AS `NUM_CANTON`,
+        `plf_spw_cantonnements_adresses`.`tel` AS `tel_CANTON`,
+        `plf_spw_cantonnements_adresses`.`direction` AS `direction_CANTON`,
+        `plf_spw_cantonnements_adresses`.`email` AS `email_CANTON`,
+        `plf_spw_cantonnements_adresses`.`attache` AS `attache_CANTON`,
+        `plf_spw_cantonnements_adresses`.`CP` AS `CP_CANTON`,
+        `plf_spw_cantonnements_adresses`.`localite` AS `localite_CANTON`,
+        `plf_spw_cantonnements_adresses`.`rue` AS `rue_CANTON`,
+        `plf_spw_cantonnements_adresses`.`numero` AS `numero_CANTON`,
+        `plf_spw_cantonnements_adresses`.`latitude` AS `latitude_CANTON`,
+        `plf_spw_cantonnements_adresses`.`longitude` AS `longitude_CANTON`,
+        `plf_spw_territoires`.`NUGC` AS `NUGC_CC`,
+        `view_spw_cc`.`N_AGREMENT_CC` AS `N_AGREMENT_CC`,
+        `view_spw_cc`.`DENOMINATION_CC` AS `DENOMINATION_CC`,
+        `view_spw_cc`.`ABREVIATION_CC` AS `ABREVIATION_CC`,
+        `view_spw_cc`.`RUE_CC` AS `RUE_CC`,
+        `view_spw_cc`.`NUM_CC` AS `NUM_CC`,
+        `view_spw_cc`.`CP_CC` AS `CP_CC`,
+        `view_spw_cc`.`LOCALITE_CC` AS `LOCALITE_CC`,
+        `view_spw_cc`.`NOM_PSDT_CC` AS `NOM_PSDT_CC`,
+        `view_spw_cc`.`PRENOM_PSDT_CC` AS `PRENOM_PSDT_CC`,
+        `view_spw_cc`.`NOM_SECR_CC` AS `NOM_SECR_CC`,
+        `view_spw_cc`.`PRENOM_SECR_CC` AS `PRENOM_SECR_CC`,
+        `view_spw_cc`.`SUPERFICIE_CC` AS `SUPERFICIE_CC`,
+        `view_spw_cc`.`LIEN_CARTE_CC` AS `LIEN_CARTE_CC`,
+        `view_spw_cc`.`email_CC` AS `email_CC`,
+        `view_spw_cc`.`site_internet_CC` AS `site_internet_CC`,
+        `view_spw_cc`.`logo_CC` AS `logo_CC`,
+        `view_spw_cc`.`latitude_CC` AS `latitude_CC`,
+        `view_spw_cc`.`longitude_CC` AS `longitude_CC`
+      FROM (((`plf_spw_territoires`
+        LEFT JOIN `plf_spw_cantonnements`
+          ON ((`plf_spw_territoires`.`NUM_CANTON` = `plf_spw_cantonnements`.`CAN`)))
+        LEFT JOIN `plf_spw_cantonnements_adresses`
+          ON ((`plf_spw_cantonnements`.`CAN` = `plf_spw_cantonnements_adresses`.`num_canton`)))
+        JOIN `view_spw_cc`
+          ON ((`view_spw_cc`.`nugc_CC` = `plf_spw_territoires`.`NUGC`)))";
     
         try {
 

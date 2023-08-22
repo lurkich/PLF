@@ -47,18 +47,6 @@ class PLF
     );
 
 
-    /**
-     *    **    **    ******   **        **        **
-     *    ****  **    **        **      ****      **
-     *    ** ** **    *****      **    **  **    **
-     *    **  ****    **          **  **    **  **
-     *    **   ***    **           ****      ****
-     *    **    **    ******        **        **
-     */
-
-
-
-
     /**-------------------------------------------------------------------------------------------------------------------------------------------
      * 
      *    Retourne la liste des territoires basés sur "N_LOT"
@@ -244,22 +232,24 @@ class PLF
                                     numero_canton,
                                     latitude_canton,
                                     longitude_canton,
-                                    CODE_UGC,
-                                    NOM_UGC,
-                                    DESCRIPTION_UGC,
-                                    VALIDE_UGC,
-                                    TITULAIRE_ADH_UGC,
-                                    President_UGC,
-                                    Secretaire_UGC,
-                                    email_UGC,
-                                    CP_UGC,
-                                    localite_UGC,
-                                    rue_UGC,
-                                    numero_UGC,
-                                    latitude_UGC,
-                                    longitude_UGC,
-                                    site_internet_UGC,
-                                    logo_UGC,
+                                    NUGC_CC,
+                                    N_AGREMENT_CC,
+                                    DENOMINATION_CC,
+                                    ABREVIATION_CC,
+                                    RUE_CC,
+                                    NUM_CC,
+                                    CP_CC,
+                                    LOCALITE_CC,
+                                    NOM_PSDT_CC,
+                                    PRENOM_PSDT_CC,
+                                    NOM_SECR_CC,
+                                    PRENOM_SECR_CC,
+                                    SUPERFICIE_CC,
+                                    email_CC,                                    
+                                    latitude_CC,
+                                    longitude_CC,
+                                    site_internet_CC,
+                                    logo_CC,
                                     DATE_MAJ
                     FROM $GLOBALS[spw_view_territoires] 
                     WHERE N_LOT = $Territoire_Name 
@@ -316,20 +306,15 @@ class PLF
         foreach ($results as $result => $value) {
 
 
+                                  
+       
+
             array_push(self::$List_Array, [
                 "KEYG" => $value["KEYG"],
                 "DA_Numero" => $value["N_LOT"],
                 "DA_Saison" => $value["SAISON"],
                 "Territories_id" => "obsolete",
                 "Territories_Name" => "obsolete",
-                "CODESERVICE" => $value["CODESERVICE"],
-                "num_canton" => $value["CANTONNEMENT"],
-                "nom_canton" => $value["FIRST_CANTON"],
-                "Code_CC" => $value["code_UGC"],
-                "Nom_CC" => $value["nom_UGC"],
-                "Description_CC" => $value["description_UGC"],
-                "VALIDE_UGC" => $value["valide_UGC"],
-                "TITULAIRE_ADH_UGC" => $value["TITULAIRE_ADH_UGC"],
                 "DA_Nom" => "N/A",
                 "TITULAIRE_" => "N/A",
                 "NOM_TITULA" => "N/A",
@@ -337,28 +322,49 @@ class PLF
                 "TITULAIRE1" => "N/A",
                 "COMMENTAIR" => "N/A",
                 "DATE_MAJ" => $value["DATE_MAJ"],
-                "ESRI_OID" => "Pas nécessaire",
-                "tel_canton" => $value["tel_CANTON"],
+
+
+
+                "CODESERVICE" => $value["CODESERVICE"],
+                "num_canton" => $value["CANTONNEMENT"],
+                "nom_canton" => $value["FIRST_CANTON"],
                 "direction_canton" => $value["direction_CANTON"],
-                "email_canton" => $value["email_CANTON"],
                 "attache_canton" => $value["attache_CANTON"],
-                "CP_canton" => $value["CP_CANTON"],
-                "localite_canton" => $value["localite_CANTON"],
+
+                "tel_canton" => $value["tel_CANTON"],
+                "email_canton" => $value["email_CANTON"],
+
                 "rue_canton" => $value["rue_CANTON"],
                 "numero_canton" => $value["numero_CANTON"],
+                "CP_canton" => $value["CP_CANTON"],
+                "localite_canton" => $value["localite_CANTON"],
+
                 "latitude_canton" => $value["latitude_CANTON"],
                 "longitude_canton" => $value["longitude_CANTON"],
-                "President_CC" => $value["president_UGC"],
-                "Secretaire_CC" => $value["secretaire_UGC"],
-                "email_CC" => $value["email_UGC"],
-                "CP_CC" => $value["cp_UGC"],
-                "localite_CC" => $value["localite_UGC"],
-                "rue_CC" => $value["rue_UGC"],
-                "numero_CC" => $value["numero_UGC"],
-                "latitude_CC" => $value["latitude_UGC"],
-                "longitude_CC" => $value["longitude_UGC"],
-                "site_internet_CC" => $value["site_internet_UGC"],
-                "logo_CC" => $value["logo_UGC"],
+
+                "Code_CC" => $value["ABREVIATION_CC"],
+                "Nom_CC" => $value["DENOMINATION_CC"],
+                "N_AGREMENT_CC" => $value["N_AGREMENT_CC"],
+                "President_CC" => $value["NOM_PSDT_CC"] . " " . $value["PRENOM_PSDT_CC"],
+                "President_nom_CC" => $value["NOM_PSDT_CC"],
+                "President_prenom_CC" => $value["PRENOM_PSDT_CC"],
+                "Secretaire_CC" => $value["NOM_SECR_CC"] . " " . $value["PRENOM_SECR_CC"],
+                "Secretaire_nom_CC" => $value["NOM_SECR_CC"],
+                "Secretaire_prenom_CC" => $value["PRENOM_SECR_CC"],
+
+                "email_CC" => $value["email_CC"],
+
+                "rue_CC" => $value["RUE_CC"],
+                "numero_CC" => $value["NUM_CC"],
+                "CP_CC" => $value["CP_CC"],
+                "localite_CC" => $value["LOCALITE_CC"],
+                "Superficie_CC" => $value["SUPERFICIE_CC"],
+
+                "latitude_CC" => $value["latitude_CC"],
+                "longitude_CC" => $value["longitude_CC"],
+                "site_internet_CC" => $value["site_internet_CC"],
+                "logo_CC" => $value["logo_CC"],
+
                 "num_triage" => "N/A",
                 "nom_triage" => "N/A",
                 "nom_Prepose" => "N/A",
@@ -916,22 +922,25 @@ class PLF
 
         $gateway = new Functions_Gateway($database);
 
-        $sql_cmd = "SELECT DISTINCT ugc,
-                                    nomugc,
-                                    president,
-                                    secretaire,
-                                    email,
-                                    cp,
-                                    localite,
-                                    rue,
-                                    numero,
-                                    latitude,
-                                    longitude,
-                                    site_internet,
-                                    logo,
-                                    description 
+        $sql_cmd = "SELECT DISTINCT nugc_CC,
+                                    DENOMINATION_CC,
+                                    ABREVIATION_CC,
+                                    RUE_CC,
+                                    NUM_CC,
+                                    CP_CC,
+                                    LOCALITE_CC,
+                                    NOM_PSDT_CC,
+                                    PRENOM_PSDT_CC,
+                                    NOM_SECR_CC,
+                                    PRENOM_SECR_CC,
+                                    SUPERFICIE_CC,
+                                    email_CC,
+                                    site_internet_CC,
+                                    logo_CC,
+                                    latitude_CC,
+                                    longitude_CC
                     FROM $GLOBALS[spw_view_cc] 
-                    ORDER BY ugc";
+                    ORDER BY ABREVIATION_CC";
 
 
         $gateway->set_Sql_Statement($sql_cmd);
@@ -973,21 +982,28 @@ class PLF
 
         foreach ($results as $result => $value) {
 
-            self::$List_Array[$value["ugc"]] = [
-                "ugc" => $value["ugc"],
-                "nom" => $value["nomugc"],
-                "description" => $value["description"],
-                "president" => $value["president"],
-                "secretaire" => $value["secretaire"],
-                "email" => $value["email"],
-                "CP" => $value["CP"],
-                "localite" => $value["localite"],
-                "rue" => $value["rue"],
-                "numero" => $value["numero"],
-                "site_internet" => $value["site_internet"],
-                "logo" => $value["logo"],
-                "latitude" => $value["latitude"],
-                "longitude" => $value["longitude"],
+
+
+
+
+            self::$List_Array[$value["ABREVIATION_CC"]] = [
+                "nom" => $value["DENOMINATION_CC"],
+                "rue" => $value["RUE_CC"],
+                "numero" => $value["NUM_CC"],
+                "CP" => $value["CP_CC"],
+                "localite" => $value["LOCALITE_CC"],
+                "president_nom" => $value["NOM_PSDT_CC"],
+                "president_prenom" => $value["PRENOM_PSDT_CC"],
+                "president" => $value["NOM_PSDT_CC"] . " " . $value["PRENOM_PSDT_CC"],
+                "secretaire_nom" => $value["NOM_SECR_CC"],
+                "secretaire_prenom" => $value["PRENOM_SECR_CC"],
+                "secretaire" =>$value["NOM_SECR_CC"] . " " .$value["PRENOM_SECR_CC"],
+                "superficie" => $value["SUPERFICIE_CC"],
+                "email" => $value["email_CC"],
+                "site_internet" => $value["site_internet_CC"],
+                "logo" => $value["logo_CC"],
+                "latitude" => $value["latitude_CC"],
+                "longitude" => $value["longitude_CC"],
             ];
 
 
@@ -1061,7 +1077,7 @@ class PLF
         $sql_cmd = "SELECT DISTINCT KEYG, SAISON, N_LOT 
                      FROM $GLOBALS[spw_view_territoires] 
                      WHERE SAISON = $Saison
-                     AND CODE_UGC = '$Code_CC'
+                     AND ABREVIATION_CC = '$Code_CC'
                      ORDER BY N_LOT";
 
 
@@ -1258,6 +1274,135 @@ class PLF
 
 
 
+
+
+
+
+    /**-------------------------------------------------------------------------------------------------------------------------------------------
+     * 
+     *    Crée un fichier json pour un CC donné
+     * 
+     *      Input     : plf_swp_CC
+     *     
+     *      Appel     : SPW_CC_JSON(<numéro de CC>)
+     * 
+     *      Arguments : numéro de CC 
+     * 
+     *      Output    : Array contenant 3 éléments
+     *                      Array[0] : Code retour.
+     *                                  xx : entier >= 0 contenant le nombre de cantons
+     *                                  autres : voir le tableau
+     *                      Array[1] : Message d'erreur éventuel
+     *                      Array[2] : Array indexé qui contient le SHAPE du CC
+     *                                 Structure - Array[0] = SHAPE 
+     * 
+     *-------------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+     public static function CC_JSON(string $CC) : array | false
+     {
+ 
+         self::$RC = 0;
+         self::$RC_Msg = "";
+         self::$List_Array = [];
+ 
+ 
+         // Make a new database connection and test if connection is OK
+ 
+         $database = new Database($_SERVER["MySql_Server"], $_SERVER["MySql_DB"],$_SERVER["MySql_Login"] ,$_SERVER["MySql_Password"] );
+ 
+         $db_conn = $database->getConnection();
+ 
+         if ($db_conn == false) {
+ 
+             self::$RC = -13;
+             self::$RC_Msg = $database->Get_Error_Message();
+ 
+             return array(
+                 self::$RC, self::$RC_Msg, self::$List_Array
+             );;
+         }
+ 
+ 
+ 
+         // Build SQL statement and pass it to the database and prccess the statement.
+ 
+         $gateway = new Functions_Gateway($database);
+ 
+         $sql_cmd = "SELECT DISTINCT GEOM,
+                                     ABREVIATION
+                     FROM $GLOBALS[spw_cc] 
+                     WHERE ABREVIATION = '$CC'";
+ 
+ 
+         $gateway->set_Sql_Statement($sql_cmd);
+ 
+         $results = $gateway->DB_Query();
+ 
+         // Check if everything went OK
+ 
+         if (count($results) == 0) {
+             self::$RC = -2;
+             self::$RC_Msg = self::$Return_Codes[self::$RC];
+             return array(self::$RC, self::$RC_Msg, self::$List_Array);
+         }
+ 
+         if ($results[0] == "error") {
+ 
+             switch ($results[1]) {
+ 
+                 case 1054:                 // invalid column name     
+                 case 1064:                 // SQL syntax error
+                     self::$RC = -6;
+                     self::$RC_Msg = $results[2];
+                     return array(self::$RC, self::$RC_Msg, self::$List_Array);
+ 
+                 default:                    // other errors
+                     self::$RC = -999;
+                     self::$RC_Msg = $database->Get_Error_Message();
+                     return array(self::$RC, self::$RC_Msg, self::$List_Array);;
+             }
+         }
+ 
+ 
+ 
+ 
+ 
+         // process the data and return the result
+ 
+         self::$RC = 0;
+ 
+         $value = $results[0];
+ 
+         $Geometry = $value['GEOM']; 
+ 
+         $headers = '
+             {
+                 "type" : "Feature",';
+ 
+ 
+         $Geometry = '      "geometry" : ' . $Geometry;
+         $Geometry .= ",";
+ 
+ 
+         $properties = '
+               "properties": {
+                   "ABREVIATION": "<ABREVIATION>"
+               }
+             }';
+ 
+         $properties = preg_replace("/<ABREVIATION>/", $CC, $properties);
+     
+ 
+         $footer = "";
+ 
+ 
+ 
+         $Geometry = $headers . $Geometry . $properties .  $footer;
+ 
+         return array(self::$RC, self::$RC_Msg, $Geometry);
+ 
+     }
 
 
     /**-------------------------------------------------------------------------------------------------------------------------------------------

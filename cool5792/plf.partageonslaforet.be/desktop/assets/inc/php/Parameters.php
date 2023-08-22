@@ -46,13 +46,14 @@ date_default_timezone_set("Europe/Brussels");
 //   ---> Database information and list of tables and views
 
 $spw_tbl_cantonnements = "plf_spw_cantonnements";
-$spw_tbl_cc = "plf_spw_cc";
 
 $spw_tbl_territoires = "plf_spw_territoires";
 $spw_tbl_territoires_tmp = "plf_spw_territoires_tmp";
 
 $spw_chasses = "plf_spw_chasses";
 $spw_chasses_tmp = "plf_spw_chasses_tmp";
+$spw_cc = "plf_spw_cc";
+$spw_cc_tmp = "plf_spw_cc_tmp";
 
 $spw_view_territoires = "view_spw_territoires";
 $spw_view_cantonnements = "view_spw_cantonnements";
@@ -72,7 +73,7 @@ $plf_infos = "plf_infos";
  */
 
 
-// rest url information. 
+// rest url information. -> Chasses et Territoires
 $spw_URL = "https://geoservices3.test.wallonie.be/arcgis/rest/services";
 $spw_Folder = "APP_DNFEXT";
 $spw_Service = "CHASSE_DATEFERM";
@@ -81,10 +82,18 @@ $spw_Index_Territoire = "1";
 $spw_Index_Chasse_Fermeture_OK = "0";
 $spw_Index_Chasse = "2";
 
+// rest url information. - Conseil cynégétique
+$spw_CC_URL = "https://geoservices.wallonie.be/arcgis/rest/services";
+$spw_CC_Folder = "FAUNE_FLORE";
+$spw_CC_Service = "CONS_CYN";
+$spw_CC_MapServer_Constant = "MapServer";
+$spw_CC_Index_CC = "0";
+
 
 // json output file.
 $spw_Territoires_Json_File = __DIR__ ."/API/tmp/spw_Territoires";
 $spw_Chasses_Json_File = __DIR__ . "/API/tmp/spw_Chasses";
+$spw_CC_Json_File = __DIR__ . "/API/tmp/spw_CC";
 
 
 
@@ -101,25 +110,4 @@ $cgt_URL = "https://pivotweb.tourismewallonie.be/PivotWeb-3.1/query/";
 $cgt_Itineraires_Json_File = __DIR__ ."/API/tmp/cgt_Itineraires.json";
 
 
-
-
-
-
-/**
- * 
- *  OLD STUFF 
- * 
- */
-
-
-  
-// ---> Old database information
-
-// $tbl_cantonnements = "plf_cantonnements";
-// $tbl_CC = "plf_cc";
-// $tbl_triages = "plf_triages";
-// $tbl_Territoires = "plf_territoires";
-// $tbl_Chasses = "plf_chasses";
-// $View_Territoires = "view_territoires";
-// $spw_chasses_fermeture = "plf_spw_chasses_fermeture";
 

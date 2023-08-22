@@ -80,8 +80,6 @@ class SPW_Territoires_Controller
 
         $this->Get_Json_Data_Into_Files();
 
-        $this->gateway->Drop_View($GLOBALS["spw_view_territoires"]);
-
         $this->gateway->Drop_Table($GLOBALS["spw_tbl_territoires_tmp"]);
 
         $this->gateway->Create_DB_Table_Territoires($GLOBALS["spw_tbl_territoires_tmp"]);
@@ -92,6 +90,7 @@ class SPW_Territoires_Controller
 
         $this->gateway->Rename_Table($GLOBALS["spw_tbl_territoires_tmp"], $GLOBALS["spw_tbl_territoires"]);
 
+        $this->gateway->Drop_View($GLOBALS["spw_view_territoires"]);
         $this->gateway->Create_View_Territoires();
 
         array_push(errorHandler::$Run_Information, ["Info", "" . PHP_EOL]);

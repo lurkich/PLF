@@ -46,8 +46,16 @@ $parts = array_flip($parts);
  *
  *  0 = ""
  *  1 = "api"
+ *  2 = "spw"
+ *  3 = "cc" 
+ *  4 = "0"
+ * 
+ *  0 = ""
+ *  1 = "api"
  *  2 = "cgt"
  *  3 = "itineraires"
+ * 
+
  * 
  */
 
@@ -161,6 +169,40 @@ if ($parts[2] == "SPW" and $parts[3] == "CHASSES" and $parts[4] == "2") {
 
 }
 
+if ($parts[2] == "SPW" and $parts[3] == "CC" and $parts[4] == "0") {
+
+    echo json_encode([
+        "0" => "", 
+        "1" => "api",
+        "2" => "spw",
+        "3" => "cc",
+        "4" => "0",
+        ]);
+
+
+        $Print_Mail_Title = "Upload SPW CC.";
+        $Print_Mail_header = "<br><i>Run Log for SPW CC API call.</i> - run of " .date("d/m/Y H:i:s") . "<br><br>";    
+       
+        $database = new Database($_SERVER["MySql_Server"], $_SERVER["MySql_DB"],$_SERVER["MySql_Login"] ,$_SERVER["MySql_Password"] );
+        $database->update_LastRuntime("cron_cc", $start=true);
+       
+        $gateway = new SPW_CC_Gateway($database);
+        $controller = new SPW_CC_Controller($gateway);   
+       
+        array_push(errorHandler::$Run_Information, ["Info", "calling URI : api/spw/CC/0" . PHP_EOL]);         
+       
+        $controller->processRequest();
+       
+        $Print_Mail_Footer = "<br><br><i>END Run Log for SPW CC API call.</i> - run of " . date("d/m/Y H:i:s") . "<br><br>";
+       
+        $database->update_LastRuntime("cron_cc", $start=false);
+       
+        Send_Run_logs_By_eMail();
+
+        return;
+
+}
+
 
 
 
@@ -181,11 +223,21 @@ function Send_Run_logs_By_eMail(): void {
    
     foreach($_ENV as $key => $mailRecipient) {
 
-        if ( strtoupper($key) == "LOGMAIL") {
+        echo "DEBUG = $key - $mailRecipient " . PHP_EOL;
+
+
+
+
+
+        if ( substr(strtoupper($key),0,7) == "LOGMAIL") {
             $plf_mail->addAddress($mailRecipient);
+            echo "sending to mail " . $mailRecipient . PHP_EOL;
         }
     }
 
+    $plf_mail->addAddress("Christian.lurkin@hotmail.com");
+
+    
     $plf_mail->addReplyTo("Christian.lurkin@hotmail.com");
     $plf_mail->isHTML(true);
     $plf_mail->Subject = "PLF logging - " . $Print_Mail_Title;
