@@ -118,7 +118,7 @@ class CGT_Itineraires_Gateway
         // `SHAPE` MEDIUMBLOB DEFAULT NULL,
         $sql = "CREATE TABLE $tablename (
                     `itineraire_id` INT NOT NULL AUTO_INCREMENT,
-                    `nom` VARCHAR(100) NOT NULL COLLATE 'utf8mb4_unicode_ci',
+                    `nom` VARCHAR(255) NOT NULL COLLATE 'utf8mb4_unicode_ci',
                     `organisme` VARCHAR(100) NOT NULL COLLATE 'utf8mb4_unicode_ci',
                     `localite` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_unicode_ci',
                     `urlweb` VARCHAR(200) NOT NULL COLLATE 'utf8mb4_unicode_ci',
