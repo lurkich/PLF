@@ -68,38 +68,81 @@ if ($parts[1] != "API") {
 
 
 
-if ($parts[2] == "CGT" and $parts[3] == "ITINERAIRES") {
+if ($parts[2] == "CGT" and $parts[3] == "ITINERAIRES" and $parts[4] == "STEP1") {
 
-    echo json_encode([
+    echo("<pre>");
+    print_r( json_encode([
         "0" => "", 
         "1" => "api",
         "2" => "cgt",
-        "3" => "itineraires"
-        ]);
+        "3" => "itineraires",
+        "4" => "STEP1"
+        ]));
+    echo("</pre>");
     
 
 
-    $Print_Mail_Title = "Upload CGT Itineraires.";
-    $Print_Mail_header = "<br><i>Run Log for CGT Itineraires API call.</i> - run of " .date("d/m/Y H:i:s") . "<br><br>";     
+    $Print_Mail_Title = "CGT Itineraires - retrieve Web Service json file.";
+    $Print_Mail_header = "<br><i>CGT Itineraires - STEP 1 - Web Service call.</i> - run of " .date("d/m/Y H:i:s") . "<br><br>";     
   
     $database = new Database($_SERVER["MySql_Server"], $_SERVER["MySql_DB"],$_SERVER["MySql_Login"] ,$_SERVER["MySql_Password"] );
-    $database->update_LastRuntime("cron_itineraires", $start=true); 
+    $database->update_LastRuntime("cron_itineraires_step1", $start=true); 
 
-    $gateway = new CGT_Itineraires_Gateway($database);
-    $controller = new CGT_Itineraires_Controller($gateway); 
+    $controller = new CGT_Itineraires_Controller_Step1(); 
 
-    array_push(errorHandler::$Run_Information, ["Info", "calling URI : api/cgt/itineraires" . PHP_EOL]); 
+    array_push(errorHandler::$Run_Information, ["Info", "calling URI : api/cgt/itineraires/step1" . PHP_EOL]); 
     $controller->processRequest();
     
-    $Print_Mail_Footer = "<br><br><i>END Run Log for CGT itineraires API call.</i> - run of " . date("d/m/Y H:i:s") . "<br><br>";
+    $Print_Mail_Footer = "<br><br><i>CGT Itineraires - STEP 1 - Web Service call.</i> - run of " . date("d/m/Y H:i:s") . "<br><br>";
 
-    $database->update_LastRuntime("cron_itineraires", $start=false);
+    $database->update_LastRuntime("cron_itineraires_step1", $start=false);
 
     Send_Run_logs_By_eMail();
 
     return;
 
 }
+
+
+
+
+
+if ($parts[2] == "CGT" and $parts[3] == "ITINERAIRES" and $parts[4] == "STEP2") {
+
+    echo("<pre>");
+    print_r( json_encode([
+        "0" => "", 
+        "1" => "api",
+        "2" => "cgt",
+        "3" => "itineraires",
+        "4" => "STEP2"
+        ]));
+    echo("</pre>");
+    
+
+
+    $Print_Mail_Title = "CGT Itineraires - STEP 2 - rebuild database table.";
+    $Print_Mail_header = "<br><i>Run Log for CGT Itineraires rebuild database table.</i> - run of " .date("d/m/Y H:i:s") . "<br><br>";     
+  
+    $database = new Database($_SERVER["MySql_Server"], $_SERVER["MySql_DB"],$_SERVER["MySql_Login"] ,$_SERVER["MySql_Password"] );
+    $database->update_LastRuntime("cron_itineraires_step2", $start=true); 
+
+    $gateway = new CGT_Itineraires_Gateway_Step2($database);
+    $controller = new CGT_Itineraires_Controller_Step2($gateway); 
+
+    array_push(errorHandler::$Run_Information, ["Info", "calling URI : api/cgt/itineraires/step2" . PHP_EOL]); 
+    $controller->processRequest();
+    
+    $Print_Mail_Footer = "<br><br><i>CGT Itineraires - STEP 2 - rebuild database table.</i> - run of " . date("d/m/Y H:i:s") . "<br><br>";
+
+    $database->update_LastRuntime("cron_itineraires_step2", $start=false);
+
+    Send_Run_logs_By_eMail();
+
+    return;
+
+}
+
 
 if ($parts[2] == "SPW" and $parts[3] == "TERRITOIRES" and $parts[4] == "1") {
 
@@ -169,6 +212,7 @@ if ($parts[2] == "SPW" and $parts[3] == "CHASSES" and $parts[4] == "2") {
 
 }
 
+
 if ($parts[2] == "SPW" and $parts[3] == "CC" and $parts[4] == "0") {
 
     echo json_encode([
@@ -203,6 +247,39 @@ if ($parts[2] == "SPW" and $parts[3] == "CC" and $parts[4] == "0") {
 
 }
 
+if ($parts[2] == "SPW" and $parts[3] == "CANTONNEMENT" and $parts[4] == "1") {
+
+    echo json_encode([
+        "0" => "", 
+        "1" => "api",
+        "2" => "spw",
+        "3" => "cantonnement",
+        "4" => "1",
+        ]);
+
+
+        $Print_Mail_Title = "Upload SPW Cantonnement.";
+        $Print_Mail_header = "<br><i>Run Log for SPW Cantonnement API call.</i> - run of " .date("d/m/Y H:i:s") . "<br><br>";    
+       
+        $database = new Database($_SERVER["MySql_Server"], $_SERVER["MySql_DB"],$_SERVER["MySql_Login"] ,$_SERVER["MySql_Password"] );
+        $database->update_LastRuntime("cron_cantonnement", $start=true);
+       
+        $gateway = new SPW_Cantonnement_Gateway($database);
+        $controller = new SPW_Cantonnement_Controller($gateway);   
+       
+        array_push(errorHandler::$Run_Information, ["Info", "calling URI : api/spw/Cantonnement/1" . PHP_EOL]);         
+       
+        $controller->processRequest();
+       
+        $Print_Mail_Footer = "<br><br><i>END Run Log for SPW Cantonnement API call.</i> - run of " . date("d/m/Y H:i:s") . "<br><br>";
+       
+        $database->update_LastRuntime("cron_cantonnement", $start=false);
+       
+        Send_Run_logs_By_eMail();
+
+        return;
+
+}
 
 
 
@@ -223,15 +300,10 @@ function Send_Run_logs_By_eMail(): void {
    
     foreach($_ENV as $key => $mailRecipient) {
 
-        echo "DEBUG = $key - $mailRecipient " . PHP_EOL;
-
-
-
-
 
         if ( substr(strtoupper($key),0,7) == "LOGMAIL") {
             $plf_mail->addAddress($mailRecipient);
-            echo "sending to mail " . $mailRecipient . PHP_EOL;
+            echo "sending to mail " . $mailRecipient . "<br>";
         }
     }
 

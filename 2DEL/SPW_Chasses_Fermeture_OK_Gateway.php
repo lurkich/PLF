@@ -76,7 +76,7 @@ class SPW_Chasses_Fermeture_OK_Gateway
                         array_push(errorHandler::$Run_Information, ["Warning", "Duplicate record for territoire : KEYG = " . $data["KEYG"]  . PHP_EOL]);
                         break;
                     default:
-                        throw new pdoDBException(0, $e, "SQL Error :" . $this->rebuildSql($sql,$data));
+                        throw new pdoDBException($SQL_Error, $e, "SQL Error :" . $this->rebuildSql($sql,$data));
 
                 }
             } catch (Exception $e) {
@@ -151,7 +151,7 @@ class SPW_Chasses_Fermeture_OK_Gateway
                     break;
 
                 default:
-                    throw new pdoDBException(0, $e, "SQL Error :" . $this->rebuildSql($sql,$data));
+                    throw new pdoDBException($SQL_Error, $e, "SQL Error :" . $this->rebuildSql($sql,$data));
 
             }
         } catch (Exception $e) {
@@ -211,7 +211,7 @@ class SPW_Chasses_Fermeture_OK_Gateway
             switch ($SQL_Error) {
 
                 default:
-                    throw new pdoDBException(0, $e, "SQL Error :" . $sql);
+                    throw new pdoDBException($SQL_Error, $e, "SQL Error :" . $sql);
 
             }
         } catch (Exception $e) {
@@ -261,7 +261,7 @@ class SPW_Chasses_Fermeture_OK_Gateway
 
             switch ($SQL_Error) {
                 default:
-                    throw new pdoDBException(0, $e, "SQL Error :" . $sql);
+                    throw new pdoDBException($SQL_Error, $e, "SQL Error :" . $sql);
 
             }
         } catch (Exception $e) {

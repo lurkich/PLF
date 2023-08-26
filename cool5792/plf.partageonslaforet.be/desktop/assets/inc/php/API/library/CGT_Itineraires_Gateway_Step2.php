@@ -1,8 +1,6 @@
 <?php
 
-use PhpOffice\PhpSpreadsheet\Helper\Handler;
-
-class CGT_Itineraires_Gateway
+class CGT_Itineraires_Gateway_Step2
 {
 
 
@@ -71,7 +69,7 @@ class CGT_Itineraires_Gateway
 
             $stmt->execute();
 
-            CGT_Itineraires_Controller::__Increment_Total_Itineraires();
+            CGT_Itineraires_Controller_Step2::__Increment_Total_Itineraires();
             array_push(errorHandler::$Run_Information, ["Info", "new itineraire : name = " . mb_convert_encoding($data["nom"], 'Windows-1252', 'UTF-8') . PHP_EOL]);
             return $this->conn->lastInsertId();
 
@@ -81,11 +79,11 @@ class CGT_Itineraires_Gateway
 
                 switch ($SQL_Error) {
                     case 1062:
-                        CGT_Itineraires_Controller::__Increment_Duplicate_Itineraires();
+                        CGT_Itineraires_Controller_Step2::__Increment_Duplicate_Itineraires();
                         array_push(errorHandler::$Run_Information, ["Warning", "Duplicate record for itineraire = " . $data["nom"]  . PHP_EOL]);
                         break;
                     default:
-                        throw new pdoDBException(0, $e, "SQL Error : " . $e->getMessage() . " --- " . $this->rebuildSql($sql,$data));
+                        throw new pdoDBException($SQL_Error, $e, "SQL Error : " . $e->getMessage() . " --- " . $this->rebuildSql($sql,$data));
 
                 }
             } catch (Exception $e) {
@@ -147,7 +145,7 @@ class CGT_Itineraires_Gateway
             switch ($SQL_Error) {
 
                 default:
-                    throw new pdoDBException(0, $e, "SQL Error :" . $sql);
+                    throw new pdoDBException($SQL_Error, $e, "SQL Error :" . $sql);
 
             }
         } catch (Exception $e) {

@@ -5,6 +5,7 @@ class SPW_Territoires_Controller
 {
 
     private static int $_max_Record_Count = 2000;
+    //private static int $_max_Record_Count = 5;
 
 
 
@@ -30,7 +31,6 @@ class SPW_Territoires_Controller
         self::$_Total_Territoires = 0;
 
         ErrorHandler::$Run_Information = [];
-
 
 
         $this->_spw_Query_Parameters = "&geometryType=esriGeometryPolygon";
@@ -78,6 +78,8 @@ class SPW_Territoires_Controller
 
         $this->_API_Total_Territoires = $this->Count_Number_Territoires();
 
+        // $this->_API_Total_Territoires = 5;
+        
         $this->Get_Json_Data_Into_Files();
 
         $this->gateway->Drop_Table($GLOBALS["spw_tbl_territoires_tmp"]);
@@ -292,8 +294,8 @@ class SPW_Territoires_Controller
     
                 // change the EPOCH date into normal dd-mm-yyyy date
 
-                $Epoch_date = substr($territoire["properties"]["DATE_MAJ"], 0, 10);
-                $local_date = date("Y-m-d", $Epoch_date);
+                // $Epoch_date = substr($territoire["properties"]["DATE_MAJ"], 0, 10);
+                // $local_date = date("Y-m-d", $Epoch_date);
 
                 $OBJECTID = $territoire["properties"]["OBJECTID"];
                 $KEYG = $territoire["properties"]["KEYG"];
@@ -310,8 +312,11 @@ class SPW_Territoires_Controller
                 }
                 
                 $TITULAIRE_ADH_UGC = $territoire["properties"]["TITULAIRE_ADH_UGC"];
-                $CODESERVICE = $territoire["properties"]["CODESERVICE"];
-                $NUM_CANTON = substr($CODESERVICE,-3);
+                $SERVICE = $territoire["properties"]["SERVICE"];
+
+                if (empty($SERVICE)) {
+                    $SERVICE = substr($N_LOT,0, 3);
+                }
   
 
                 $this->gateway->New_Territoire([
@@ -321,10 +326,9 @@ class SPW_Territoires_Controller
                     "N_LOT" => $N_LOT,
                     "SHAPE" => $SHAPE,
                     "NUGC" => $NUGC,
-                    "CODESERVICE" => $CODESERVICE,
-                    "NUM_CANTON" => $NUM_CANTON,
+                    "SERVICE" => $SERVICE,
                     "TITULAIRE_ADH_UGC" => $TITULAIRE_ADH_UGC,
-                    "DATE_MAJ" => $local_date
+                    "DATE_MAJ" => date("Y-m-d")
                 ]);
 
             

@@ -1,5 +1,7 @@
 <?php
 
+use PhpOffice\PhpSpreadsheet\Calculation\DateTimeExcel\Date;
+
 class Database 
 {
 
@@ -33,18 +35,23 @@ class Database
 
             $connection = new PDO($dsn, $this->user, $this->password, [
                 PDO::ATTR_EMULATE_PREPARES => false,
-                pdo::ATTR_STRINGIFY_FETCHES => false
+                PDO::ATTR_STRINGIFY_FETCHES => false,
+                PDO::ATTR_TIMEOUT => 3600
             ]);
     
         } catch (PDOException $e) {
 
 
             switch ($e->getCode()) {
+                case 1049:                      // Database does not exist.
+                    throw new pdoDBException(1049, $e, "SQL Database does not exist : " . $e->getMessage(), );
+                    $x = 4;
+
                 case 2002:                      // Database is unreachable
-                    throw new pdoDBException(0, $e, "Unable to access database : " . $e->getMessage(), );
+                    throw new pdoDBException(2002, $e, "Unable to access database : " . $e->getMessage(), );
                 
                 default:
-                    throw new pdoDBException(0, $e, "unexpected error : " . $e->getMessage(), );
+                    throw new pdoDBException($e->getCode(), $e, "unexpected error : " . $e->getMessage(), );
 
                 }
 
@@ -60,25 +67,69 @@ class Database
 
     public static function drop_Table(PDO $conn, string $tablename): bool {
 
+
+        if ($GLOBALS["debug"]) {print_r("DEBUG drop_Table Start - tablename : " . $tablename . " - database.php <br>");}   
+        
+        $RC = false;
+
         $sql = "DROP TABLE IF EXISTS $tablename";
 
-        $stmt = $conn->prepare($sql);
+        try {
+            $stmt = $conn->prepare($sql);
 
-        $RC = $stmt->execute();
+            $RC = $stmt->execute();
+    
+        } catch(PDOException $e) {
+
+            if ($GLOBALS["debug"]) {
+                print_r("DEBUG drop_Table Error - tablename : " . $tablename . " - database.php <br>"); 
+                print_r($e);
+                print_r("DEBUG <br>");
+                print_r("DEBUG e->getCode() value : " . $e->getCode() . "<br>");
+            }
+            switch ($e->getCode()) {
+                
+                default:
+                    throw new pdoDBException($e->getCode(), $e, "unexpected error : " . $e->getMessage(), );
+
+                }
+
+
+        }
+
+        if ($GLOBALS["debug"]) {print_r("DEBUG drop_Table End - tablename : " . $tablename . " - database.php <br>");}  
 
         return $RC;
+
+ 
+
 
     }
 
 
     public static function drop_View(PDO $conn, string $viewname): bool {
 
+        if ($GLOBALS["debug"]) {print_r("DEBUG drop_view Start - viewname : " . $viewname . " - database.php <br>");} 
+
+        $RC = false;
+
         $sql = "DROP VIEW IF EXISTS $viewname";
 
-        $stmt = $conn->prepare($sql);
+        try {
+            $stmt = $conn->prepare($sql);
 
-        $RC = $stmt->execute();
+            $RC = $stmt->execute();
+    
+        } catch(PDOException $e) {
 
+            if ($GLOBALS["debug"]) {
+                print_r("DEBUG drop_view Error - viewname : " . $viewname . " - database.php <br>"); 
+                print_r($e);
+            }
+
+        }
+        if ($GLOBALS["debug"]) {print_r("DEBUG drop_view End - viewname : " . $viewname . " - database.php <br>");}  
+        
         return $RC;
 
     }
@@ -146,11 +197,29 @@ class Database
 
         } catch (pdoException $e) {
 
+
+            switch ($e->getCode()) {
+                case 1049:                      // Database does not exist
+                    throw new pdoDBException(1049, $e, "SQL Database does not exist : " . $e->getMessage(), );
+                    $x = 3;
+                    exit;
+
+                case 2002:                      // Database is unreachable
+                    throw new pdoDBException(2002, $e, "Unable to access database : " . $e->getMessage(), );
+
+                default:
+                    throw new pdoDBException($e->getCode(), $e, "unexpected error : " . $e->getMessage(), );
+
+                }
+
                 $SQL_Error = $e->errorInfo[1];
 
+
+
+                
                 switch ($SQL_Error) {
                     default:
-                        throw new pdoDBException(0, $e, "SQL Error : " . $e->getMessage() . " --- " );
+                        throw new pdoDBException($SQL_Error, $e, "SQL Error : " . $e->getMessage() . " --- " );
 
                 }
             } catch (Exception $e) {

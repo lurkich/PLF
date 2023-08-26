@@ -1,7 +1,7 @@
 <?php
 
 
-class CGT_Itineraires_Controller
+class CGT_Itineraires_Controller_Step2
 {
 
 
@@ -14,7 +14,7 @@ class CGT_Itineraires_Controller
 
 
 
-    public function __construct(private CGT_Itineraires_Gateway $gateway)
+    public function __construct(private CGT_Itineraires_Gateway_Step2 $gateway)
     {
 
         $this->_Rest_Url = "";
@@ -44,20 +44,22 @@ class CGT_Itineraires_Controller
     public function processRequest(): void
     {
            
-        $this->Prepare_Web_Service_URL();
 
-        $RC = $this->Get_Json_Data_Into_Files();
+        echo("DEBUG : Start ProcessRequest" . "<br>");
 
-        if ($RC == false) { return;}
-
+        echo("DEBUG : Drop_Table " . $GLOBALS["cgt_itineraires_tmp"] . "<br>");
         $this->gateway->Drop_Table($GLOBALS["cgt_itineraires_tmp"]);
-        
+
+        echo("DEBUG : Create_DB_Table_Itineraires" . $GLOBALS["cgt_itineraires_tmp"] . "<br>");
         $this->gateway->Create_DB_Table_Itineraires($GLOBALS["cgt_itineraires_tmp"]);
 
+        echo("DEBUG : Process_Json_Files" . "<br>");
         $this->Process_Json_Files();
 
+        echo("DEBUG : Drop_Table" . $GLOBALS["cgt_itineraires"] . "<br>");
         $this->gateway->Drop_Table($GLOBALS["cgt_itineraires"]);
 
+        echo("DEBUG : Rename_Table" . $GLOBALS["cgt_itineraires_tmp"] . " to " . $GLOBALS["cgt_itineraires"] . "<br>");
         $this->gateway->Rename_Table($GLOBALS["cgt_itineraires_tmp"], $GLOBALS["cgt_itineraires"]);
 
         array_push(errorHandler::$Run_Information, ["Info", "" . PHP_EOL]);
@@ -65,6 +67,7 @@ class CGT_Itineraires_Controller
         array_push(errorHandler::$Run_Information, ["Info", self::$_Total_Itineraires . " new itineraires." . PHP_EOL]);
         array_push(errorHandler::$Run_Information, ["Info", "End of process."]);
 
+        echo("DEBUG : End of process" . "<br>");
 
     }
 
@@ -72,97 +75,6 @@ class CGT_Itineraires_Controller
 
 
 
-    /**=======================================================================
-     * 
-     * Format the web Service URL without the query itself.
-     * 
-     *   ARGUMENTS :
-     * 
-     *   INPUT : https://pivotweb.tourismewallonie.be/PivotWeb-3.1/query/OTH-A0-009F-5MSN;content=3;info=true
-     * 
-     *   OUTPUT :  $Rest_Url (containing the common fields of the web Service URL)
-     * 
-     * =======================================================================*/
-
-    private function Prepare_Web_Service_URL(): void
-    {
-        
-        $this->_Rest_Url = $GLOBALS['cgt_URL'];
-
-    }
-
-
-    /**=======================================================================
-     * 
-     * Retrieve the JSON information from the SPF Web Site and save chunks if files
-     * 
-     *   ARGUMENTS : URI curl query string
-     * 
-     *   INPUT :
-     * 
-     *   OUTPUT : json file(s)
-     * 
-     * =======================================================================*/
-    private function Get_Json_Data_Into_Files(): Bool
-    { 
-    
-
-            $json_file = $GLOBALS['cgt_Itineraires_Json_File'];
-
-            try  {
-                unlink($json_file);             // delete file if it exists
-            } catch (Exception $e) {
-
-            }
-            
-            $fp = fopen($json_file, "w");   // create file for writing
-    
-       
-    
-            $curl_Url = $this->_Rest_Url . $this->_Query_Parameters;
-    
-
-            array_push(errorHandler::$Run_Information, ["Info", "Retrieving CGT API itineraires " . PHP_EOL]);
-    
-    
-            $Curl = curl_init();
-    
-            $http_header = array(
-                "Content-Type: application/json", 
-                "Accept: application/json", 
-                "ws_key: cd8680b9-43c8-4faf-a6a8-d9574e2470e3"
-            );
-
-            curl_setopt($Curl, CURLOPT_HEADER, 0);
-            curl_setopt($Curl, CURLOPT_URL, $curl_Url);
-            curl_setopt($Curl, CURLOPT_FILE, $fp);
-            curl_setopt($Curl, CURLOPT_CONNECTTIMEOUT, 300);
-            curl_setopt($Curl, CURLOPT_VERBOSE, true);
-            curl_setopt($Curl, CURLOPT_SSL_VERIFYPEER, false);
-            curl_setopt($Curl, CURLOPT_HTTPHEADER, $http_header);
-    
-            $RC_Bool = curl_exec($Curl);
-            $headers = curl_getinfo($Curl);
-
-            fclose($fp);
-
-            switch ($headers["http_code"]) {
-                case 200: 
-                    break;
-                case 503:
-                    array_push(errorHandler::$Run_Information, ["CRITICAL", "CGT service unavailable : http_code = " . $headers["http_code"] . " Calling URL = " . $headers["url"] . PHP_EOL]);
-                    return false;
-                case 404:
-                    array_push(errorHandler::$Run_Information, ["CRITICAL", "CGT resource page not found : http_code = " . $headers["http_code"] . " Calling URL = " . $headers["url"] . PHP_EOL]);
-                    return false;
-                default:
-                    array_push(errorHandler::$Run_Information, ["CRITICAL", "CGT service call error : http_code = " . $headers["http_code"] . " Calling URL = " . $headers["url"] . PHP_EOL]);
-                    return false;
-                
-            }
-       
-        return true;
-    }
 
  
     /**=======================================================================

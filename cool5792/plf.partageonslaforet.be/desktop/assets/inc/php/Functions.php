@@ -219,7 +219,6 @@ class PLF
         $sql_cmd = "SELECT DISTINCT KEYG,
                                     SAISON,
                                     N_LOT,
-                                    CODESERVICE,
                                     CANTONNEMENT,
                                     FIRST_CANTON,
                                     tel_canton,
@@ -325,7 +324,6 @@ class PLF
 
 
 
-                "CODESERVICE" => $value["CODESERVICE"],
                 "num_canton" => $value["CANTONNEMENT"],
                 "nom_canton" => $value["FIRST_CANTON"],
                 "direction_canton" => $value["direction_CANTON"],
@@ -674,8 +672,10 @@ class PLF
         $gateway = new Functions_Gateway($database);
 
         $sql_cmd = "SELECT DISTINCT CAN, 
-                                    FIRST_CANTON,
-                                    tel,
+                                    PREPOSE,
+                                    GSM,
+                                    CANTON,
+                                    TEL_CAN,
                                     direction,
                                     email,
                                     attache,
@@ -727,9 +727,11 @@ class PLF
         foreach ($results as $result => $value) {
 
             self::$List_Array[$value["CAN"]] = [
-                            "nom" => $value["FIRST_CANTON"],
-                            "tel" => $value["tel"],
+                            "nom" => $value["CANTON"],
                             "num_canton" => $value["CAN"],
+                            "prepose" => $value["PREPOSE"],
+                            "tel" => $value["TEL_CAN"],
+                            "gsm" => $value["GSM"],
                             "direction" => $value["direction"],
                             "email" => $value["email"],
                             "attache" => $value["attache"],
@@ -807,8 +809,8 @@ class PLF
         $gateway = new Functions_Gateway($database);
 
         $sql_cmd = "SELECT DISTINCT KEYG, SAISON, N_LOT 
-                    FROM $GLOBALS[spw_view_territoires] 
-                    WHERE CANTONNEMENT = '$Num_Canton'
+                    FROM $GLOBALS[spw_tbl_territoires] 
+                    WHERE SERVICE = '$Num_Canton'
                     AND SAISON = $Saison
                     ORDER BY SAISON, N_LOT";
 
@@ -1274,11 +1276,6 @@ class PLF
     }
 
 
-
-
-
-
-
     /**-------------------------------------------------------------------------------------------------------------------------------------------
      * 
      *    Crée un fichier json pour un CC donné
@@ -1300,7 +1297,7 @@ class PLF
      *-------------------------------------------------------------------------------------------------------------------------------------------*/
 
 
-     public static function CC_JSON(string $CC) : array | false
+     public static function Canton_JSON(string $Canton) : array | false
      {
  
          self::$RC = 0;
@@ -1331,9 +1328,9 @@ class PLF
          $gateway = new Functions_Gateway($database);
  
          $sql_cmd = "SELECT DISTINCT GEOM,
-                                     ABREVIATION
-                     FROM $GLOBALS[spw_cc] 
-                     WHERE ABREVIATION = '$CC'";
+                                     CAN
+                     FROM $GLOBALS[spw_cantonnements] 
+                     WHERE CAN = '$Canton'";
  
  
          $gateway->set_Sql_Statement($sql_cmd);
@@ -1387,12 +1384,12 @@ class PLF
  
  
          $properties = '
-               "properties": {
-                   "ABREVIATION": "<ABREVIATION>"
-               }
+             "properties": {
+                 "ABREVIATION": "<ABREVIATION>"
+             }
              }';
  
-         $properties = preg_replace("/<ABREVIATION>/", $CC, $properties);
+         $properties = preg_replace("/<ABREVIATION>/", $Canton, $properties);
      
  
          $footer = "";
@@ -1404,6 +1401,135 @@ class PLF
          return array(self::$RC, self::$RC_Msg, $Geometry);
  
      }
+
+
+
+
+    /**-------------------------------------------------------------------------------------------------------------------------------------------
+     * 
+     *    Crée un fichier json pour un CC donné
+     * 
+     *      Input     : plf_swp_CC
+     *     
+     *      Appel     : SPW_CC_JSON(<numéro de CC>)
+     * 
+     *      Arguments : numéro de CC 
+     * 
+     *      Output    : Array contenant 3 éléments
+     *                      Array[0] : Code retour.
+     *                                  xx : entier >= 0 contenant le nombre de cantons
+     *                                  autres : voir le tableau
+     *                      Array[1] : Message d'erreur éventuel
+     *                      Array[2] : Array indexé qui contient le SHAPE du CC
+     *                                 Structure - Array[0] = SHAPE 
+     * 
+     *-------------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+    public static function CC_JSON(string $CC) : array | false
+    {
+
+        self::$RC = 0;
+        self::$RC_Msg = "";
+        self::$List_Array = [];
+
+
+        // Make a new database connection and test if connection is OK
+
+        $database = new Database($_SERVER["MySql_Server"], $_SERVER["MySql_DB"],$_SERVER["MySql_Login"] ,$_SERVER["MySql_Password"] );
+
+        $db_conn = $database->getConnection();
+
+        if ($db_conn == false) {
+
+            self::$RC = -13;
+            self::$RC_Msg = $database->Get_Error_Message();
+
+            return array(
+                self::$RC, self::$RC_Msg, self::$List_Array
+            );;
+        }
+
+
+
+        // Build SQL statement and pass it to the database and prccess the statement.
+
+        $gateway = new Functions_Gateway($database);
+
+        $sql_cmd = "SELECT DISTINCT GEOM,
+                                    ABREVIATION
+                    FROM $GLOBALS[spw_cc] 
+                    WHERE ABREVIATION = '$CC'";
+
+
+        $gateway->set_Sql_Statement($sql_cmd);
+
+        $results = $gateway->DB_Query();
+
+        // Check if everything went OK
+
+        if (count($results) == 0) {
+            self::$RC = -2;
+            self::$RC_Msg = self::$Return_Codes[self::$RC];
+            return array(self::$RC, self::$RC_Msg, self::$List_Array);
+        }
+
+        if ($results[0] == "error") {
+
+            switch ($results[1]) {
+
+                case 1054:                 // invalid column name     
+                case 1064:                 // SQL syntax error
+                    self::$RC = -6;
+                    self::$RC_Msg = $results[2];
+                    return array(self::$RC, self::$RC_Msg, self::$List_Array);
+
+                default:                    // other errors
+                    self::$RC = -999;
+                    self::$RC_Msg = $database->Get_Error_Message();
+                    return array(self::$RC, self::$RC_Msg, self::$List_Array);;
+            }
+        }
+
+
+
+
+
+        // process the data and return the result
+
+        self::$RC = 0;
+
+        $value = $results[0];
+
+        $Geometry = $value['GEOM']; 
+
+        $headers = '
+            {
+                "type" : "Feature",';
+
+
+        $Geometry = '      "geometry" : ' . $Geometry;
+        $Geometry .= ",";
+
+
+        $properties = '
+            "properties": {
+                "ABREVIATION": "<ABREVIATION>"
+            }
+            }';
+
+        $properties = preg_replace("/<ABREVIATION>/", $CC, $properties);
+    
+
+        $footer = "";
+
+
+
+        $Geometry = $headers . $Geometry . $properties .  $footer;
+
+        return array(self::$RC, self::$RC_Msg, $Geometry);
+
+    }
 
 
     /**-------------------------------------------------------------------------------------------------------------------------------------------

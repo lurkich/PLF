@@ -25,8 +25,7 @@ class SPW_Territoires_Gateway
                     " SAISON," .
                     " N_LOT," .
                     " NUGC," .
-                    " CODESERVICE," .
-                    " NUM_CANTON," .
+                    " SERVICE," .
                     " TITULAIRE_ADH_UGC," . 
                     " DATE_MAJ," .
                     " SHAPE" .
@@ -36,8 +35,7 @@ class SPW_Territoires_Gateway
                     " :SAISON," .
                     " :N_LOT," .
                     " :NUGC," .
-                    " :CODESERVICE," .
-                    " :NUM_CANTON," .
+                    " :SERVICE," .
                     " :TITULAIRE_ADH_UGC," .
                     " :DATE_MAJ," . 
                     " :SHAPE)";
@@ -55,8 +53,7 @@ class SPW_Territoires_Gateway
             $data["SHAPE"] = preg_replace('/\n\s+/', ' ', $data["SHAPE"]);
             $stmt->bindValue(":SHAPE", $data["SHAPE"] ?? "", PDO::PARAM_LOB);
             $stmt->bindValue(":NUGC", $data["NUGC"], PDO::PARAM_INT);
-            $stmt->bindValue(":CODESERVICE", $data["CODESERVICE"], PDO::PARAM_STR);
-            $stmt->bindValue(":NUM_CANTON", $data["NUM_CANTON"], PDO::PARAM_STR);
+            $stmt->bindValue(":SERVICE", $data["SERVICE"], PDO::PARAM_STR);
             $stmt->bindValue(":TITULAIRE_ADH_UGC", $data["TITULAIRE_ADH_UGC"], PDO::PARAM_BOOL);
             $stmt->bindValue(":DATE_MAJ", $data["DATE_MAJ"], PDO::PARAM_STR);
 
@@ -77,7 +74,7 @@ class SPW_Territoires_Gateway
                         array_push(errorHandler::$Run_Information, ["Warning", "Duplicate record for territoire : KEYG = " . $data["KEYG"]  . PHP_EOL]);
                         break;
                     default:
-                        throw new pdoDBException(0, $e, "SQL Error :" . $this->rebuildSql($sql,$data));
+                        throw new pdoDBException($SQL_Error, $e, "SQL Error :" . $this->rebuildSql($sql,$data));
 
                 }
             } catch (Exception $e) {
@@ -115,8 +112,7 @@ class SPW_Territoires_Gateway
                     `SAISON` SMALLINT NOT NULL,
                     `KEYG` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_unicode_ci',
                     `N_LOT` VARCHAR(10) NOT NULL COLLATE 'utf8mb4_unicode_ci',
-                    `CODESERVICE` VARCHAR(9) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
-                    `NUM_CANTON` VARCHAR(3) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+                    `SERVICE` VARCHAR(5) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
                     `NUGC` SMALLINT NULL DEFAULT NULL,
                     `TITULAIRE_ADH_UGC` TINYINT(1) NOT NULL,
                     `DATE_MAJ` DATE NULL DEFAULT NULL,
@@ -138,7 +134,7 @@ class SPW_Territoires_Gateway
             switch ($SQL_Error) {
 
                 default:
-                    throw new pdoDBException(0, $e, "SQL Error :" . $sql);
+                    throw new pdoDBException($SQL_Error, $e, "SQL Error :" . $sql);
 
             }
         } catch (Exception $e) {
@@ -159,52 +155,53 @@ class SPW_Territoires_Gateway
 
         $sql = "CREATE VIEW " . $GLOBALS["spw_view_territoires"] . " AS
         SELECT
-        `plf_spw_territoires`.`KEYG` AS `KEYG`,
-        `plf_spw_territoires`.`SAISON` AS `SAISON`,
-        `plf_spw_territoires`.`N_LOT` AS `N_LOT`,
-        `plf_spw_territoires`.`CODESERVICE` AS `CODESERVICE`,
-        `plf_spw_cantonnements`.`CAN` AS `CANTONNEMENT`,
-        `plf_spw_cantonnements`.`FIRST_CANTON` AS `FIRST_CANTON`,
-        `plf_spw_territoires`.`TITULAIRE_ADH_UGC` AS `TITULAIRE_ADH_UGC`,
-        `plf_spw_territoires`.`DATE_MAJ` AS `DATE_MAJ`,
-        `plf_spw_territoires`.`SHAPE` AS `SHAPE`,
-        `plf_spw_territoires`.`NUM_CANTON` AS `NUM_CANTON`,
-        `plf_spw_cantonnements_adresses`.`tel` AS `tel_CANTON`,
-        `plf_spw_cantonnements_adresses`.`direction` AS `direction_CANTON`,
-        `plf_spw_cantonnements_adresses`.`email` AS `email_CANTON`,
-        `plf_spw_cantonnements_adresses`.`attache` AS `attache_CANTON`,
-        `plf_spw_cantonnements_adresses`.`CP` AS `CP_CANTON`,
-        `plf_spw_cantonnements_adresses`.`localite` AS `localite_CANTON`,
-        `plf_spw_cantonnements_adresses`.`rue` AS `rue_CANTON`,
-        `plf_spw_cantonnements_adresses`.`numero` AS `numero_CANTON`,
-        `plf_spw_cantonnements_adresses`.`latitude` AS `latitude_CANTON`,
-        `plf_spw_cantonnements_adresses`.`longitude` AS `longitude_CANTON`,
-        `plf_spw_territoires`.`NUGC` AS `NUGC_CC`,
-        `view_spw_cc`.`N_AGREMENT_CC` AS `N_AGREMENT_CC`,
-        `view_spw_cc`.`DENOMINATION_CC` AS `DENOMINATION_CC`,
-        `view_spw_cc`.`ABREVIATION_CC` AS `ABREVIATION_CC`,
-        `view_spw_cc`.`RUE_CC` AS `RUE_CC`,
-        `view_spw_cc`.`NUM_CC` AS `NUM_CC`,
-        `view_spw_cc`.`CP_CC` AS `CP_CC`,
-        `view_spw_cc`.`LOCALITE_CC` AS `LOCALITE_CC`,
-        `view_spw_cc`.`NOM_PSDT_CC` AS `NOM_PSDT_CC`,
-        `view_spw_cc`.`PRENOM_PSDT_CC` AS `PRENOM_PSDT_CC`,
-        `view_spw_cc`.`NOM_SECR_CC` AS `NOM_SECR_CC`,
-        `view_spw_cc`.`PRENOM_SECR_CC` AS `PRENOM_SECR_CC`,
-        `view_spw_cc`.`SUPERFICIE_CC` AS `SUPERFICIE_CC`,
-        `view_spw_cc`.`LIEN_CARTE_CC` AS `LIEN_CARTE_CC`,
-        `view_spw_cc`.`email_CC` AS `email_CC`,
-        `view_spw_cc`.`site_internet_CC` AS `site_internet_CC`,
-        `view_spw_cc`.`logo_CC` AS `logo_CC`,
-        `view_spw_cc`.`latitude_CC` AS `latitude_CC`,
-        `view_spw_cc`.`longitude_CC` AS `longitude_CC`
-      FROM (((`plf_spw_territoires`
-        LEFT JOIN `plf_spw_cantonnements`
-          ON ((`plf_spw_territoires`.`NUM_CANTON` = `plf_spw_cantonnements`.`CAN`)))
-        LEFT JOIN `plf_spw_cantonnements_adresses`
-          ON ((`plf_spw_cantonnements`.`CAN` = `plf_spw_cantonnements_adresses`.`num_canton`)))
-        JOIN `view_spw_cc`
-          ON ((`view_spw_cc`.`nugc_CC` = `plf_spw_territoires`.`NUGC`)))";
+          `plf_spw_territoires`.`KEYG` AS `KEYG`,
+          `plf_spw_territoires`.`SAISON` AS `SAISON`,
+          `plf_spw_territoires`.`N_LOT` AS `N_LOT`,
+          `plf_spw_territoires`.`SERVICE` AS `SERVICE`,
+          `plf_spw_cantonnements`.`CAN` AS `CAN`,
+          `plf_spw_cantonnements`.`CANTON` AS `CANTON`,
+          `plf_spw_cantonnements`.`GSM` AS `GSM`,
+          `plf_spw_cantonnements`.`PREPOSE` AS `PREPOSE`,
+          `plf_spw_cantonnements`.`TEL_CAN` AS `TEL_CAN`,
+          `plf_spw_territoires`.`TITULAIRE_ADH_UGC` AS `TITULAIRE_ADH_UGC`,
+          `plf_spw_territoires`.`DATE_MAJ` AS `DATE_MAJ`,
+          `plf_spw_territoires`.`SHAPE` AS `SHAPE`,
+          `plf_spw_cantonnements_adresses`.`direction` AS `direction_CANTON`,
+          `plf_spw_cantonnements_adresses`.`email` AS `email_CANTON`,
+          `plf_spw_cantonnements_adresses`.`attache` AS `attache_CANTON`,
+          `plf_spw_cantonnements_adresses`.`CP` AS `CP_CANTON`,
+          `plf_spw_cantonnements_adresses`.`localite` AS `localite_CANTON`,
+          `plf_spw_cantonnements_adresses`.`rue` AS `rue_CANTON`,
+          `plf_spw_cantonnements_adresses`.`numero` AS `numero_CANTON`,
+          `plf_spw_cantonnements_adresses`.`latitude` AS `latitude_CANTON`,
+          `plf_spw_cantonnements_adresses`.`longitude` AS `longitude_CANTON`,
+          `plf_spw_territoires`.`NUGC` AS `NUGC_CC`,
+          `view_spw_cc`.`N_AGREMENT_CC` AS `N_AGREMENT_CC`,
+          `view_spw_cc`.`DENOMINATION_CC` AS `DENOMINATION_CC`,
+          `view_spw_cc`.`ABREVIATION_CC` AS `ABREVIATION_CC`,
+          `view_spw_cc`.`RUE_CC` AS `RUE_CC`,
+          `view_spw_cc`.`NUM_CC` AS `NUM_CC`,
+          `view_spw_cc`.`CP_CC` AS `CP_CC`,
+          `view_spw_cc`.`LOCALITE_CC` AS `LOCALITE_CC`,
+          `view_spw_cc`.`NOM_PSDT_CC` AS `NOM_PSDT_CC`,
+          `view_spw_cc`.`PRENOM_PSDT_CC` AS `PRENOM_PSDT_CC`,
+          `view_spw_cc`.`NOM_SECR_CC` AS `NOM_SECR_CC`,
+          `view_spw_cc`.`PRENOM_SECR_CC` AS `PRENOM_SECR_CC`,
+          `view_spw_cc`.`SUPERFICIE_CC` AS `SUPERFICIE_CC`,
+          `view_spw_cc`.`LIEN_CARTE_CC` AS `LIEN_CARTE_CC`,
+          `view_spw_cc`.`email_CC` AS `email_CC`,
+          `view_spw_cc`.`site_internet_CC` AS `site_internet_CC`,
+          `view_spw_cc`.`logo_CC` AS `logo_CC`,
+          `view_spw_cc`.`latitude_CC` AS `latitude_CC`,
+          `view_spw_cc`.`longitude_CC` AS `longitude_CC`
+        FROM (((`plf_spw_territoires`
+          LEFT JOIN `plf_spw_cantonnements`
+            ON ((`plf_spw_territoires`.`SERVICE` = `plf_spw_cantonnements`.`CAN`)))
+          LEFT JOIN `plf_spw_cantonnements_adresses`
+            ON ((`plf_spw_cantonnements`.`CAN` = `plf_spw_cantonnements_adresses`.`num_canton`)))
+          LEFT JOIN `view_spw_cc`
+            ON ((`view_spw_cc`.`nugc_CC` = `plf_spw_territoires`.`NUGC`)));";
     
         try {
 
@@ -218,7 +215,7 @@ class SPW_Territoires_Gateway
             switch ($SQL_Error) {
 
                 default:
-                    throw new pdoDBException(0, $e, "SQL Error :" . $sql);
+                    throw new pdoDBException($SQL_Error, $e, "SQL Error :" . $sql);
 
             }
         } catch (Exception $e) {

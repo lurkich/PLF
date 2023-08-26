@@ -4,6 +4,8 @@ declare(strict_types=1);
 require_once __DIR__ . "/vendor/autoload.php";
 require_once __DIR__ . "/Functions.php";
 
+$debug = false;
+
 
 // determine to file path of the .env file depending is call is done through batch or http
 
@@ -14,6 +16,11 @@ if ( empty($_SERVER["DOCUMENT_ROOT"]) == true ) {
 }
 
 
+set_time_limit(0);
+
+ini_set('mysql.connect_timeout','0');   
+ini_set('mysqli.connect_timeout','0'); 
+ini_set('max_execution_time', '3600');   
 
 
 // load .env values
@@ -45,7 +52,8 @@ date_default_timezone_set("Europe/Brussels");
  
 //   ---> Database information and list of tables and views
 
-$spw_tbl_cantonnements = "plf_spw_cantonnements";
+$spw_cantonnements = "plf_spw_cantonnements";
+$spw_cantonnements_tmp = "plf_spw_cantonnements_tmp";
 
 $spw_tbl_territoires = "plf_spw_territoires";
 $spw_tbl_territoires_tmp = "plf_spw_territoires_tmp";
@@ -83,6 +91,13 @@ $spw_Index_Chasse_Fermeture_OK = "0";
 $spw_Index_Chasse = "2";
 
 // rest url information. - Conseil cynégétique
+$spw_Cantonnement_URL = "https://geoservices.wallonie.be/arcgis/rest/services";
+$spw_Cantonnement_Folder = "FAUNE_FLORE";
+$spw_Cantonnement_Service = "LIMITES_DNF";
+$spw_Cantonnement_MapServer_Constant = "MapServer";
+$spw_Cantonnement_Index_Cantonnement = "1";
+
+// rest url information. - Conseil cynégétique
 $spw_CC_URL = "https://geoservices.wallonie.be/arcgis/rest/services";
 $spw_CC_Folder = "FAUNE_FLORE";
 $spw_CC_Service = "CONS_CYN";
@@ -94,6 +109,7 @@ $spw_CC_Index_CC = "0";
 $spw_Territoires_Json_File = __DIR__ ."/API/tmp/spw_Territoires";
 $spw_Chasses_Json_File = __DIR__ . "/API/tmp/spw_Chasses";
 $spw_CC_Json_File = __DIR__ . "/API/tmp/spw_CC";
+$spw_Cantonnement_Json_File = __DIR__ . "/API/tmp/spw_Cantonnement";
 
 
 

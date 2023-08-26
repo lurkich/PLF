@@ -28,7 +28,8 @@ class ErrorHandler {
                             "file" => $exception->getFile(),
                             "line" => $exception->getLine()
                             ]),
-                        print_r($exception->getTrace(), true ));
+                        $exception->getTrace());
+
 
     }
 
@@ -44,10 +45,13 @@ class ErrorHandler {
         }
 
 
-    public static function Send_eMail(string $info, string $message, string $trace): void {
+    public static function Send_eMail(string $info, string $message, array $trace): void {
 
+        $fmt_trace = "<pre>";
+        $fmt_trace .= print_r($trace, true);
+        $fmt_trace .= "</pre>";
         
-        $trace = preg_replace("/\n/", "<br>", $trace);
+        // $trace = preg_replace("/\n/", "<br>", $trace);
 
         $plf_mail = new PHPMailer();
         $plf_mail->From = "Christian.lurkin@hotmail.com";
@@ -67,7 +71,7 @@ class ErrorHandler {
 
     
         $plf_mail->Body .= "(<b>" . $info . "</b>) - " . $message;
-        $plf_mail->Body .= "<br>" . $trace . "<br>";
+        $plf_mail->Body .= "<br>" . $fmt_trace . "<br>";
 
     
         if ( !$plf_mail->send()) {
@@ -87,40 +91,48 @@ class pdoDBException extends PDOException {
     private string $_code;
     private string $_msg;
 
-    public function __construct(int $SQLerrorCode, PDOException $e, string $customString) {
+    public function __construct(string $SQLerrorCode, PDOException $e, string $customString) {
 
-        $this->_code = 0;
-        $this->_msg = "";
+        $this->_code = $SQLerrorCode;
+        $this->_msg = $customString;
 
 
-        $SQLstate = $e->errorInfo[0];
-        $SQLerrorCode = $e->errorInfo[1];
-        
-        switch ($SQLerrorCode) {
-            case 1062:
-                $this->_code = $SQLerrorCode;
-                $this->_msg =  "Duplicate record for KEYG : " . $customString;
-                break;
+        if ( ! empty($e->errorInfo[1])) {
 
-            case 2002:
-                $this->_code = $SQLerrorCode;
-                $this->_msg =  "MySql database is not accessible : " . $customString;
-                break;
+            // $SQLstate = $e->errorInfo[0];
+            // $SQLerrorCode = $e->errorInfo[1];
+            
+            switch ($SQLerrorCode) {
+
+                case 1049:
+                    $this->_code = $SQLerrorCode;
+                    $this->_msg =  "SQL Database does not exist : " . $customString;
+                    break;
+
+                case 1062:
+                    $this->_code = $SQLerrorCode;
+                    $this->_msg =  "Duplicate record for KEYG : " . $customString;
+                    break;
     
-
-            default:            
-                $this->_code = $SQLstate;
-                $this->_msg =  $SQLerrorCode . " - SQL Statment : " . $customString;
-                $this->_msg = preg_replace("/\r\n/", "", $this->_msg);
-                $this->_msg = preg_replace("/\s+/", " ", $this->_msg);            
-                break;
+                case 2002:
+                    $this->_code = $SQLerrorCode;
+                    $this->_msg =  "MySql database is not accessible : " . $customString;
+                    break;
+        
+    
+                default:            
+                    $this->_code = $SQLerrorCode;
+                    $this->_msg =  $SQLerrorCode . " - SQL Statment : " . $customString;
+                    $this->_msg = preg_replace("/\r\n/", "", $this->_msg);
+                    $this->_msg = preg_replace("/\s+/", " ", $this->_msg);            
+                    break;
+            }
         }
 
 
-        parent::__construct($this->_msg , (int) $this->_code, $e);
-
-        }
-
-
-
+       parent::__construct($this->_msg , (int) $this->_code, $e);
     }
+
+
+
+}
