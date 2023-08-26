@@ -1,2 +1,4 @@
 cool5792/plf.partageonslaforet.be/desktop/assets/inc/php/API/tmp/
-Pivot/All_Offers_Content_2.json
+*.json
+*.xml
+.env
