@@ -47,25 +47,32 @@ class CGT_Itineraires_Controller_Step2
 
         echo("DEBUG : Start ProcessRequest" . "<br>");
 
-        echo("DEBUG : Drop_Table " . $GLOBALS["cgt_itineraires_tmp"] . "<br>");
-        $this->gateway->Drop_Table($GLOBALS["cgt_itineraires_tmp"]);
+        if ($this->Get_Step1_Execution_Status() == true) {
 
-        echo("DEBUG : Create_DB_Table_Itineraires" . $GLOBALS["cgt_itineraires_tmp"] . "<br>");
-        $this->gateway->Create_DB_Table_Itineraires($GLOBALS["cgt_itineraires_tmp"]);
-
-        echo("DEBUG : Process_Json_Files" . "<br>");
-        $this->Process_Json_Files();
-
-        echo("DEBUG : Drop_Table" . $GLOBALS["cgt_itineraires"] . "<br>");
-        $this->gateway->Drop_Table($GLOBALS["cgt_itineraires"]);
-
-        echo("DEBUG : Rename_Table" . $GLOBALS["cgt_itineraires_tmp"] . " to " . $GLOBALS["cgt_itineraires"] . "<br>");
-        $this->gateway->Rename_Table($GLOBALS["cgt_itineraires_tmp"], $GLOBALS["cgt_itineraires"]);
-
-        array_push(errorHandler::$Run_Information, ["Info", "" . PHP_EOL]);
-        array_push(errorHandler::$Run_Information, ["Info", self::$_Duplicate_Itineraires . " duplicate itineraires records." . PHP_EOL]);
-        array_push(errorHandler::$Run_Information, ["Info", self::$_Total_Itineraires . " new itineraires." . PHP_EOL]);
-        array_push(errorHandler::$Run_Information, ["Info", "End of process."]);
+            echo("DEBUG : Drop_Table " . $GLOBALS["cgt_itineraires_tmp"] . "<br>");
+            $this->gateway->Drop_Table($GLOBALS["cgt_itineraires_tmp"]);
+    
+            echo("DEBUG : Create_DB_Table_Itineraires" . $GLOBALS["cgt_itineraires_tmp"] . "<br>");
+            $this->gateway->Create_DB_Table_Itineraires($GLOBALS["cgt_itineraires_tmp"]);
+    
+            echo("DEBUG : Process_Json_Files" . "<br>");
+            $this->Process_Json_Files();
+    
+            echo("DEBUG : Drop_Table" . $GLOBALS["cgt_itineraires"] . "<br>");
+            $this->gateway->Drop_Table($GLOBALS["cgt_itineraires"]);
+    
+            echo("DEBUG : Rename_Table" . $GLOBALS["cgt_itineraires_tmp"] . " to " . $GLOBALS["cgt_itineraires"] . "<br>");
+            $this->gateway->Rename_Table($GLOBALS["cgt_itineraires_tmp"], $GLOBALS["cgt_itineraires"]);
+    
+            array_push(errorHandler::$Run_Information, ["Info", "" . PHP_EOL]);
+            array_push(errorHandler::$Run_Information, ["Info", self::$_Duplicate_Itineraires . " duplicate itineraires records." . PHP_EOL]);
+            array_push(errorHandler::$Run_Information, ["Info", self::$_Total_Itineraires . " new itineraires." . PHP_EOL]);
+    
+        } else {
+            array_push(errorHandler::$Run_Information, ["Critical", "" . PHP_EOL]);
+            array_push(errorHandler::$Run_Information, ["Critical", "Step 1 - retrieve Web Service data FAILED." . PHP_EOL]);
+            array_push(errorHandler::$Run_Information, ["Critical", "Step 2 - aborted and no data updated" . PHP_EOL]);     
+        }
 
         echo("DEBUG : End of process" . "<br>");
 
@@ -190,6 +197,23 @@ class CGT_Itineraires_Controller_Step2
 
         return "";
     
+    }
+
+    private function Get_Step1_Execution_Status(): bool {
+
+
+        $status = $this->gateway->Get_Step1_Status();
+
+        if (strtoupper($status) == "FAILED") {
+            return false;
+        } else {
+            return true;
+        } 
+        return true;
+
+
+
+
     }
 
 

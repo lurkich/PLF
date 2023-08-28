@@ -157,7 +157,30 @@ class CGT_Itineraires_Gateway_Step2
     }
 
 
+    public function Get_Step1_Status(): string {
 
+         $sql = "SELECT Infos_Value from plf_infos WHERE Infos_Name = 'cron_itineraires_step1'";
+                
+
+        try {
+
+        $stmt = $this->conn->prepare($sql);
+
+        $stmt->execute();
+
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        } catch (pdoException $e) {
+
+            throw new pdoDBException($e->getCode(), $e, "SQL Error : " . $e->getMessage() );
+            $data = "SQL Error";
+
+            }
+
+        return $data["Infos_Value"];
+
+
+    }
 
 
     private function rebuildSql($string,$data) {

@@ -16,6 +16,7 @@ class SPW_Cantonnement_Controller
 
     public static int $_Duplicate_Cantonnement;
     public static int $_Total_Cantonnement;
+    public static array $_List_Cantonnement;
        
 
 
@@ -27,6 +28,7 @@ class SPW_Cantonnement_Controller
         $this->_iteration_Count = 0;
         self::$_Duplicate_Cantonnement = 0;
         self::$_Total_Cantonnement = 0;
+        self::$_List_Cantonnement = [];
 
         ErrorHandler::$Run_Information = [];
 
@@ -35,7 +37,7 @@ class SPW_Cantonnement_Controller
         $this->_spw_Query_Parameters .= "&returnGeometry=true";
         $this->_spw_Query_Parameters .= "&returnCountOnly=false";                 
         $this->_spw_Query_Parameters .= "&f=geojson";
-
+        $this->_spw_Query_Parameters .= "&orderByFields=CAN";
         $this->_spw_Query_Count_Parameters = "&returnCountOnly=true";
         $this->_spw_Query_Count_Parameters .= "&outFields=ABREVIATION";
         $this->_spw_Query_Count_Parameters .= "&returnGeometry=false";
@@ -55,7 +57,9 @@ class SPW_Cantonnement_Controller
         self::$_Total_Cantonnement++ ;
     }
 
-
+    public static function __Update_List_Cantonnement(int $Num_Cantonnement): void {
+        array_push(self::$_List_Cantonnement, $Num_Cantonnement) ;
+    }
 
     public function processRequest(): void
     {
@@ -270,16 +274,20 @@ class SPW_Cantonnement_Controller
     
             foreach ($Cantonnements as $Cantonnement) {
     
-
-
                 $cantonnement = json_decode(json_encode($Cantonnement), true);
 
+                $CAN = $cantonnement["properties"]["CAN"];
+
+                if ( in_array($CAN, self::$_List_Cantonnement)) {
+                    continue;
+                }
 
                 $cantonnement_geometry = $cantonnement["geometry"];
                 $cantonnement_geometry = json_encode($cantonnement_geometry, JSON_PRETTY_PRINT, 512);
 
-                $CAN = $cantonnement["properties"]["CAN"];
+
                 $PREPOSE = $cantonnement["properties"]["PREPOSE"];
+                $PREPOSE = "";
                 $GSM = $cantonnement["properties"]["GSM"];
                 $CANTON = $cantonnement["properties"]["CANTON"];
                 $TEL_CAN = $cantonnement["properties"]["TEL_CAN"];

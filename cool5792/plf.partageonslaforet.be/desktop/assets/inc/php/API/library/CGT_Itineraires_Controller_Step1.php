@@ -131,6 +131,9 @@ class CGT_Itineraires_Controller_Step1
             switch ($headers["http_code"]) {
                 case 200: 
                     break;
+                case 502:
+                    array_push(errorHandler::$Run_Information, ["CRITICAL", "Bad Gateway : http_code = " . $headers["http_code"] . " Calling URL = " . $headers["url"] . PHP_EOL]);
+                    return false;
                 case 503:
                     array_push(errorHandler::$Run_Information, ["CRITICAL", "CGT service unavailable : http_code = " . $headers["http_code"] . " Calling URL = " . $headers["url"] . PHP_EOL]);
                     return false;

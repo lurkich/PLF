@@ -20,7 +20,7 @@ set_time_limit(0);
 
 ini_set('mysql.connect_timeout','0');   
 ini_set('mysqli.connect_timeout','0'); 
-ini_set('max_execution_time', '3600');   
+ini_set('max_execution_time', '7200');   
 
 
 // load .env values

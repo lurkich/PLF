@@ -122,7 +122,7 @@ if ($parts[2] == "CGT" and $parts[3] == "ITINERAIRES" and $parts[4] == "STEP2") 
 
 
     $Print_Mail_Title = "CGT Itineraires - STEP 2 - rebuild database table.";
-    $Print_Mail_header = "<br><i>Run Log for CGT Itineraires rebuild database table.</i> - run of " .date("d/m/Y H:i:s") . "<br><br>";     
+    $Print_Mail_header = "<br><i>Run Log for CGT Itineraires Step2 - Upload database table.</i> - run of " .date("d/m/Y H:i:s") . "<br><br>";     
   
     $database = new Database($_SERVER["MySql_Server"], $_SERVER["MySql_DB"],$_SERVER["MySql_Login"] ,$_SERVER["MySql_Password"] );
     $database->update_LastRuntime("cron_itineraires_step2", $start=true); 
@@ -133,7 +133,7 @@ if ($parts[2] == "CGT" and $parts[3] == "ITINERAIRES" and $parts[4] == "STEP2") 
     array_push(errorHandler::$Run_Information, ["Info", "calling URI : api/cgt/itineraires/step2" . PHP_EOL]); 
     $controller->processRequest();
     
-    $Print_Mail_Footer = "<br><br><i>CGT Itineraires - STEP 2 - rebuild database table.</i> - run of " . date("d/m/Y H:i:s") . "<br><br>";
+    $Print_Mail_Footer = "<br><br><i>CGT Itineraires - STEP 2 - Upload database table.</i> - run of " . date("d/m/Y H:i:s") . "<br><br>";
 
     $database->update_LastRuntime("cron_itineraires_step2", $start=false);
 
