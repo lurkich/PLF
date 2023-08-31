@@ -61,7 +61,7 @@ class SPW_Territoires_Gateway
 
             $stmt->execute();
             SPW_Territoires_Controller::__Increment_Total_Territoires();
-            array_push(errorHandler::$Run_Information, ["Info", "new territoire : KEYG = " . $data["KEYG"] . PHP_EOL]);
+            //array_push(errorHandler::$Run_Information, ["Info", "new territoire : KEYG = " . $data["KEYG"] . PHP_EOL]);
             return $this->conn->lastInsertId();
 
         } catch (pdoException $e) {

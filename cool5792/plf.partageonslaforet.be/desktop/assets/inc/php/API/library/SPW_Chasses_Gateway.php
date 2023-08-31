@@ -60,7 +60,7 @@ class SPW_Chasses_Gateway
 
             $stmt->execute();
             SPW_Chasses_Controller::__Increment_Total_Chasses();
-            array_push(errorHandler::$Run_Information, ["Info", "new chasse : KEYG = " . $data["KEYG"] . PHP_EOL]);
+            //array_push(errorHandler::$Run_Information, ["Info", "new chasse : KEYG = " . $data["KEYG"] . PHP_EOL]);
             
             return $this->conn->lastInsertId();
 

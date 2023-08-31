@@ -77,7 +77,7 @@ class SPW_CC_Gateway
 
             $stmt->execute();
             SPW_CC_Controller::__Increment_Total_CC();
-            array_push(errorHandler::$Run_Information, ["Info", "new Conseil Cynégétique : " . $data["ABBREVIATION"] . " - " . $data["DENOMINATION"] . PHP_EOL]);
+            //array_push(errorHandler::$Run_Information, ["Info", "new Conseil Cynégétique : " . $data["ABBREVIATION"] . " - " . $data["DENOMINATION"] . PHP_EOL]);
             
             return $this->conn->lastInsertId();
 

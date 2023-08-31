@@ -198,7 +198,7 @@ if ($parts[2] == "SPW" and $parts[3] == "CHASSES" and $parts[4] == "2") {
         $gateway = new SPW_Chasses_Gateway($database);
         $controller = new SPW_Chasses_Controller($gateway);   
        
-        array_push(errorHandler::$Run_Information, ["Info", "calling URI : api/spw/territoires/1" . PHP_EOL]);         
+        array_push(errorHandler::$Run_Information, ["Info", "calling URI : api/spw/chasses/2" . PHP_EOL]);         
        
         $controller->processRequest();
        

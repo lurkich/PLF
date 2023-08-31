@@ -52,7 +52,7 @@ class SPW_Cantonnement_Gateway
             $stmt->execute();
             SPW_Cantonnement_Controller::__Increment_Total_Cantonnement();
             SPW_Cantonnement_Controller::__Update_List_Cantonnement($data["CAN"]);
-            array_push(errorHandler::$Run_Information, ["Info", "new Cantonnement: " . $data["CAN"] . " - " . $data["CANTON"] . PHP_EOL]);
+            //array_push(errorHandler::$Run_Information, ["Info", "new Cantonnement: " . $data["CAN"] . " - " . $data["CANTON"] . PHP_EOL]);
             
             
             return $this->conn->lastInsertId();

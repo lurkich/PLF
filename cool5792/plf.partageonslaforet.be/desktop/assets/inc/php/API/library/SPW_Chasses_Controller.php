@@ -24,7 +24,8 @@ class SPW_Chasses_Controller
 
     {
         
-        $this->_mode_chasse = "BATTUE";
+        // $this->_mode_chasse = "BATTUE";
+        $this->_mode_chasse = "";
         $this->_Rest_Url = "";
         $this->_iteration_Count = 0;
         self::$_Duplicate_Chasses = 0;
@@ -120,8 +121,8 @@ class SPW_Chasses_Controller
     {
         
 
-        $this->_spw_Url_Where_Clause = urlencode("MODE_CHASSE = '" . $this->_mode_chasse . "'");
-
+        $this->_spw_Url_Where_Clause = urlencode("SAISON = 2023");
+        
         $this->_Rest_Url = $GLOBALS['spw_URL'];
         $this->_Rest_Url .= "/" . $GLOBALS['spw_Folder'];
         $this->_Rest_Url .= "/" . $GLOBALS['spw_Service'];
@@ -157,8 +158,28 @@ class SPW_Chasses_Controller
         curl_setopt($Curl, CURLOPT_RETURNTRANSFER, true);
 
         $json_Return = curl_exec($Curl);
+        $headers = curl_getinfo($Curl);
 
         curl_close($Curl);
+
+
+        switch ($headers["http_code"]) {
+            case 200: 
+                break;
+            case 503:
+                array_push(errorHandler::$Run_Information, ["CRITICAL", "SPW service unavailable : http_code = " . $headers["http_code"] . " Calling URL = " . $headers["url"] . PHP_EOL]);
+                return false;
+            case 400:
+                array_push(errorHandler::$Run_Information, ["CRITICAL", "SPW Fatal Error Occured : http_code = " . $headers["http_code"] . " Calling URL = " . $headers["url"] . PHP_EOL]);
+                return false;
+            case 404:
+                array_push(errorHandler::$Run_Information, ["CRITICAL", "SPW resource page not found : http_code = " . $headers["http_code"] . " Calling URL = " . $headers["url"] . PHP_EOL]);
+                return false;
+            default:
+                array_push(errorHandler::$Run_Information, ["CRITICAL", "SPW service call error : http_code = " . $headers["http_code"] . " Calling URL = " . $headers["url"] . PHP_EOL]);
+                return false;
+
+            }
 
         return json_decode($json_Return, true)["count"];
 

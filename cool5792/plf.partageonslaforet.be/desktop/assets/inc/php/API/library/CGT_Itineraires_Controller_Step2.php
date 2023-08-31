@@ -45,23 +45,23 @@ class CGT_Itineraires_Controller_Step2
     {
            
 
-        echo("DEBUG : Start ProcessRequest" . "<br>");
+        //echo("DEBUG : Start ProcessRequest" . "<br>");
 
         if ($this->Get_Step1_Execution_Status() == true) {
 
-            echo("DEBUG : Drop_Table " . $GLOBALS["cgt_itineraires_tmp"] . "<br>");
+            //echo("DEBUG : Drop_Table " . $GLOBALS["cgt_itineraires_tmp"] . "<br>");
             $this->gateway->Drop_Table($GLOBALS["cgt_itineraires_tmp"]);
     
-            echo("DEBUG : Create_DB_Table_Itineraires" . $GLOBALS["cgt_itineraires_tmp"] . "<br>");
+            //echo("DEBUG : Create_DB_Table_Itineraires" . $GLOBALS["cgt_itineraires_tmp"] . "<br>");
             $this->gateway->Create_DB_Table_Itineraires($GLOBALS["cgt_itineraires_tmp"]);
     
-            echo("DEBUG : Process_Json_Files" . "<br>");
+            //echo("DEBUG : Process_Json_Files" . "<br>");
             $this->Process_Json_Files();
     
-            echo("DEBUG : Drop_Table" . $GLOBALS["cgt_itineraires"] . "<br>");
+            //echo("DEBUG : Drop_Table" . $GLOBALS["cgt_itineraires"] . "<br>");
             $this->gateway->Drop_Table($GLOBALS["cgt_itineraires"]);
     
-            echo("DEBUG : Rename_Table" . $GLOBALS["cgt_itineraires_tmp"] . " to " . $GLOBALS["cgt_itineraires"] . "<br>");
+            //echo("DEBUG : Rename_Table" . $GLOBALS["cgt_itineraires_tmp"] . " to " . $GLOBALS["cgt_itineraires"] . "<br>");
             $this->gateway->Rename_Table($GLOBALS["cgt_itineraires_tmp"], $GLOBALS["cgt_itineraires"]);
     
             array_push(errorHandler::$Run_Information, ["Info", "" . PHP_EOL]);
@@ -74,7 +74,7 @@ class CGT_Itineraires_Controller_Step2
             array_push(errorHandler::$Run_Information, ["Critical", "Step 2 - aborted and no data updated" . PHP_EOL]);     
         }
 
-        echo("DEBUG : End of process" . "<br>");
+        //echo("DEBUG : End of process" . "<br>");
 
     }
 

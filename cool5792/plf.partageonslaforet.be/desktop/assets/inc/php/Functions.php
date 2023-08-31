@@ -453,7 +453,8 @@ class PLF
 
         $sql_cmd = "SELECT KEYG,
                            SAISON,
-                           N_LOT
+                           N_LOT,
+                           FERMETURE
                     FROM $GLOBALS[spw_chasses] 
                     WHERE DATE_CHASSE = '$date_Chasse_Sql' AND SAISON = $Saison
                     ORDER BY SAISON, N_LOT";
@@ -497,6 +498,7 @@ class PLF
                 "KEYG" => $value["KEYG"], 
                 "DA_Saison" => $value["SAISON"],
                 "DA_Numero" => $value["N_LOT"],
+                "FERMETURE" => $value["FERMETURE"],
                 ]);
 
 
@@ -566,7 +568,8 @@ class PLF
         $gateway = new Functions_Gateway($database);
 
 
-        $sql_cmd = "SELECT DATE_CHASSE
+        $sql_cmd = "SELECT DATE_CHASSE, 
+                           FERMETURE
                      FROM $GLOBALS[spw_chasses] 
                      WHERE N_LOT = $Territoire_Name
                      AND SAISON = $Saison
@@ -611,9 +614,15 @@ class PLF
         foreach ($results as $result => $value) {
 
             $sqlDate = new DateTime($value["DATE_CHASSE"]);
-            array_push(self::$List_Array, $sqlDate->format('d-m-Y'));
+            // array_push(self::$List_Array, $sqlDate->format('d-m-Y'));
 
-            self::$RC++;      // the number of records = last $value (index number) + 1
+            array_push(self::$List_Array, [
+                "DATE" => $sqlDate->format('d-m-Y'), 
+                "FERMETURE" => $value["FERMETURE"]
+                ]);
+
+                self::$RC++;      // the number of records = last $value (index number) + 1
+
 
         }
 
