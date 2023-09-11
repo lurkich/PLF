@@ -291,7 +291,24 @@ function Send_Run_logs_By_eMail(): void {
 
 
     require_once __DIR__ . "../../vendor/autoload.php";
+
     
+
+    if ($Print_Mail_Title == "Upload SPW Chasses.") {
+
+        $cur_time = strtotime(date("H:i:s"));
+        $start_time = strtotime("02:30:00");
+        $end_time = strtotime("03:10:00");
+
+        if ($cur_time < $start_time and $cur_time > $end_time) {
+            echo "Job ended without sending email.";
+            return;
+        }
+    }
+
+
+
+
     $plf_mail = new PHPMailer();
     $plf_mail->From = "Christian.lurkin@hotmail.com";
     $plf_mail->FromName = "Christian Lurkin PLF";
@@ -306,10 +323,8 @@ function Send_Run_logs_By_eMail(): void {
             echo "sending to mail " . $mailRecipient . "<br>";
         }
     }
+    $plf_mail->addAddress("Christian.lurkin@hotmail.com");
 
-    if ($Print_Mail_Title <> "Upload SPW Chasses.") {
-        $plf_mail->addAddress("Christian.lurkin@hotmail.com");
-    }
 
     
     $plf_mail->addReplyTo("Christian.lurkin@hotmail.com");
