@@ -307,7 +307,9 @@ function Send_Run_logs_By_eMail(): void {
         }
     }
 
-    $plf_mail->addAddress("Christian.lurkin@hotmail.com");
+    if ($Print_Mail_Title <> "Upload SPW Chasses.") {
+        $plf_mail->addAddress("Christian.lurkin@hotmail.com");
+    }
 
     
     $plf_mail->addReplyTo("Christian.lurkin@hotmail.com");
