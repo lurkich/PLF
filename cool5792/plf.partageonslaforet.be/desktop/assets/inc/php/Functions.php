@@ -1592,7 +1592,8 @@ class PLF
         $gateway = new Functions_Gateway($database);
 
         $sql_cmd = "SELECT itineraire_id, nom  
-                    FROM $GLOBALS[cgt_itineraires]  
+                    FROM $GLOBALS[cgt_itineraires] 
+                    WHERE gpx_url <> '' 
                     ORDER BY nom";
 
         $gateway->set_Sql_Statement($sql_cmd);

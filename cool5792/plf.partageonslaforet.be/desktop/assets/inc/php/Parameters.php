@@ -82,7 +82,8 @@ $plf_infos = "plf_infos";
 
 
 // rest url information. -> Chasses et Territoires
-$spw_URL = "https://geoservices3.test.wallonie.be/arcgis/rest/services";
+//$spw_URL = "https://geoservices3.test.wallonie.be/arcgis/rest/services";
+$spw_URL = "https://geoservices3.wallonie.be/arcgis/rest/services";
 $spw_Folder = "APP_DNFEXT";
 $spw_Service = "CHASSE_DATEFERM";
 $spw_MapServer_Constant = "MapServer";
@@ -90,7 +91,7 @@ $spw_Index_Territoire = "1";
 $spw_Index_Chasse_Fermeture_OK = "0";
 $spw_Index_Chasse = "2";
 
-// rest url information. - Conseil cynégétique
+// rest url information. - Conseil Cantonnements
 $spw_Cantonnement_URL = "https://geoservices.wallonie.be/arcgis/rest/services";
 $spw_Cantonnement_Folder = "FAUNE_FLORE";
 $spw_Cantonnement_Service = "LIMITES_DNF";

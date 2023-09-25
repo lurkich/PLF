@@ -116,7 +116,7 @@ class SPW_Chasses_Gateway
                     `KEYG` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_unicode_ci',
                     INDEX chasse_id (chasse_id),
                     PRIMARY KEY (`chasse_id`) USING BTREE,
-                    UNIQUE INDEX `KEYG_DATE` (`KEYG`, `DATE_CHASSE`) USING BTREE)
+                    UNIQUE INDEX `KEYG_DATE_NUM` (`KEYG`, `DATE_CHASSE`, `NUM`) USING BTREE)
             COLLATE='utf8mb4_unicode_ci'
             ENGINE=InnoDB;";
             

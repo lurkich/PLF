@@ -318,7 +318,7 @@ class SPW_Chasses_Controller
                 $FERMETURE = $chasse["attributes"]["FERMETURE"];
                 $KEYG = $chasse["attributes"]["KEYG"];
 
-  
+
 
                 $this->gateway->New_Chasse([
                     "SAISON" => $SAISON,

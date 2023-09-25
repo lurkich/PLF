@@ -297,11 +297,11 @@ function Send_Run_logs_By_eMail(): void {
     if ($Print_Mail_Title == "Upload SPW Chasses.") {
 
         $cur_time = strtotime(date("H:i:s"));
-        $start_time = strtotime("02:30:00");
-        $end_time = strtotime("03:10:00");
+        $start_time = strtotime("18:30:00");
+        $end_time = strtotime("19:10:00");
 
-        if ($cur_time < $start_time and $cur_time > $end_time) {
-            echo "Job ended without sending email.";
+        if ($cur_time < $start_time or $cur_time > $end_time) {
+            echo "Job ended without sending email. start = " . $start_time . " - current : " . $cur_time . " - End : " . $end_time;
             return;
         }
     }
